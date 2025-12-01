@@ -96,7 +96,7 @@ export default function HeroSection() {
                             {/* BUTTONS CONTAINER */}
                             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto mt-2 lg:mt-0">
                                 {/* FILTER BTN - Mobile only */}
-                                <button className="lg:hidden px-4 py-2 rounded-lg border font-medium hover:bg-gray-100 transition text-sm sm:text-base">
+                                <button className="px-8 py-4 rounded-lg border font-medium hover:bg-gray-100 transition text-sm sm:text-base">
                                     Filter
                                 </button>
 
@@ -109,9 +109,9 @@ export default function HeroSection() {
                     </div>
 
                     {/* POPULAR SEARCH */}
-                    <div className="mt-32 sm:mt-36 md:mt-40 lg:mt-48">
-                        <p className="font-medium text-xs sm:text-sm text-gray-600 mb-2">Popular Search</p>
+                    <div className="mt-32 sm:mt-36 md:mt-40 lg:mt-52">
                         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        <p className="font-medium text-xs sm:text-sm text-gray-600 mb-2">Popular Search</p>
                             {["Modern Villa", "Studio Apartment", "Town House"].map((item) => (
                                 <span
                                     key={item}
