@@ -19,8 +19,8 @@ export default function HeroSection() {
                     </h1>
 
                     {/* SEARCH BAR FLOATING */}
-                    <div className="relative w-full mt-8 sm:mt-10 md:mt-12 lg:mt-14">
-                        <div className="absolute w-full lg:w-[150%] -bottom-16 sm:-bottom-20 left-0 right-0 mx-auto bg-white shadow-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4 z-10">
+                    <div className="relative w-full mt-8 sm:mt-10 md:mt-12 lg:mt-20">
+                        <div className="absolute w-full lg:w-[150%] -bottom-16 sm:-bottom-20 left-0 right-0 mx-auto bg-white shadow-xl rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4 z-10">
                             
                             {/* KEYWORD */}
                             <div className="flex-1 w-full min-w-0">
@@ -95,7 +95,7 @@ export default function HeroSection() {
                             {/* BUTTONS CONTAINER */}
                             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto mt-2 lg:mt-0">
                                 {/* FILTER BTN - Mobile only */}
-                                <button className="lg:hidden px-4 py-2 rounded-lg border font-medium hover:bg-gray-100 transition text-sm sm:text-base">
+                                <button className="px-8 py-4 rounded-lg border font-medium hover:bg-gray-100 transition text-sm sm:text-base">
                                     Filter
                                 </button>
 
@@ -108,9 +108,9 @@ export default function HeroSection() {
                     </div>
 
                     {/* POPULAR SEARCH */}
-                    <div className="mt-32 sm:mt-36 md:mt-40 lg:mt-48">
-                        <p className="font-medium text-xs sm:text-sm text-gray-600 mb-2">Popular Search</p>
+                    <div className="mt-32 sm:mt-36 md:mt-40 lg:mt-52">
                         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        <p className="font-medium text-xs sm:text-sm text-gray-600 mb-2">Popular Search</p>
                             {["Modern Villa", "Studio Apartment", "Town House"].map((item) => (
                                 <span
                                     key={item}
