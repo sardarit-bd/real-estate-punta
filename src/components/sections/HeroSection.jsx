@@ -1,10 +1,11 @@
 import { Search } from "lucide-react";
+import Image from "next/image";
 import { FaCaretDown } from "react-icons/fa";
 
 export default function HeroSection() {
     return (
         <section className="w-full bg-[#FFF6F2] py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+            <div className="max-w-7xl mx-auto sm:px-6  grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
 
                 {/* ---------- LEFT: TEXT + SEARCH BOX ---------- */}
                 <div className="relative pb-16 sm:pb-20 md:pb-24 lg:pb-28 mt-8 sm:mt-12 lg:mt-32">
@@ -19,9 +20,9 @@ export default function HeroSection() {
                     </h1>
 
                     {/* SEARCH BAR FLOATING */}
-                    <div className="relative w-full mt-8 sm:mt-10 md:mt-12 lg:mt-20">
-                        <div className="absolute w-full lg:w-[150%] -bottom-16 sm:-bottom-20 left-0 right-0 mx-auto bg-white shadow-xl rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4 z-10">
-                            
+                    <div className="relative w-full mt-8 sm:mt-10 md:mt-12 lg:mt-14">
+                        <div className="absolute w-full lg:w-[150%] -bottom-16 sm:-bottom-20 left-0 right-0 mx-auto bg-white shadow-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 flex flex-col lg:flex-row items-stretch lg:items-center gap-3 sm:gap-4 z-10">
+
                             {/* KEYWORD */}
                             <div className="flex-1 w-full min-w-0">
                                 <label className="text-xs sm:text-sm text-gray-500 block mb-1">Keyword</label>
@@ -127,9 +128,11 @@ export default function HeroSection() {
                 {/* ---------- RIGHT: SINGLE IMAGE ---------- */}
                 <div className="relative order-first lg:order-last">
                     <div className="grid grid-cols-1 gap-4">
-                        <img
+                        <Image
                             src="/images/home-image.png"
                             alt="Property"
+                            width={1000}
+                            height={1000}
                             className="w-full h-auto object-cover rounded-2xl sm:rounded-3xl max-h-[400px] sm:max-h-[500px] lg:max-h-none"
                         />
                     </div>
