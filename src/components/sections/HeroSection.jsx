@@ -4,7 +4,7 @@ import { FaCaretDown } from "react-icons/fa";
 export default function HeroSection() {
     return (
         <section className="w-full bg-[#FFF6F2] py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+            <div className="max-w-7xl mx-auto sm:px-6  grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
 
                 {/* ---------- LEFT: TEXT + SEARCH BOX ---------- */}
                 <div className="relative pb-16 sm:pb-20 md:pb-24 lg:pb-28 mt-8 sm:mt-12 lg:mt-32">

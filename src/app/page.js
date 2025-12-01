@@ -1,5 +1,6 @@
 import CitiesSection from "@/components/sections/CitiesSection";
 import HeroSection from "@/components/sections/HeroSection";
+import Properties from "@/components/sections/Properties";
 
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <div>
       <HeroSection />
       <CitiesSection/>
+      <Properties/>
     </div>
   );
 }
