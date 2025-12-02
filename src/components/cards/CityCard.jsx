@@ -11,6 +11,7 @@ export default function CityCard({ name, properties, img }) {
         width={800}
         height={800}
         className="w-14 h-14 rounded-xl object-cover"
+        alt={name}
       />
       {/* Info */}
       <div>

@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="w-full bg-[#F8F4F1] py-4">
+      <header className="w-full bg-[#F8F4F1] py-4 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
           {/* LEFT: LOGO + MENUS */}
@@ -30,7 +30,7 @@ export default function Navbar() {
             {/* Desktop Menu */}
             <nav className="hidden md:flex items-center gap-8 text-sm text-[#1F3A34]">
               <NavItem title="Home" href="/" />
-              <NavItem title="About" href="/about" dropdown />
+              <NavItem title="About" href="pages/about" />
               <NavItem title="Services" href="/services" dropdown />
               <NavItem title="Properties" href="/public/properties" dropdown />
               <Link href="/public/blog" className="hover:text-black">Blog</Link>
