@@ -41,7 +41,7 @@ export default function Properties() {
 
             {/* TOP SECTION */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                
+
                 <div>
                     <h2 className="text-3xl font-semibold text-[#1F1F1F]">
                         Featured Properties
@@ -58,10 +58,9 @@ export default function Properties() {
                             key={type}
                             onClick={() => setFilter(type)}
                             className={`px-5 py-2 rounded-full border 
-                                ${
-                                    filter === type
-                                        ? "bg-black text-white"
-                                        : "border-gray-300 text-gray-700"
+                                ${filter === type
+                                    ? "bg-black text-white"
+                                    : "border-gray-300 text-gray-700"
                                 }
                             `}
                         >
@@ -105,10 +104,9 @@ export default function Properties() {
                         onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                         disabled={currentPage === 1}
                         className={`px-4 py-2 rounded border 
-                            ${
-                                currentPage === 1
-                                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                    : "bg-white hover:bg-gray-100"
+                            ${currentPage === 1
+                                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                : "bg-white hover:bg-gray-100"
                             }
                         `}
                     >
@@ -124,10 +122,9 @@ export default function Properties() {
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
                                     className={`w-10 h-10 flex items-center justify-center rounded border text-sm font-medium
-                                        ${
-                                            currentPage === page
-                                                ? "bg-black text-white"
-                                                : "bg-white hover:bg-gray-100"
+                                        ${currentPage === page
+                                            ? "bg-black text-white"
+                                            : "bg-white hover:bg-gray-100"
                                         }
                                     `}
                                 >
@@ -144,10 +141,9 @@ export default function Properties() {
                         }
                         disabled={currentPage === totalPages}
                         className={`px-4 py-2 rounded border 
-                            ${
-                                currentPage === totalPages
-                                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                    : "bg-white hover:bg-gray-100"
+                            ${currentPage === totalPages
+                                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                : "bg-white hover:bg-gray-100"
                             }
                         `}
                     >
