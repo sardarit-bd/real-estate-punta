@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
-
 
 import BlogCard from "@/components/cards/Blog";
 import BlogSkeleton from "./BlogSkeleton";
@@ -12,12 +12,10 @@ export default function BlogList({ blogs }) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPage(1);
     }, [blogs]);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setLoading(true);
         const t = setTimeout(() => setLoading(false), 500);
         return () => clearTimeout(t);
@@ -27,65 +25,84 @@ export default function BlogList({ blogs }) {
     const start = (page - 1) * ITEMS_PER_PAGE;
     const current = blogs.slice(start, start + ITEMS_PER_PAGE);
 
+    const noBlogs = blogs.length === 0;
+
     return (
         <div>
-            {/* SKELETONS */}
-            {loading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {[...Array(6)].map((_, i) => (
-                        <BlogSkeleton key={i} />
-                    ))}
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {current.map((blog) => (
-                        <div key={blog.slug} className="fade-up">
-                            <BlogCard {...blog} />
-                        </div>
-                    ))}
+            {/* ---------- NO BLOGS FOUND ---------- */}
+            {noBlogs && (
+                <div className="text-center py-20">
+                    <h3 className="text-xl font-semibold text-gray-700">
+                        No Blogs Found
+                    </h3>
+
+                    <p className="text-gray-500 mt-2 max-w-md mx-auto text-sm">
+                        Try adjusting your search or category filters to find articles.
+                    </p>
                 </div>
             )}
 
-            {/* PAGINATION */}
-            {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-10">
+            {/* ---------- BLOG LIST ---------- */}
+            {!noBlogs && (
+                <>
+                    {loading ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {[...Array(6)].map((_, i) => (
+                                <BlogSkeleton key={i} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {current.map((blog) => (
+                                <div key={blog.slug} className="fade-up">
+                                    <BlogCard {...blog} />
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
-                    <button
-                        disabled={page === 1}
-                        onClick={() => setPage(page - 1)}
-                        className={`px-4 py-2 rounded-lg border ${
-                            page === 1 ? "opacity-40" : "hover:bg-gray-100"
-                        }`}
-                    >
-                        Prev
-                    </button>
+                    {/* ---------- PAGINATION ---------- */}
+                    {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-2 mt-10">
 
-                    {[...Array(totalPages)].map((_, i) => (
-                        <button
-                            key={i}
-                            onClick={() => setPage(i + 1)}
-                            className={`px-4 py-2 rounded-lg border text-sm ${
-                                page === i + 1
-                                    ? "bg-black text-white"
-                                    : "hover:bg-gray-100"
-                            }`}
-                        >
-                            {i + 1}
-                        </button>
-                    ))}
+                            <button
+                                disabled={page === 1}
+                                onClick={() => setPage(page - 1)}
+                                className={`px-4 py-2 rounded-lg border ${
+                                    page === 1 ? "opacity-40" : "hover:bg-gray-100"
+                                }`}
+                            >
+                                Prev
+                            </button>
 
-                    <button
-                        disabled={page === totalPages}
-                        onClick={() => setPage(page + 1)}
-                        className={`px-4 py-2 rounded-lg border ${
-                            page === totalPages
-                                ? "opacity-40"
-                                : "hover:bg-gray-100"
-                        }`}
-                    >
-                        Next
-                    </button>
-                </div>
+                            {[...Array(totalPages)].map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setPage(i + 1)}
+                                    className={`px-4 py-2 rounded-lg border text-sm ${
+                                        page === i + 1
+                                            ? "bg-black text-white"
+                                            : "hover:bg-gray-100"
+                                    }`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+
+                            <button
+                                disabled={page === totalPages}
+                                onClick={() => setPage(page + 1)}
+                                className={`px-4 py-2 rounded-lg border ${
+                                    page === totalPages
+                                        ? "opacity-40"
+                                        : "hover:bg-gray-100"
+                                }`}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );
