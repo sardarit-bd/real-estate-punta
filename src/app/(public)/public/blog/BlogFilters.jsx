@@ -25,10 +25,9 @@ export default function BlogFilters({
                     className="border rounded-lg px-3 py-2 w-40"
                 >
                     <option value="all">All Categories</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Investment">Investment</option>
-                    <option value="Lifestyle">Lifestyle</option>
-                    <option value="Travel">Travel</option>
+                    <option value="REAL ESTATE">Real Estate</option>
+                    <option value="GUIDE">Guide</option>
+                    <option value="DESIGN">Design</option>
                 </select>
 
                 {/* CLEAR BUTTON */}
