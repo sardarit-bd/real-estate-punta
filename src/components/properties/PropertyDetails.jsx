@@ -115,7 +115,7 @@ export default function PropertyDetails({ property }) {
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                     Description
                 </h2>
-                <p classname="text-gray-700 leading-relaxed text-[15px] md:text-base">
+                <p className="text-gray-700 leading-relaxed text-[15px] md:text-base">
                     {description}
                 </p>
             </div>
