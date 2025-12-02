@@ -67,7 +67,7 @@ export default function Properties() {
                             {type === "all" && "All Properties"}
                             {type === "sale" && "For Sale"}
                             {type === "rent" && "For Rent"}
-                        </button>
+                        </button>-
                     ))}
                 </div>
             </div>
@@ -75,7 +75,7 @@ export default function Properties() {
             {/* GRID SECTION */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
                 {currentProperties.map((item) => (
-                    <Link
+                    <Links
                         key={item.id}
                         href={`/pages/property/${item.id}`}
                         className="block"
@@ -91,7 +91,7 @@ export default function Properties() {
                             isFeatured={item.isFeatured}
                             isForSale={item.type === "sale"}
                         />
-                    </Link>
+                    </Links>
                 ))}
             </div>
 
