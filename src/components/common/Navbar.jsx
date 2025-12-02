@@ -32,8 +32,8 @@ export default function Navbar() {
               <NavItem title="Home" href="/" />
               <NavItem title="About" href="/about" dropdown />
               <NavItem title="Services" href="/services" dropdown />
-              <NavItem title="Properties" href="/properties" dropdown />
-              <Link href="/blog" className="hover:text-black">Blog</Link>
+              <NavItem title="Properties" href="/public/properties" dropdown />
+              <Link href="/public/blog" className="hover:text-black">Blog</Link>
               <Link href="/contact" className="hover:text-black">Contact</Link>
             </nav>
           </div>
