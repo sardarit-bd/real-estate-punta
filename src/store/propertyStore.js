@@ -12,6 +12,13 @@ const initialProperties = [
         sqft: 400,
         isFeatured: true,
         type: "sale",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
     },
     {
         id: 2,
@@ -24,6 +31,13 @@ const initialProperties = [
         sqft: 450,
         isFeatured: false,
         type: "sale",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
     },
     {
         id: 3,
@@ -36,6 +50,13 @@ const initialProperties = [
         sqft: 400,
         isFeatured: false,
         type: "rent",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
     },
     {
         id: 4,
@@ -48,6 +69,13 @@ const initialProperties = [
         sqft: 450,
         isFeatured: true,
         type: "sale",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
     },
     {
         id: 5,
@@ -60,6 +88,13 @@ const initialProperties = [
         sqft: 460,
         isFeatured: true,
         type: "rent",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
     },
     {
         id: 6,
@@ -72,14 +107,21 @@ const initialProperties = [
         sqft: 500,
         isFeatured: true,
         type: "sale",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
     },
 ];
 
 export const usePropertyStore = create((set, get) => ({
-  properties: initialProperties,
+    properties: initialProperties,
 
-  setProperties: (data) => set({ properties: data }),
+    setProperties: (data) => set({ properties: data }),
 
-  getPropertyById: (id) =>
-    get().properties.find((p) => String(p.id) === String(id)),
+    getPropertyById: (id) =>
+        get().properties.find((p) => String(p.id) === String(id)),
 }));
