@@ -3,32 +3,29 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaSearch, FaCaretDown } from "react-icons/fa";
+import Image from "next/image";
 
 export default function LuxuryHero() {
     const router = useRouter();
 
-    // States
+    // Filters
     const [city, setCity] = useState("all");
     const [type, setType] = useState("all");
     const [bedrooms, setBedrooms] = useState("all");
 
-    // Dropdown toggles
     const [openDropdown, setOpenDropdown] = useState(null);
 
-    const toggleDropdown = (field) => {
-        setOpenDropdown(openDropdown === field ? null : field);
-    };
+    const toggle = (f) => setOpenDropdown(openDropdown === f ? null : f);
 
-    const handleSelect = (field, value) => {
-        if (field === "city") setCity(value);
-        if (field === "type") setType(value);
-        if (field === "bedrooms") setBedrooms(value);
+    const handleSelect = (field, val) => {
+        if (field === "city") setCity(val);
+        if (field === "type") setType(val);
+        if (field === "bedrooms") setBedrooms(val);
         setOpenDropdown(null);
     };
 
     const handleSearch = () => {
         const params = new URLSearchParams();
-
         if (city !== "all") params.set("city", city);
         if (type !== "all") params.set("type", type);
         if (bedrooms !== "all") params.set("bedrooms", bedrooms);
@@ -37,152 +34,144 @@ export default function LuxuryHero() {
     };
 
     return (
-        <section
-            className="relative w-full min-h-[75vh] bg-center bg-cover bg-no-repeat flex items-center"
-            style={{ backgroundImage: "url('/images/home-3.webp')" }}
-        >
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50"></div>
+        <section className="bg-[#FFF7F3] py-20">
+            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <div className="relative max-w-7xl mx-auto px-6 py-20 w-full text-center">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-lg">
-                    Discover Your <span className="text-[#E7C464]">Luxury Home</span>
-                </h1>
+                {/* LEFT SIDE */}
+                <div>
+                    <p className="text-gray-600 text-sm mb-2">
+                        From as low as $10 per day with limited time offer discounts.
+                    </p>
 
-                <p className="text-gray-200 mt-4 text-sm sm:text-base max-w-2xl mx-auto">
-                    Explore premium villas, ocean-view apartments & luxury residential properties.
-                </p>
+                    <h1 className="text-4xl sm:text-5xl font-bold text-[#113B28] leading-tight">
+                        Your <span className="text-[#E7C464]">Property</span>, Our Priority.
+                    </h1>
 
-                {/* SEARCH CARD */}
-                <div className="mt-12 bg-white/20 backdrop-blur-2xl border border-white/30 shadow-2xl rounded-3xl p-6 sm:p-8 max-w-4xl mx-auto">
+                    {/* SEARCH CARD */}
+                    <div className="mt-10 bg-white shadow-lg rounded-3xl p-6 border">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                        {/* ---------- CUSTOM DROPDOWNS ---------- */}
-
-                        {/* CITY */}
-                        <div className="text-left text-white">
-                            <label className="text-sm mb-2 block">City</label>
-                            <div className="relative">
-                                <div
-                                    onClick={() => toggleDropdown("city")}
-                                    className="custom-box"
-                                >
-                                    <span>{city === "all" ? "All Cities" : city}</span>
-                                    <FaCaretDown />
-                                </div>
-
-                                {openDropdown === "city" && (
-                                    <div className="dropdown-panel">
-                                        {["all", "punta-cana", "bavaro", "cocotal", "cap-cana"].map((item) => (
-                                            <div
-                                                key={item}
-                                                className="dropdown-item"
-                                                onClick={() => handleSelect("city", item)}
-                                            >
-                                                {item === "all" ? "All Cities" : item}
-                                            </div>
-                                        ))}
+                            {/* CITY */}
+                            <div>
+                                <label className="text-gray-600 text-sm">City</label>
+                                <div className="relative mt-1">
+                                    <div className="custom-box" onClick={() => toggle("city")}>
+                                        <span>{city === "all" ? "All Cities" : city}</span>
+                                        <FaCaretDown />
                                     </div>
-                                )}
-                            </div>
-                        </div>
 
-                        {/* TYPE */}
-                        <div className="text-left text-white">
-                            <label className="text-sm mb-2 block">Type</label>
-                            <div className="relative">
-                                <div
-                                    onClick={() => toggleDropdown("type")}
-                                    className="custom-box"
-                                >
-                                    <span>
-                                        {type === "all"
-                                            ? "All Types"
-                                            : type === "rent"
-                                            ? "For Rent"
-                                            : "For Sale"}
-                                    </span>
-                                    <FaCaretDown />
+                                    {openDropdown === "city" && (
+                                        <div className="dropdown-panel">
+                                            {["all", "punta-cana", "bavaro", "cocotal", "cap-cana"].map((item) => (
+                                                <div key={item} className="dropdown-item"
+                                                     onClick={() => handleSelect("city", item)}>
+                                                    {item === "all" ? "All Cities" : item}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
-
-                                {openDropdown === "type" && (
-                                    <div className="dropdown-panel">
-                                        <div className="dropdown-item" onClick={() => handleSelect("type", "all")}>
-                                            All Types
-                                        </div>
-                                        <div className="dropdown-item" onClick={() => handleSelect("type", "rent")}>
-                                            For Rent
-                                        </div>
-                                        <div className="dropdown-item" onClick={() => handleSelect("type", "sale")}>
-                                            For Sale
-                                        </div>
-                                    </div>
-                                )}
                             </div>
-                        </div>
 
-                        {/* BEDROOMS */}
-                        <div className="text-left text-white">
-                            <label className="text-sm mb-2 block">Bedrooms</label>
-                            <div className="relative">
-                                <div
-                                    onClick={() => toggleDropdown("bedrooms")}
-                                    className="custom-box"
-                                >
-                                    <span>
-                                        {
-                                            {
+                            {/* STATUS */}
+                            <div>
+                                <label className="text-gray-600 text-sm">Status</label>
+                                <div className="relative mt-1">
+                                    <div className="custom-box" onClick={() => toggle("type")}>
+                                        <span>
+                                            {type === "all" ? "All Status" : type === "rent" ? "For Rent" : "For Sale"}
+                                        </span>
+                                        <FaCaretDown />
+                                    </div>
+
+                                    {openDropdown === "type" && (
+                                        <div className="dropdown-panel">
+                                            <div className="dropdown-item" onClick={() => handleSelect("type", "all")}>All Status</div>
+                                            <div className="dropdown-item" onClick={() => handleSelect("type", "rent")}>For Rent</div>
+                                            <div className="dropdown-item" onClick={() => handleSelect("type", "sale")}>For Sale</div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* BEDROOMS */}
+                            <div>
+                                <label className="text-gray-600 text-sm">Bedrooms</label>
+                                <div className="relative mt-1">
+                                    <div className="custom-box" onClick={() => toggle("bedrooms")}>
+                                        <span>
+                                            {{
                                                 all: "Any",
                                                 1: "1 Bedroom",
                                                 2: "2 Bedrooms",
                                                 3: "3 Bedrooms",
                                                 4: "4+ Bedrooms",
-                                            }[bedrooms]
-                                        }
-                                    </span>
-                                    <FaCaretDown />
-                                </div>
-
-                                {openDropdown === "bedrooms" && (
-                                    <div className="dropdown-panel">
-                                        <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "all")}>Any</div>
-                                        <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "1")}>1 Bedroom</div>
-                                        <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "2")}>2 Bedrooms</div>
-                                        <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "3")}>3 Bedrooms</div>
-                                        <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "4")}>4+ Bedrooms</div>
+                                            }[bedrooms]}
+                                        </span>
+                                        <FaCaretDown />
                                     </div>
-                                )}
+
+                                    {openDropdown === "bedrooms" && (
+                                        <div className="dropdown-panel">
+                                            <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "all")}>Any</div>
+                                            <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "1")}>1 Bedroom</div>
+                                            <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "2")}>2 Bedrooms</div>
+                                            <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "3")}>3 Bedrooms</div>
+                                            <div className="dropdown-item" onClick={() => handleSelect("bedrooms", "4")}>4+ Bedrooms</div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+                        </div>
+
+                        {/* BUTTONS */}
+                        <div className="flex gap-4 mt-6">
+                            <button
+                                onClick={handleSearch}
+                                className="px-8 py-3 w-full bg-[#E7C464] text-black font-semibold rounded-xl shadow"
+                            >
+                                Search
+                            </button>
                         </div>
                     </div>
 
-                    {/* SEARCH BUTTON */}
-                    <div className="mt-8 flex justify-center">
-                        <button
-                            onClick={handleSearch}
-                            className="luxury-btn"
-                        >
-                            <FaSearch /> Search Properties
-                        </button>
-                    </div>
+                    {/* Popular Search */}
+                    {/* <div className="mt-6 flex items-center gap-4 flex-wrap">
+                        <span className="text-gray-600 text-sm font-medium">Popular Search</span>
+                        {["Modern Villa", "Studio Apartment", "Town House"].map((item) => (
+                            <span key={item}
+                                  className="px-4 py-1.5 bg-white border rounded-full text-sm shadow cursor-pointer">
+                                {item}
+                            </span>
+                        ))}
+                    </div> */}
+                </div>
+
+                {/* RIGHT SIDE IMAGE (Your Single Image) */}
+                <div className="flex justify-center lg:justify-end">
+                    <Image
+                        src="/images/home-image.png"   // <<--- USE YOUR IMAGE HERE
+                        alt="Luxury Home"
+                        width={600}
+                        height={700}
+                        className="rounded-3xl object-cover shadow-lg"
+                    />
                 </div>
             </div>
 
-            {/* EXTRA CSS */}
+            {/* CUSTOM STYLES */}
             <style>{`
                 .custom-box {
-                    background: rgba(255,255,255,0.9);
-                    color: #05314A;
-                    padding: 14px 18px;
-                    border-radius: 12px;
+                    background: white;
+                    padding: 14px 16px;
+                    border-radius: 14px;
+                    border: 1px solid #E5E7EB;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     cursor: pointer;
-                    border: 1px solid #ddd;
+                    color: #05314A;
                     font-weight: 500;
-                    transition: 0.2s;
                 }
                 .custom-box:hover {
                     border-color: #E7C464;
@@ -190,40 +179,23 @@ export default function LuxuryHero() {
                 .dropdown-panel {
                     position: absolute;
                     width: 100%;
-                    margin-top: 5px;
                     background: white;
+                    padding: 10px;
                     border-radius: 12px;
-                    padding: 8px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                    margin-top: 6px;
                     z-index: 20;
                 }
                 .dropdown-item {
-                    padding: 10px 12px;
+                    padding: 10px;
                     border-radius: 8px;
                     cursor: pointer;
                     font-size: 14px;
                     color: #05314A;
-                    font-weight: 500;
                 }
                 .dropdown-item:hover {
                     background: #E7C464;
-                    color: black;
-                }
-                .luxury-btn {
-                    padding: 14px 30px;
-                    background: #E7C464;
                     color: #05314A;
-                    font-weight: 600;
-                    border-radius: 14px;
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    font-size: 15px;
-                    transition: 0.2s;
-                    box-shadow: 0 4px 20px rgba(231,196,100,0.4);
-                }
-                .luxury-btn:hover {
-                    background: #d9b452;
                 }
             `}</style>
         </section>
