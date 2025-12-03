@@ -47,9 +47,6 @@ const ownerMenu = [
 const adminMenu = [
     { title: "Dashboard", href: "/dashboard", icon: Home },
 
-    // KPI + Analytics Dashboard
-    { title: "Analytics & KPIs", href: "/dashboard/admin/analytics", icon: LineChart },
-
     // User Management
     { title: "Manage Users", href: "/dashboard/admin/users", icon: Users },
 
