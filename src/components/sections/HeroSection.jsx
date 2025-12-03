@@ -161,7 +161,7 @@ export default function LuxuryHero() {
                     />
 
                     {/* OVERLAY CARD */}
-                    <div className="absolute bottom-[-40px] left-80 bg-white shadow-xl rounded-2xl px-6 py-6 flex items-center gap-4z-20">
+                    <div className="absolute -bottom-10 left-80 bg-white shadow-xl rounded-2xl px-6 py-6 flex items-center gap-4 z-20">
                         <div >
                             {/* IMAGE GROUP (Use Just 1 or multiple) */}
                         <div className="flex justify-around items-center">
