@@ -3,7 +3,12 @@ import { create } from "zustand";
 const initialProperties = [
     {
         id: 1,
-        image: "/uploads/abc.png",
+        image: "/uploads/abc.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
         title: "Luxury Family Home",
         price: "395000",
         address: "1800-1818 79th St",
@@ -23,7 +28,12 @@ const initialProperties = [
     },
     {
         id: 2,
-        image: "/uploads/abcd.png",
+        image: "/uploads/abcd.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
         title: "Skyper Pool Apartment",
         price: "280000",
         address: "1020 Bloomingdale Ave",
@@ -43,7 +53,12 @@ const initialProperties = [
     },
     {
         id: 3,
-        image: "/uploads/abc.png",
+        image: "/uploads/abc.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
         title: "North Dillard Street",
         price: "250",
         address: "4330 Bill Shoals Rd",
@@ -63,7 +78,12 @@ const initialProperties = [
     },
     {
         id: 4,
-        image: "/uploads/abcd.png",
+        image: "/uploads/abcd.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
         title: "Eaton Grant Penthouse",
         price: "180000",
         address: "7722 18th Ave, Brooklyn",
@@ -84,6 +104,12 @@ const initialProperties = [
     {
         id: 5,
         image: "/uploads/abc.png",
+        images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
         title: "New Apartment Nice View",
         price: "850",
         address: "42 Avenue O, Brooklyn",
@@ -103,7 +129,12 @@ const initialProperties = [
     },
     {
         id: 6,
-        image: "/uploads/abcd.png",
+        image: "/uploads/abcd.png",   images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
         title: "Diamond Manor Apartment",
         price: "259000",
         address: "7802 20th Ave, Brooklyn",

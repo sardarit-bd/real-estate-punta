@@ -34,7 +34,7 @@ export default function LuxuryHero() {
     };
 
     return (
-        <section className="bg-[#FFF7F3] py-20">
+        <section className="bg-[#FFF7F3] py-30">
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                 {/* LEFT SIDE */}
@@ -155,13 +155,13 @@ export default function LuxuryHero() {
                     <Image
                         src="/images/home-image.png"
                         alt="Luxury Home"
-                        width={600}
-                        height={700}
+                        width={400}
+                        height={600}
                         className="rounded-3xl object-cover"
                     />
 
                     {/* OVERLAY CARD */}
-                    <div className="absolute -bottom-10 left-80 bg-white shadow-xl rounded-2xl px-6 py-6 flex items-center gap-4 z-20">
+                    <div className="absolute bottom-[-40px] left-80 bg-white shadow-xl rounded-2xl px-6 py-6 flex items-center gap-4z-20">
                         <div >
                             {/* IMAGE GROUP (Use Just 1 or multiple) */}
                         <div className="flex justify-around items-center">
