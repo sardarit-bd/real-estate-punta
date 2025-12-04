@@ -1,7 +1,15 @@
+import Link from "next/link";
 import Image from "next/image";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
+
 export default function Footer() {
+    const popupMaker = (service) => () => {
+
+        alert(`You clicked on ${service}. More information will be available soon!`);
+
+    }
+
     return (
         <footer className="bg-[#F8F4F1] text-black py-16 shadow-inner">
             <div className="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
@@ -23,11 +31,11 @@ export default function Footer() {
                 <div>
                     <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2 text-black/70">
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Home</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">About Us</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Properties</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Contact</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Blog</a></li>
+                        <li> <Link href="/" className="hover:text-brandAccent transition-colors duration-200">Home</Link> </li>
+                        <li><Link href="/pages/about" className="hover:text-brandAccent transition-colors duration-200">About Us</Link></li>
+                        <li><Link href="/pages/properties" className="hover:text-brandAccent transition-colors duration-200">Properties</Link></li>
+                        <li><Link href="/pages/contact" className="hover:text-brandAccent transition-colors duration-200">Contact</Link></li>
+                        <li><Link href="/pages/blog" className="hover:text-brandAccent transition-colors duration-200">Blog</Link></li>
                     </ul>
                 </div>
 
@@ -35,10 +43,18 @@ export default function Footer() {
                 <div>
                     <h3 className="text-xl font-semibold mb-4">Services</h3>
                     <ul className="space-y-2 text-black/70">
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Buying Guide</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Selling Guide</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Investment Advice</a></li>
-                        <li><a href="#" className="hover:text-brandAccent transition-colors duration-200">Property Management</a></li>
+                        <li>
+                            <button className="hover:text-brandAccent transition-colors duration-200">Property Buying</button>
+                        </li>
+                        <li>
+                            <button className="hover:text-brandAccent transition-colors duration-200">Property Selling</button>
+                        </li>
+                        <li>
+                            <button className="hover:text-brandAccent transition-colors duration-200">Investment Consulting</button>
+                        </li>
+                        <li>
+                            <button className="hover:text-brandAccent transition-colors duration-200">Legal Assistance</button>
+                        </li>
                     </ul>
                 </div>
 
