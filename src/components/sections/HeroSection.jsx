@@ -34,7 +34,7 @@ export default function LuxuryHero() {
     };
 
     return (
-        <section className="bg-[#FFF7F3] py-20">
+        <section className="bg-[#FFF7F3] py-30">
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
                 {/* LEFT SIDE */}
@@ -64,7 +64,7 @@ export default function LuxuryHero() {
                                         <div className="dropdown-panel">
                                             {["all", "punta-cana", "bavaro", "cocotal", "cap-cana"].map((item) => (
                                                 <div key={item} className="dropdown-item"
-                                                     onClick={() => handleSelect("city", item)}>
+                                                    onClick={() => handleSelect("city", item)}>
                                                     {item === "all" ? "All Cities" : item}
                                                 </div>
                                             ))}
@@ -148,15 +148,37 @@ export default function LuxuryHero() {
                 </div>
 
                 {/* RIGHT SIDE IMAGE (Your Single Image) */}
-                <div className="flex justify-center lg:justify-end">
+                {/* RIGHT SIDE IMAGE WITH OVERLAY CARD */}
+                <div className="relative flex justify-center lg:justify-end">
+
+                    {/* MAIN IMAGE */}
                     <Image
-                        src="/images/home-image.png"   // <<--- USE YOUR IMAGE HERE
+                        src="/images/home-image.png"
                         alt="Luxury Home"
-                        width={600}
-                        height={700}
-                        className="rounded-3xl object-cover shadow-lg"
+                        width={400}
+                        height={600}
+                        className="rounded-3xl object-cover"
                     />
+
+                    {/* OVERLAY CARD */}
+                    <div className="absolute bottom-[-40px] left-80 bg-white shadow-xl rounded-2xl px-6 py-6 flex items-center gap-4z-20">
+                        <div >
+                            {/* IMAGE GROUP (Use Just 1 or multiple) */}
+                            <div className="flex justify-around items-center">
+                                <Image alt="user1" width={300} height={300} src="/images/user1.jpg" className="w-12 h-12 rounded-full border-2 border-[#ff7433]" />
+                                <Image alt="user2" width={300} height={300} src="/images/user2.jpg" className="w-12 h-12 rounded-full border-2 border-[#ff7433]" />
+                                <Image alt="user3" width={300} height={300} src="/images/user3.jpg" className="w-12 h-12 rounded-full border-2 border-[#ff7433]" />
+                            </div>
+
+                            {/* TEXT */}
+                            <div className="flex justify-center items-center mt-5 gap-2">
+                                <p className="font-bold text-lg">1000K+</p>
+                                <p className="text-gray-600 text-sm">Exclusive Agents</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
             {/* CUSTOM STYLES */}

@@ -31,8 +31,7 @@ export default function Navbar() {
             <nav className="hidden md:flex items-center gap-8 text-sm text-[#1F3A34]">
               <NavItem title="Home" href="/" />
               <NavItem title="About" href="/pages/about" />
-              <NavItem title="Services" href="/pages/services" dropdown />
-              <NavItem title="Properties" href="/pages/properties" dropdown />
+              <NavItem title="Properties" href="/pages/properties" />
               <Link href="/pages/blog" className="hover:text-black">Blog</Link>
               <Link href="/pages/contact" className="hover:text-black">Contact</Link>
             </nav>

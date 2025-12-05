@@ -131,8 +131,159 @@ const initialProperties = [
       phone: "(123) 456-7890",
       email: "R9yQ2@example.com55",
       image: "/uploads/agent.png",
-    },
+    }
   },
+    {
+        id: 1,
+        image: "/uploads/abc.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
+        title: "Luxury Family Home",
+        price: "395000",
+        address: "1800-1818 79th St",
+        beds: 4,
+        baths: 1,
+        sqft: 400,
+        isFeatured: true,
+        type: "sale",
+        city: "punta-cana",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ahsan Alam",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/images/agent2.png"
+        }
+    },
+    {
+        id: 2,
+        image: "/uploads/abcd.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
+        title: "Skyper Pool Apartment",
+        price: "280000",
+        address: "1020 Bloomingdale Ave",
+        beds: 4,
+        baths: 2,
+        sqft: 450,
+        isFeatured: false,
+        type: "sale",
+        city: "bavaro",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
+    },
+    {
+        id: 3,
+        image: "/uploads/abc.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
+        title: "North Dillard Street",
+        price: "250",
+        address: "4330 Bill Shoals Rd",
+        beds: 4,
+        baths: 2,
+        sqft: 400,
+        isFeatured: false,
+        type: "rent",
+        city: "cocotal",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ahsan Alam",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/images/agent2.png"
+        }
+    },
+    {
+        id: 4,
+        image: "/uploads/abcd.png", images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
+        title: "Eaton Grant Penthouse",
+        price: "180000",
+        address: "7722 18th Ave, Brooklyn",
+        beds: 4,
+        baths: 2,
+        sqft: 450,
+        isFeatured: true,
+        type: "sale",
+        city: "cap-cana",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ashiqur Rahman",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/uploads/agent.png"
+        }
+    },
+    {
+        id: 5,
+        image: "/uploads/abc.png",
+        images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
+        title: "New Apartment Nice View",
+        price: "850",
+        address: "42 Avenue O, Brooklyn",
+        beds: 2,
+        baths: 1,
+        sqft: 460,
+        isFeatured: true,
+        type: "rent",
+        city: "punta-cana",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ahsan Alam",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/images/agent2.png"
+        }
+    },
+    {
+        id: 6,
+        image: "/uploads/abcd.png",   images: [
+            "/uploads/abcd.png",
+            "/uploads/abc.png",
+            "/uploads/abcd.png",
+            "/uploads/abcd.png",
+        ],
+        title: "Diamond Manor Apartment",
+        price: "259000",
+        address: "7802 20th Ave, Brooklyn",
+        beds: 3,
+        baths: 2,
+        sqft: 500,
+        isFeatured: true,
+        type: "sale",
+        city: "bavaro",
+        description: "A beautiful apartment with stunning views and modern amenities. Perfect for urban living",
+        agent: {
+            name: "Ahsan Alam",
+            phone: "(123) 456-7890",
+            email: "R9yQ2@example.com55",
+            image: "/images/agent2.png"
+        }
+    },
 ];
 
 export const usePropertyStore = create((set, get) => ({

@@ -77,7 +77,7 @@ export default function Properties() {
                 {currentProperties.map((item) => (
                     <Link
                         key={item.id}
-                        href={`/pages/property/${item.id}`}
+                        href={`/pages/properties/${item.id}`}
                         className="block"
                     >
                         <PropertyCard
