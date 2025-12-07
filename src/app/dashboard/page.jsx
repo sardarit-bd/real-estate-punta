@@ -14,5 +14,5 @@ export default function DashboardHome() {
     return <p>Access denied</p>;
   }
 
-  return user.role === "admin" || role == 'super_admin' ? <AdminDashboard /> : user.role === "owner" ? <OwnerDashboard /> : <p>Access denied</p>;
+  return user.role === "admin" || user.role === 'super_admin' ? <AdminDashboard /> : user.role === "owner" ? <OwnerDashboard /> : <p>Access denied</p>;
 }
