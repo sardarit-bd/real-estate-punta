@@ -92,7 +92,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0076BC] text-white py-2 rounded-lg hover:bg-[var(--brandColorDark)] transition-colors font-semibold"
+            className="w-full bg-[#1F3A34] text-white py-2 rounded-lg  transition-colors font-semibold"
           >
             {loading ? "Registering..." : "Register"}
           </button>
