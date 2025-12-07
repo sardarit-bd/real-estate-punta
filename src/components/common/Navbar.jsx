@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Phone, User, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import UserButtons from "./UserButtons";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -44,9 +45,7 @@ export default function Navbar() {
               <span className="text-sm font-medium">+68 685 88666</span>
             </div>
 
-            <button className="p-2 border rounded-full border-[#1F3A34]">
-              <User size={16} />
-            </button>
+            <UserButtons />
 
             <Link
               href="/add-property"

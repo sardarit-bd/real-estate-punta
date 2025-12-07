@@ -7,9 +7,13 @@ import { getDashboardSideMenu } from "@/app/helpers/getDashboardSidebarMenu";
 import { useAuth } from "@/hooks/userAuth";
 
 export function DashboardSidebar() {
-    const user = useAuth();
+    const {user, loading} = useAuth();
+    
     const [isOpen, setIsOpen] = useState(false);
 
+    if(loading){
+        return <h2>Loading...</h2>   
+    }
     const sidebarNavItems = getDashboardSideMenu(user?.role);
 
     return (

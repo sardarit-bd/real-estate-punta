@@ -1,11 +1,8 @@
-
+import { useAuthContext } from "@/providers/AuthProvider";
 
 export const useAuth = () => {
-  const user = {
-    id: 1,
-    name: "Md Sohel",
-    role: "admin", // Change to 'admin' or 'owner' to test different roles
-  };   
-
-  return user; 
-} 
+  const { user, loading, login, logout, register} = useAuthContext();
+  // Get instructor by ID
+ 
+  return { user, loading, login, logout, register };
+};

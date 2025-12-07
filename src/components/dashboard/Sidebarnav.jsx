@@ -1,11 +1,25 @@
 "use client";
 
+import { useAuth } from "@/hooks/userAuth";
+import axios from "axios";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function SidebarNav({ items }) {
     const pathname = usePathname();
+    const {logout} = useAuth()
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+            toast.success("Logout Successfull.")
+        } catch (err) {
+            console.log(err)
+            toast.error("Something Wrong when logout. Please wait and try again.")
+        }
+    }
 
     return (
         <nav className="flex flex-col px-4 py-6 space-y-2 w-full">
@@ -20,10 +34,9 @@ export default function SidebarNav({ items }) {
                         href={item.href}
                         className={`relative group flex items-center gap-3 rounded-xl px-4 py-3 
                             text-sm font-medium transition-all duration-200
-                            ${
-                                isActive
-                                    ? "bg-[#113B28] text-white shadow-md"
-                                    : "text-[#113B28]/80 hover:bg-[#E7C464]/20 hover:text-[#113B28]"
+                            ${isActive
+                                ? "bg-[#113B28] text-white shadow-md"
+                                : "text-[#113B28]/80 hover:bg-[#E7C464]/20 hover:text-[#113B28]"
                             }
                         `}
                     >
@@ -40,10 +53,9 @@ export default function SidebarNav({ items }) {
                             <Icon
                                 size={18}
                                 className={`transition-colors duration-200
-                                    ${
-                                        isActive
-                                            ? "text-white"
-                                            : "text-[#113B28]/70 group-hover:text-[#113B28]"
+                                    ${isActive
+                                        ? "text-white"
+                                        : "text-[#113B28]/70 group-hover:text-[#113B28]"
                                     }
                                 `}
                             />
@@ -56,10 +68,9 @@ export default function SidebarNav({ items }) {
             })}
 
             {/* ================= Logout Button ================= */}
-            <Link
-                href="/"
+            <button onClick={handleLogout}
                 className="
-                    mt-3 flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium
+                    mt-3 cursor-pointer flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium
                     border border-[#113B28]/20 text-[#113B28]
                     transition-all duration-200
                     hover:bg-[#E7C464]/20 hover:text-[#113B28]
@@ -67,7 +78,7 @@ export default function SidebarNav({ items }) {
             >
                 <LogOut size={18} />
                 <span>Logout</span>
-            </Link>
+            </button>
         </nav>
     );
 }

@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/userAuth";
 
 
 export default function DashboardHome() {
-  const user = useAuth()
+  const {user} = useAuth()
 
   if (!user) {
     return <p>Access denied</p>;
