@@ -15,6 +15,7 @@ import {
     Edit,
     Trash2,
     Settings,
+    SettingsIcon,
 } from "lucide-react";
 
 //
@@ -57,6 +58,7 @@ const adminMenu = [
 
     // CSV Export
     { title: "Export CSV", href: "/dashboard/admin/export", icon: FileSpreadsheet },
+    {title: "Settings", href: "/dashboard/admin/setting", icon: SettingsIcon}
 
     // Reports
     // { title: "Reports & Logs", href: "/dashboard/admin/reports", icon: ClipboardList },

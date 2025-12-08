@@ -1,10 +1,19 @@
 'use client'
 
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar"
+import { useAuth } from "@/hooks/userAuth";
 
 export default function DashboardLayout({
   children,
 }) {
+  const {loading} = useAuth()
+  if (loading) {
+    return (
+      <div className="min-h-screen p-6 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1F3A34]"></div>
+      </div>
+    );
+  }
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <div className="grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
