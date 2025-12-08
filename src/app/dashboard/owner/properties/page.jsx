@@ -166,7 +166,7 @@ export default function PropertiesPage() {
               <p className="text-gray-600">Manage all your property listings</p>
             </div>
             <Link
-              href="/owner/properties/add"
+              href="/dashboard/owner/properties/add"
               className="flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45]"
             >
               <Plus className="h-4 w-4 mr-2" />

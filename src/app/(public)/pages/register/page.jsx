@@ -13,6 +13,7 @@ export default function Register() {
     email: "",
     password: "",
   });
+  
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const {register} = useAuth()

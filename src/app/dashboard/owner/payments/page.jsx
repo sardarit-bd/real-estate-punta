@@ -317,13 +317,6 @@ export default function OwnerPaymentsPage() {
               <h1 className="text-2xl font-bold text-gray-900">Payment History</h1>
               <p className="text-gray-600">View and manage your property payments</p>
             </div>
-            <button
-              onClick={() => console.log('Make new payment')}
-              className="flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45] transition-colors"
-            >
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Make Payment
-            </button>
           </div>
         </div>
       </div>

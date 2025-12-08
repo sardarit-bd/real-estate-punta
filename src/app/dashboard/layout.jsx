@@ -8,6 +8,7 @@ export default function DashboardLayout({
   children,
 }) {
   const router = useRouter()
+  
   const {loading, user} = useAuth()
   if (loading) {
     return (
