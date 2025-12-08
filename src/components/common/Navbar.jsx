@@ -1,13 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { Phone, User, ChevronDown, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Phone, User, ChevronDown, Menu, X, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import UserButtons from "./UserButtons";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [favouriteCount, setFavouriteCount] = useState(0);
+
+  // Load favourite count from localStorage
+  useEffect(() => {
+    updateFavouriteCount();
+
+    const refresh = () => updateFavouriteCount();
+
+    window.addEventListener("favourites-updated", refresh);
+
+    return () => window.removeEventListener("favourites-updated", refresh);
+  }, []);
+
+
+  const updateFavouriteCount = () => {
+    const favourites = JSON.parse(localStorage.getItem("favouriteProperties") || "[]");
+    setFavouriteCount(favourites.length);
+  };
 
   return (
     <>
@@ -16,7 +34,6 @@ export default function Navbar() {
 
           {/* LEFT: LOGO + MENUS */}
           <div className="flex items-center gap-12">
-
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <Image
@@ -40,10 +57,24 @@ export default function Navbar() {
 
           {/* RIGHT SIDE (Desktop) */}
           <div className="hidden md:flex items-center gap-6">
+            {/* Phone Number */}
             <div className="flex items-center gap-2 text-[#1F3A34]">
               <Phone size={18} />
               <span className="text-sm font-medium">+68 685 88666</span>
             </div>
+
+            {/* Favourites Button */}
+            <Link
+              href="/pages/favourites"
+              className="relative p-2 hover:bg-white/50 rounded-full transition"
+            >
+              <Heart size={20} className="text-gray-700" />
+              {favouriteCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  {favouriteCount}
+                </span>
+              )}
+            </Link>
 
             <UserButtons />
 
@@ -69,8 +100,8 @@ export default function Navbar() {
       {/* MOBILE LEFT DRAWER */}
       <div
         className={`fixed top-0 left-0 h-full w-[280px] bg-white shadow-xl z-50 transform 
-        ${open ? "translate-x-0" : "-translate-x-full"} 
-        transition-transform duration-300`}
+                ${open ? "translate-x-0" : "-translate-x-full"} 
+                transition-transform duration-300`}
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b">
@@ -82,11 +113,10 @@ export default function Navbar() {
 
         {/* Drawer Items */}
         <nav className="flex flex-col px-5 py-4 text-[16px] text-[#1F3A34] gap-4">
-
           <MobileItem title="Home" href="/" />
-          <MobileItem title="About" href="/pages/about" dropdown />
-          <MobileItem title="Services" href="/pages/services" dropdown />
-          <MobileItem title="Properties" href="/pages/properties" dropdown />
+          <MobileItem title="About" href="/pages/about" />
+          <MobileItem title="Properties" href="/pages/properties" />
+          <MobileItem title="Favourites" href="/pages/favourites" />
           <MobileItem title="Blog" href="/pages/blog" />
           <MobileItem title="Contact" href="/pages/contact" />
 
@@ -96,9 +126,23 @@ export default function Navbar() {
               <span className="text-sm font-medium">+68 685 88666</span>
             </div>
 
-            <button className="p-2 border rounded-full border-[#1F3A34] mb-4">
-              <User size={16} />
-            </button>
+            <div className="flex items-center gap-4 mb-4">
+              <button className="p-2 border rounded-full border-[#1F3A34]">
+                <User size={16} />
+              </button>
+
+              <Link
+                href="/pages/favourites"
+                className="relative p-2 border rounded-full border-[#1F3A34]"
+              >
+                <Heart size={16} />
+                {favouriteCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    {favouriteCount}
+                  </span>
+                )}
+              </Link>
+            </div>
 
             <Link
               href="/add-property"
@@ -107,7 +151,6 @@ export default function Navbar() {
               Add Property
             </Link>
           </div>
-
         </nav>
       </div>
 
