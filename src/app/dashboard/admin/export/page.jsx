@@ -29,7 +29,7 @@ export default function ExportCSVPage() {
       {/* TOP SECTION */}
       <div className="mb-8">
         <h1 className="text-3xl font-semibold text-[#05314A] flex items-center gap-3">
-          <FileSpreadsheet size={32} className="text-[#0076BC]" />
+          <FileSpreadsheet size={32} className="text-[#1F3A34]" />
           Export CSV
         </h1>
         <p className="text-gray-600 mt-1">
@@ -48,7 +48,7 @@ export default function ExportCSVPage() {
             >
               {/* Icon */}
               <div className="w-12 h-12 rounded-xl bg-[#E6F4F1] flex items-center justify-center mb-4">
-                <Icon className="text-[#0076BC]" size={26} />
+                <Icon className="text-[#1F3A34]" size={26} />
               </div>
 
               {/* Title */}
@@ -63,7 +63,7 @@ export default function ExportCSVPage() {
               <button
                 onClick={item.action}
                 className="mt-5 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl 
-                           bg-[#0076BC] hover:bg-[#005F99] text-white transition"
+                           bg-[#1F3A34] hover:bg-[#1F3A34] text-white transition"
               >
                 <Download size={16} />
                 Download CSV
