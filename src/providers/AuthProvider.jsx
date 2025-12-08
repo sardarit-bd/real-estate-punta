@@ -57,8 +57,8 @@ export function AuthProvider({ children }) {
 
     const logout = async () => {
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, null, { withCredentials: true })
-        setUser(null);
         router.push("/pages/login");
+        setUser(null);
     };
 
     return (

@@ -2,17 +2,23 @@
 
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar"
 import { useAuth } from "@/hooks/userAuth";
+import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }) {
-  const {loading} = useAuth()
+  const router = useRouter()
+  const {loading, user} = useAuth()
   if (loading) {
     return (
       <div className="min-h-screen p-6 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1F3A34]"></div>
       </div>
     );
+  }
+
+  if(!user){
+    router.push('/')
   }
   return (
     <div className="flex min-h-screen flex-col space-y-6">
