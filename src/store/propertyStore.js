@@ -170,7 +170,7 @@ const initialProperties = [
     }
   },
   {
-    id: 1,
+    id: 7,
     image: "/uploads/abc.png", images: [
       "/uploads/abcd.png",
       "/uploads/abc.png",
@@ -195,7 +195,7 @@ const initialProperties = [
     }
   },
   {
-    id: 2,
+    id: 8,
     image: "/uploads/abcd.png", images: [
       "/uploads/abcd.png",
       "/uploads/abc.png",
@@ -220,7 +220,7 @@ const initialProperties = [
     }
   },
   {
-    id: 3,
+    id: 9,
     image: "/uploads/abc.png", images: [
       "/uploads/abcd.png",
       "/uploads/abc.png",
@@ -245,7 +245,7 @@ const initialProperties = [
     }
   },
   {
-    id: 4,
+    id: 10,
     image: "/uploads/abcd.png", images: [
       "/uploads/abcd.png",
       "/uploads/abc.png",
@@ -270,7 +270,7 @@ const initialProperties = [
     }
   },
   {
-    id: 5,
+    id: 11,
     image: "/uploads/abc.png",
     images: [
       "/uploads/abcd.png",
@@ -296,7 +296,7 @@ const initialProperties = [
     }
   },
   {
-    id: 6,
+    id: 12,
     image: "/uploads/abcd.png", images: [
       "/uploads/abcd.png",
       "/uploads/abc.png",

@@ -147,36 +147,17 @@ export default function LuxuryHero() {
                     </div> */}
                 </div>
 
-                {/* RIGHT SIDE IMAGE (Your Single Image) */}
                 {/* RIGHT SIDE IMAGE WITH OVERLAY CARD */}
-                <div className="relative flex justify-center lg:justify-end">
-
-                    {/* MAIN IMAGE */}
-                    <Image
-                        src="/images/home-image.png"
-                        alt="Luxury Home"
-                        width={400}
-                        height={600}
-                        className="rounded-3xl object-cover"
+                <div className="">
+                    {/* MAIN VIDEO */}
+                    <video
+                        src="/videos/hero-video.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="rounded-3xl object-cover w-[600px] h-[435px]"
                     />
-
-                    {/* OVERLAY CARD */}
-                    <div className="absolute bottom-[-40px] left-80 bg-white shadow-xl rounded-2xl px-6 py-6 flex items-center gap-4z-20">
-                        <div >
-                            {/* IMAGE GROUP (Use Just 1 or multiple) */}
-                            <div className="flex justify-around items-center">
-                                <Image alt="user1" width={300} height={300} src="/images/user1.jpg" className="w-12 h-12 rounded-full border-2 border-[#ff7433]" />
-                                <Image alt="user2" width={300} height={300} src="/images/user2.jpg" className="w-12 h-12 rounded-full border-2 border-[#ff7433]" />
-                                <Image alt="user3" width={300} height={300} src="/images/user3.jpg" className="w-12 h-12 rounded-full border-2 border-[#ff7433]" />
-                            </div>
-
-                            {/* TEXT */}
-                            <div className="flex justify-center items-center mt-5 gap-2">
-                                <p className="font-bold text-lg">1000K+</p>
-                                <p className="text-gray-600 text-sm">Exclusive Agents</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>

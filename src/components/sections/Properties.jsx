@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import PropertyCard from "@/components/cards/Property";
 import { usePropertyStore } from "@/store/propertyStore";
+import Link from "next/link";
 
 export default function Properties() {
 
