@@ -724,31 +724,6 @@ export default function AddEditPropertyPage() {
                   </div>
                 </div>
               </div>
-
-              {/* Quick Stats */}
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Quick Stats</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Images</span>
-                    <span className="font-medium">{images.length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Status</span>
-                    <span className="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
-                      {isEditMode ? 'Active' : 'Draft'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Type</span>
-                    <span className="font-medium capitalize">{formData.type}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Listing Type</span>
-                    <span className="font-medium capitalize">{formData.listingType}</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </form>
