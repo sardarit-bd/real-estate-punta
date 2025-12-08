@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { useAuth } from "@/hooks/userAuth";
 
 export default function Login() {
-    const {login} = useAuth()
+    const { login } = useAuth()
     const [form, setForm] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -21,10 +21,9 @@ export default function Login() {
         setLoading(true);
         setMessage("");
         try {
-           await login(form)
-
+            await login(form)
             setMessage("Login successful! Redirecting...");
-            setTimeout(() => redirect("/dashboard"), 1000); // redirect after 1s
+            redirect("/dashboard")
         } catch (err) {
             setMessage(
                 err.response?.data?.message || "Login failed. Check credentials."
@@ -43,8 +42,8 @@ export default function Login() {
                 {message && (
                     <div
                         className={`mb-4 p-3 rounded ${message.includes("successful")
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
                             }`}
                     >
                         {message}

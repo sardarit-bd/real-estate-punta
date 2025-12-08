@@ -35,9 +35,9 @@ export function AuthProvider({ children }) {
                 { withCredentials: true }
             );
             const { data } = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/me`,
-                    { withCredentials: true }
-                );
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/me`,
+                { withCredentials: true }
+            );
             setUser(data?.data);
             router.push("/dashboard");
         } catch (err) {
@@ -48,19 +48,18 @@ export function AuthProvider({ children }) {
 
 
 
-      const register = async (form) => {
-        await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`,
-        form
-      );
-        router.push("/pages/login");
-      };
+    const register = async (form) => {
+        const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`,
+            form
+        );
+    };
 
-      const logout = async () => {
+    const logout = async () => {
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, null, { withCredentials: true })
         setUser(null);
         router.push("/pages/login");
-      };
+    };
 
     return (
         <AuthContext.Provider value={{ user, loading, login, logout, register }}>

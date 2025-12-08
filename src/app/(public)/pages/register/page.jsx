@@ -4,8 +4,10 @@ import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useAuth } from "@/hooks/userAuth";
+import { useRouter } from "next/navigation";;
 
 export default function Register() {
+  const router = useRouter()
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -27,7 +29,9 @@ export default function Register() {
       await register(form)
       setMessage("Registration successful! You can now log in.");
       setForm({ name: "", email: "", password: "" });
+      router.push("/pages/login");
     } catch (err) {
+      console.log(err)
       setMessage(
         err.response?.data?.message || "Registration failed. Try again."
       );
