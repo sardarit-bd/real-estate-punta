@@ -148,7 +148,7 @@ export default function LuxuryHero() {
                 </div>
 
                 {/* RIGHT SIDE IMAGE WITH OVERLAY CARD */}
-                <div className="">
+                <div>
                     {/* MAIN VIDEO */}
                     <video
                         src="/videos/hero-video.mp4"
