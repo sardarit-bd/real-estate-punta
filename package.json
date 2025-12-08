@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.2.6",
+    "@tiptap/extension-bubble-menu": "^3.13.0",
+    "@tiptap/extension-floating-menu": "^3.13.0",
+    "@tiptap/extension-placeholder": "^3.13.0",
+    "@tiptap/react": "^3.13.0",
+    "@tiptap/starter-kit": "^3.13.0",
     "apexcharts": "^5.3.6",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",

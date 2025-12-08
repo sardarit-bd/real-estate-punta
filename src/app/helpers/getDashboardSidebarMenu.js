@@ -16,6 +16,7 @@ import {
     Trash2,
     Settings,
     SettingsIcon,
+    Pen,
 } from "lucide-react";
 
 //
@@ -53,6 +54,7 @@ const adminMenu = [
 
     // Property Moderation
     { title: "Manage Properties", href: "/dashboard/admin/properties", icon: Building2 },
+    {title: "Blogs", href: "/dashboard/admin/blog", icon: Pen},
 
     { title: "All Transactions", href: "/dashboard/admin/transactions", icon: CreditCard },
 
