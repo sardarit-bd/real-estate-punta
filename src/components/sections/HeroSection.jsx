@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaSearch, FaCaretDown } from "react-icons/fa";
 import Image from "next/image";
+import VideoPlayer from "./VideoPlayer";
 
 export default function LuxuryHero() {
     const router = useRouter();
@@ -148,17 +149,7 @@ export default function LuxuryHero() {
                 </div>
 
                 {/* RIGHT SIDE IMAGE WITH OVERLAY CARD */}
-                <div>
-                    {/* MAIN VIDEO */}
-                    <video
-                        src="/videos/hero-video.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="rounded-3xl object-cover w-[600px] h-[435px]"
-                    />
-                </div>
+                <VideoPlayer />
 
             </div>
 
