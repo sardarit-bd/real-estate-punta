@@ -19,6 +19,7 @@ import {
   PlusCircle,
   AlertCircle
 } from 'lucide-react';
+import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
 
 export default function OwnerPaymentsPage() {
   const [payments, setPayments] = useState([]);
@@ -37,9 +38,25 @@ export default function OwnerPaymentsPage() {
   const [dateRange, setDateRange] = useState('all');
   const [showFilters, setShowFilters] = useState(true);
 
+  // Status options
+  const statusOptions = [
+    { value: 'all', label: 'All Status' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'pending', label: 'Pending' },
+    { value: 'failed', label: 'Failed' }
+  ];
+
+  // Date range options
+  const dateOptions = [
+    { value: 'all', label: 'All Time' },
+    { value: 'today', label: 'Today' },
+    { value: 'week', label: 'Last 7 Days' },
+    { value: 'month', label: 'Last 30 Days' },
+    { value: 'year', label: 'Last Year' }
+  ];
+
   // Mock data - Replace with actual API calls
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/immutability
     fetchPayments();
   }, []);
 
@@ -274,22 +291,12 @@ export default function OwnerPaymentsPage() {
     // Implement retry logic
   };
 
-  // Status options
-  const statusOptions = [
-    { value: 'all', label: 'All Status' },
-    { value: 'completed', label: 'Completed' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'failed', label: 'Failed' }
-  ];
-
-  // Date range options
-  const dateOptions = [
-    { value: 'all', label: 'All Time' },
-    { value: 'today', label: 'Today' },
-    { value: 'week', label: 'Last 7 Days' },
-    { value: 'month', label: 'Last 30 Days' },
-    { value: 'year', label: 'Last Year' }
-  ];
+  // Clear all filters
+  const clearFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setDateRange('all');
+  };
 
   if (loading) {
     return (
@@ -416,7 +423,6 @@ export default function OwnerPaymentsPage() {
             <h2 className="text-lg font-semibold text-gray-900">Payment History</h2>
             
             <div className="flex items-center space-x-3">
-              
               <button className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
@@ -445,43 +451,31 @@ export default function OwnerPaymentsPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Status
                 </label>
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
+                <CustomSelect
                   value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                >
-                  {statusOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  options={statusOptions}
+                  onChange={setStatusFilter}
+                  className="w-full"
+                  variant="compact"
+                />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Date Range
                 </label>
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
+                <CustomSelect
                   value={dateRange}
-                  onChange={(e) => setDateRange(e.target.value)}
-                >
-                  {dateOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  options={dateOptions}
+                  onChange={setDateRange}
+                  className="w-full"
+                  variant="compact"
+                />
               </div>
 
               <div className="flex items-end">
                 <button
-                  onClick={() => {
-                    setSearchTerm('');
-                    setStatusFilter('all');
-                    setDateRange('all');
-                  }}
+                  onClick={clearFilters}
                   className="w-full px-4 py-2 border border-gray-300 bg-white text-gray-700 rounded-lg hover:bg-gray-50"
                 >
                   Clear Filters

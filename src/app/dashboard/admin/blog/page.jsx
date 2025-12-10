@@ -4,169 +4,8 @@ import { useState, useMemo } from 'react'
 import Link from "next/link"
 import PostCard from "./components/PostCard"
 
-// Mock data
-const mockPosts = [
-  {
-    id: 1,
-    title: 'Getting Started with Next.js 14',
-    excerpt: 'Learn how to build modern web applications using Next.js 14 with the new App Router and server components...',
-    status: 'published',
-    category: 'Technology',
-    author: 'John Doe',
-    createdAt: '2024-01-15',
-    updatedAt: '2024-01-15',
-    tags: ['nextjs', 'react', 'web'],
-    views: 1250,
-    comments: 24,
-    readTime: '5 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 2,
-    title: 'Mastering Tailwind CSS',
-    excerpt: 'Advanced techniques and best practices for using Tailwind CSS in your projects...',
-    status: 'published',
-    category: 'Web Design',
-    author: 'Jane Smith',
-    createdAt: '2024-01-14',
-    updatedAt: '2024-01-14',
-    tags: ['tailwind', 'css', 'design'],
-    views: 890,
-    comments: 18,
-    readTime: '8 min',
-    featured: false,
-    pinned: true
-  },
-  {
-    id: 3,
-    title: 'The Future of Web Development',
-    excerpt: 'Exploring upcoming trends and technologies in web development...',
-    status: 'draft',
-    category: 'Technology',
-    author: 'Alex Johnson',
-    createdAt: '2024-01-13',
-    updatedAt: '2024-01-13',
-    tags: ['future', 'trends', 'ai'],
-    views: 0,
-    comments: 0,
-    readTime: '10 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 4,
-    title: 'Building Accessible Web Applications',
-    excerpt: 'A comprehensive guide to creating web applications that are accessible to everyone...',
-    status: 'published',
-    category: 'Accessibility',
-    author: 'Sam Wilson',
-    createdAt: '2024-01-12',
-    updatedAt: '2024-01-12',
-    tags: ['accessibility', 'a11y', 'web'],
-    views: 650,
-    comments: 12,
-    readTime: '12 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 5,
-    title: 'React Hooks Deep Dive',
-    excerpt: 'Understanding React Hooks and how to use them effectively in your applications...',
-    status: 'published',
-    category: 'Technology',
-    author: 'John Doe',
-    createdAt: '2024-01-11',
-    updatedAt: '2024-01-11',
-    tags: ['react', 'hooks', 'javascript'],
-    views: 2100,
-    comments: 42,
-    readTime: '15 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 6,
-    title: 'TypeScript for React Developers',
-    excerpt: 'Learn how to use TypeScript effectively with React for better type safety...',
-    status: 'published',
-    category: 'Technology',
-    author: 'Jane Smith',
-    createdAt: '2024-01-10',
-    updatedAt: '2024-01-10',
-    tags: ['typescript', 'react', 'web'],
-    views: 1800,
-    comments: 31,
-    readTime: '20 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 7,
-    title: 'Building REST APIs with Node.js',
-    excerpt: 'A complete guide to building RESTful APIs using Node.js and Express...',
-    status: 'draft',
-    category: 'Backend',
-    author: 'Alex Johnson',
-    createdAt: '2024-01-09',
-    updatedAt: '2024-01-09',
-    tags: ['nodejs', 'api', 'backend'],
-    views: 0,
-    comments: 0,
-    readTime: '25 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 8,
-    title: 'Database Design Best Practices',
-    excerpt: 'Learn the best practices for designing scalable and efficient databases...',
-    status: 'published',
-    category: 'Database',
-    author: 'Sam Wilson',
-    createdAt: '2024-01-08',
-    updatedAt: '2024-01-08',
-    tags: ['database', 'sql', 'design'],
-    views: 950,
-    comments: 15,
-    readTime: '18 min',
-    featured: false,
-    pinned: false
-  },
-  {
-    id: 9,
-    title: 'Web Performance Optimization',
-    excerpt: 'Techniques and tools to optimize your website for better performance...',
-    status: 'published',
-    category: 'Performance',
-    author: 'John Doe',
-    createdAt: '2024-01-07',
-    updatedAt: '2024-01-07',
-    tags: ['performance', 'web', 'optimization'],
-    views: 1100,
-    comments: 22,
-    readTime: '14 min',
-    featured: false,
-    pinned: true
-  },
-  {
-    id: 10,
-    title: 'Mobile First Design Approach',
-    excerpt: 'Learn why mobile-first design is important and how to implement it...',
-    status: 'published',
-    category: 'Web Design',
-    author: 'Jane Smith',
-    createdAt: '2024-01-06',
-    updatedAt: '2024-01-06',
-    tags: ['mobile', 'design', 'responsive'],
-    views: 780,
-    comments: 19,
-    readTime: '9 min',
-    featured: false,
-    pinned: false
-  },
-]
+import { mockPosts } from './mockPosts'
+import CustomSelect from '@/components/dashboard/Admin/CustomSelect'
 
 const ITEMS_PER_PAGE = 6
 const CATEGORIES = ['All', 'Technology', 'Web Design', 'Accessibility', 'Backend', 'Database', 'Performance']
@@ -278,6 +117,38 @@ export default function PostsPage() {
     pinned: mockPosts.filter(p => p.pinned).length,
   }
 
+  // Prepare options for CustomSelect components
+  const categoryOptions = CATEGORIES.map(cat => ({
+    value: cat,
+    label: cat === 'All' ? 'All Categories' : cat
+  }))
+
+  const statusOptions = STATUS_OPTIONS.map(status => ({
+    value: status,
+    label: status === 'All' ? 'All Statuses' : status.charAt(0).toUpperCase() + status.slice(1)
+  }))
+
+  const sortOptions = SORT_OPTIONS.map(opt => ({
+    value: opt.value,
+    label: opt.label
+  }))
+
+  // Handle select changes
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value)
+    setCurrentPage(1)
+  }
+
+  const handleStatusChange = (value) => {
+    setSelectedStatus(value)
+    setCurrentPage(1)
+  }
+
+  const handleSortChange = (value) => {
+    setSortBy(value)
+    setCurrentPage(1)
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
@@ -297,7 +168,7 @@ export default function PostsPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
         <div className="bg-white p-4 rounded-lg shadow border">
           <div className="text-2xl font-bold text-gray-800">{stats.total}</div>
           <div className="text-sm text-gray-600">Total Posts</div>
@@ -309,6 +180,14 @@ export default function PostsPage() {
         <div className="bg-white p-4 rounded-lg shadow border">
           <div className="text-2xl font-bold text-yellow-600">{stats.draft}</div>
           <div className="text-sm text-gray-600">Drafts</div>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow border">
+          <div className="text-2xl font-bold text-blue-600">{stats.featured}</div>
+          <div className="text-sm text-gray-600">Featured</div>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow border">
+          <div className="text-2xl font-bold text-purple-600">{stats.pinned}</div>
+          <div className="text-sm text-gray-600">Pinned</div>
         </div>
       </div>
 
@@ -342,7 +221,7 @@ export default function PostsPage() {
                   setCurrentPage(1)
                 }}
                 placeholder="Search by title, content, tags..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
               />
               <svg className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -355,18 +234,12 @@ export default function PostsPage() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Category
             </label>
-            <select
+            <CustomSelect
               value={selectedCategory}
-              onChange={(e) => {
-                setSelectedCategory(e.target.value)
-                setCurrentPage(1)
-              }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
-            >
-              {CATEGORIES.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
+              options={categoryOptions}
+              onChange={handleCategoryChange}
+              className="w-full"
+            />
           </div>
 
           {/* Status Filter */}
@@ -374,20 +247,12 @@ export default function PostsPage() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Status
             </label>
-            <select
+            <CustomSelect
               value={selectedStatus}
-              onChange={(e) => {
-                setSelectedStatus(e.target.value)
-                setCurrentPage(1)
-              }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
-            >
-              {STATUS_OPTIONS.map(status => (
-                <option key={status} value={status}>
-                  {status === 'All' ? 'All Statuses' : status.charAt(0).toUpperCase() + status.slice(1)}
-                </option>
-              ))}
-            </select>
+              options={statusOptions}
+              onChange={handleStatusChange}
+              className="w-full"
+            />
           </div>
 
           {/* Sort By */}
@@ -395,19 +260,29 @@ export default function PostsPage() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Sort By
             </label>
-            <select
+            <CustomSelect
               value={sortBy}
+              options={sortOptions}
+              onChange={handleSortChange}
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        {/* Toggle Filters */}
+        <div className="mt-6 flex flex-wrap gap-4">
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              checked={showFeatured}
               onChange={(e) => {
-                setSortBy(e.target.value)
+                setShowFeatured(e.target.checked)
                 setCurrentPage(1)
               }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
-            >
-              {SORT_OPTIONS.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
-          </div>
+              className="w-4 h-4 text-[#103B29] rounded focus:ring-[#103B29] border-gray-300"
+            />
+            <span className="ml-2 text-sm text-gray-700">Show Featured Only</span>
+          </label>
         </div>
 
         {/* Results Count */}

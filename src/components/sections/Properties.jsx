@@ -61,12 +61,6 @@ export default function Properties() {
                     <h2 className="text-3xl font-semibold text-[#1F1F1F]">
                         Featured Properties
                     </h2>
-                    <p className="text-gray-500 mt-1">
-                        Browse the latest properties available for sale and rent.
-                        <span className="ml-2 text-[#E63946] font-medium">
-                            {favouriteCount} favourites
-                        </span>
-                    </p>
                 </div>
 
                 {/* FILTER BUTTONS */}

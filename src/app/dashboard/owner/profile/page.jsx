@@ -20,6 +20,7 @@ import {
   Upload,
   X
 } from 'lucide-react';
+import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
 
 export default function AccountPage() {
   // User data state
@@ -59,6 +60,18 @@ export default function AccountPage() {
     'Cabeza de Toro', 'Cortecito', 'Uvero Alto'
   ];
 
+  // Country options for CustomSelect
+  const countryOptions = countries.map(country => ({
+    value: country,
+    label: country
+  }));
+
+  // City options for CustomSelect
+  const cityOptions = dominicanCities.map(city => ({
+    value: city,
+    label: city
+  }));
+
   // Load user data
   useEffect(() => {
     fetchUserData();
@@ -97,6 +110,19 @@ export default function AccountPage() {
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  // Handle select changes
+  const handleSelectChange = (name, value) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -639,17 +665,13 @@ export default function AccountPage() {
                           City
                         </label>
                         {isEditing ? (
-                          <select
-                            name="city"
-                            value={formData.city}
-                            onChange={handleInputChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-                          >
-                            <option value="">Select City</option>
-                            {dominicanCities.map(city => (
-                              <option key={city} value={city}>{city}</option>
-                            ))}
-                          </select>
+                          <CustomSelect
+                            value={formData.city || ''}
+                            options={[{ value: '', label: 'Select City' }, ...cityOptions]}
+                            onChange={(value) => handleSelectChange('city', value)}
+                            className="w-full"
+                            variant="admin"
+                          />
                         ) : (
                           <div className="px-4 py-3 bg-gray-50 rounded-lg">
                             {userData.city}
@@ -663,17 +685,13 @@ export default function AccountPage() {
                           Country
                         </label>
                         {isEditing ? (
-                          <select
-                            name="country"
-                            value={formData.country}
-                            onChange={handleInputChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-                          >
-                            <option value="">Select Country</option>
-                            {countries.map(country => (
-                              <option key={country} value={country}>{country}</option>
-                            ))}
-                          </select>
+                          <CustomSelect
+                            value={formData.country || ''}
+                            options={[{ value: '', label: 'Select Country' }, ...countryOptions]}
+                            onChange={(value) => handleSelectChange('country', value)}
+                            className="w-full"
+                            variant="admin"
+                          />
                         ) : (
                           <div className="px-4 py-3 bg-gray-50 rounded-lg">
                             {userData.country}
@@ -741,45 +759,6 @@ export default function AccountPage() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Notifications Settings (Read-only) */}
-                  {/* <div>
-                    <h3 className="font-medium text-gray-900 mb-4">Notification Preferences</h3>
-                    
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-medium text-gray-900">Email Notifications</p>
-                          <p className="text-sm text-gray-600">Property inquiries and updates</p>
-                        </div>
-                        <div className="text-green-600 font-medium">Enabled</div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-medium text-gray-900">SMS Notifications</p>
-                          <p className="text-sm text-gray-600">Important alerts and reminders</p>
-                        </div>
-                        <div className="text-green-600 font-medium">Enabled</div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-medium text-gray-900">Marketing Emails</p>
-                          <p className="text-sm text-gray-600">Platform updates and offers</p>
-                        </div>
-                        <div className="text-gray-600 font-medium">Disabled</div>
-                      </div>
-                    </div>
-                    
-                    <button
-                      type="button"
-                      onClick={() => console.log('Manage notifications')}
-                      className="mt-4 text-sm text-[#1F3A34] hover:text-[#2a4d45] font-medium"
-                    >
-                      Manage notification settings →
-                    </button>
-                  </div> */}
                 </div>
 
                 {/* Form Footer */}

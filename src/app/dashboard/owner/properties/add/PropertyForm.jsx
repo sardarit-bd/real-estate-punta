@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Home, MapPin, DollarSign, Bed, Bath, Upload, X, Star, Save, Plus, Calendar, Ruler } from 'lucide-react';
 import Link from 'next/link';
+import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
+
 
 export default function AddEditPropertyPage() {
   const router = useRouter();
@@ -47,6 +49,27 @@ export default function AddEditPropertyPage() {
   const cities = [
     'Punta Cana', 'Bavaro', 'Cap Cana', 'Macao', 
     'Uvero Alto', 'Cabeza de Toro', 'Cortecito'
+  ];
+
+  // City options for CustomSelect
+  const cityOptions = cities.map(city => ({
+    value: city,
+    label: city
+  }));
+
+  // Area unit options
+  const areaUnitOptions = [
+    { value: 'sqft', label: 'Sq Ft' },
+    { value: 'sqm', label: 'Sq M' },
+    { value: 'acre', label: 'Acres' }
+  ];
+
+  // Price period options
+  const pricePeriodOptions = [
+    { value: 'night', label: 'Per Night' },
+    { value: 'week', label: 'Per Week' },
+    { value: 'month', label: 'Per Month' },
+    { value: 'year', label: 'Per Year' }
   ];
 
   // Load property data if in edit mode
@@ -99,6 +122,17 @@ export default function AddEditPropertyPage() {
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
+    }));
+
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleSelectChange = (name, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
     }));
 
     if (errors[name]) {
@@ -336,16 +370,13 @@ export default function AddEditPropertyPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       City *
                     </label>
-                    <select
-                      name="city"
+                    <CustomSelect
                       value={formData.city}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-                    >
-                      {cities.map(city => (
-                        <option key={city} value={city}>{city}</option>
-                      ))}
-                    </select>
+                      options={cityOptions}
+                      onChange={(value) => handleSelectChange('city', value)}
+                      className="w-full"
+                      variant="admin"
+                    />
                   </div>
 
                   <div>
@@ -361,16 +392,15 @@ export default function AddEditPropertyPage() {
                         placeholder="0"
                         className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
                       />
-                      <select
-                        name="areaUnit"
-                        value={formData.areaUnit}
-                        onChange={handleInputChange}
-                        className="w-32 px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-                      >
-                        <option value="sqft">Sq Ft</option>
-                        <option value="sqm">Sq M</option>
-                        <option value="acre">Acres</option>
-                      </select>
+                      <div className="w-32">
+                        <CustomSelect
+                          value={formData.areaUnit}
+                          options={areaUnitOptions}
+                          onChange={(value) => handleSelectChange('areaUnit', value)}
+                          className="w-full"
+                          variant="compact"
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -432,17 +462,13 @@ export default function AddEditPropertyPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Price Period
                         </label>
-                        <select
-                          name="pricePeriod"
+                        <CustomSelect
                           value={formData.pricePeriod}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-                        >
-                          <option value="night">Per Night</option>
-                          <option value="week">Per Week</option>
-                          <option value="month">Per Month</option>
-                          <option value="year">Per Year</option>
-                        </select>
+                          options={pricePeriodOptions}
+                          onChange={(value) => handleSelectChange('pricePeriod', value)}
+                          className="w-full"
+                          variant="admin"
+                        />
                       </div>
                     )}
                   </div>

@@ -1,120 +1,126 @@
-"use client";
 
-import { useState } from "react";
-import { FaCaretDown } from "react-icons/fa";
+
+import CustomSelect from "@/components/dashboard/Admin/CustomSelect";
 
 export default function BlogFilters({
     search, setSearch,
     category, setCategory,
     clearFilters
 }) {
-    const [open, setOpen] = useState(false);
+    // Options for category dropdown
+    const categoryOptions = [
+        "all categories",
+        "real estate",
+        "guide",
+        "design"
+    ];
 
-    const toggle = () => setOpen(!open);
-
-    const handleSelect = (value) => {
-        setCategory(value);
-        setOpen(false);
+    // Convert internal value to display value
+    const getCategoryDisplayValue = () => {
+        if (category === "all") return "all categories";
+        return category.toLowerCase();
     };
 
+    // Handle category change
+    const handleCategoryChange = (value) => {
+        const internalValue = value === "all categories" ? "all" : 
+                             value.toUpperCase();
+        setCategory(internalValue);
+    };
+
+    // Check if any filters are active
+    const hasActiveFilters = search || category !== "all";
+
     return (
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-
-            {/* SEARCH BAR */}
-            <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search articles..."
-                className="w-full md:w-1/3 border rounded-lg px-4 py-2 text-[#05314A] focus:border-[#E7C464] focus:ring-2 focus:ring-[#E7C464]/40"
-            />
-
-            <div className="flex items-center gap-3">
-
-                {/* CUSTOM CATEGORY DROPDOWN */}
-                <div className="relative w-40">
-                    <div
-                        onClick={toggle}
-                        className="custom-box"
-                    >
-                        <span>
-                            {category === "all"
-                                ? "All Categories"
-                                : category}
-                        </span>
-                        <FaCaretDown />
-                    </div>
-
-                    {open && (
-                        <div className="dropdown-panel">
-                            <div className="dropdown-item" onClick={() => handleSelect("all")}>
-                                All Categories
-                            </div>
-                            <div className="dropdown-item" onClick={() => handleSelect("REAL ESTATE")}>
-                                Real Estate
-                            </div>
-                            <div className="dropdown-item" onClick={() => handleSelect("GUIDE")}>
-                                Guide
-                            </div>
-                            <div className="dropdown-item" onClick={() => handleSelect("DESIGN")}>
-                                Design
-                            </div>
-                        </div>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 p-5 bg-white rounded-xl shadow-sm border">
+            
+            {/* LEFT: SEARCH BAR */}
+            <div className="flex-1">
+                <div className="relative">
+                    <input
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search articles..."
+                        className="w-full border border-gray-300 rounded-lg px-4 py-3 text-[#05314A] 
+                                 focus:border-[#E7C464] focus:ring-2 focus:ring-[#E7C464]/40 transition-all duration-200
+                                 placeholder:text-gray-400 text-sm"
+                    />
+                    {search && (
+                        <button
+                            onClick={() => setSearch("")}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            aria-label="Clear search"
+                        >
+                            ✕
+                        </button>
                     )}
                 </div>
-
-                {/* CLEAR BUTTON */}
-                <button
-                    onClick={clearFilters}
-                    className="text-sm underline text-gray-600 hover:text-gray-900"
-                >
-                    Clear
-                </button>
             </div>
 
-            {/* STYLES */}
-            <style>{`
-                .custom-box {
-                    background: #fff;
-                    border: 1px solid #ddd;
-                    padding: 10px 12px;
-                    border-radius: 10px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    cursor: pointer;
-                    font-size: 14px;
-                    font-weight: 500;
-                    color: #05314A;
-                    transition: 0.2s;
-                }
-                .custom-box:hover {
-                    border-color: #E7C464;
-                }
+            {/* RIGHT: FILTERS AND CONTROLS */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                {/* CATEGORY FILTER */}
+                <div className="w-full sm:w-auto">
+                    <CustomSelect
+                        value={getCategoryDisplayValue()}
+                        options={categoryOptions}
+                        onChange={handleCategoryChange}
+                        className="min-w-[180px]"
+                    />
+                </div>
 
-                .dropdown-panel {
-                    position: absolute;
-                    top: 110%;
-                    width: 100%;
-                    background: white;
-                    border-radius: 12px;
-                    padding: 8px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-                    z-index: 20;
-                }
+                {/* CLEAR BUTTON AND STATUS */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    {hasActiveFilters && (
+                        <div className="text-sm text-gray-600">
+                            <span className="font-medium text-[#05314A]">
+                                {search ? 1 : 0 + (category !== "all" ? 1 : 0)}
+                            </span> filter(s) active
+                        </div>
+                    )}
+                    
+                    {hasActiveFilters && (
+                        <button
+                            onClick={clearFilters}
+                            className="text-sm font-medium text-[#E7C464] hover:text-[#d2ab54] 
+                                     px-4 py-2 border border-[#E7C464] rounded-lg hover:bg-[#E7C464]/5 
+                                     transition-colors duration-200 whitespace-nowrap"
+                        >
+                            Clear Filters
+                        </button>
+                    )}
+                </div>
+            </div>
 
-                .dropdown-item {
-                    padding: 10px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    color: #05314A;
-                    transition: 0.15s;
-                }
-                .dropdown-item:hover {
-                    background: #E7C464;
-                    color: #05314A;
-                }
-            `}</style>
+            {/* ACTIVE FILTERS CHIPS (Optional - shows below on mobile) */}
+            {hasActiveFilters && (
+                <div className="md:hidden mt-4 pt-4 border-t">
+                    <div className="flex flex-wrap gap-2">
+                        {search && (
+                            <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs px-3 py-1.5 rounded-full">
+                                Search: {search}
+                                <button 
+                                    onClick={() => setSearch("")}
+                                    className="text-blue-500 hover:text-blue-700"
+                                >
+                                    ✕
+                                </button>
+                            </span>
+                        )}
+                        {category !== "all" && (
+                            <span className="inline-flex items-center gap-1 bg-[#E7C464]/20 text-[#05314A] text-xs px-3 py-1.5 rounded-full">
+                                Category: {category.toLowerCase()}
+                                <button 
+                                    onClick={() => setCategory("all")}
+                                    className="text-[#05314A] hover:text-opacity-70"
+                                >
+                                    ✕
+                                </button>
+                            </span>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

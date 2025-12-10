@@ -17,6 +17,7 @@ import {
   DeleteIcon
 } from 'lucide-react';
 import Link from 'next/link';
+import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState([]);
@@ -133,6 +134,17 @@ export default function PropertiesPage() {
   const propertyTypes = ['all', ...new Set(properties.map(p => p.type))];
   const cities = ['all', ...new Set(properties.map(p => p.city))];
 
+  // Prepare options for CustomSelect
+  const typeOptions = propertyTypes.map(type => ({
+    value: type,
+    label: type === 'all' ? 'All Types' : type.charAt(0).toUpperCase() + type.slice(1)
+  }));
+
+  const cityOptions = cities.map(city => ({
+    value: city,
+    label: city === 'all' ? 'All Cities' : city
+  }));
+
   // Summary statistics
   const stats = {
     total: properties.length,
@@ -235,32 +247,26 @@ export default function PropertiesPage() {
             </div>
 
             {/* Type Filter */}
-            <select
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-            >
-              <option value="all">All Types</option>
-              {propertyTypes.filter(type => type !== 'all').map(type => (
-                <option key={type} value={type}>
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </option>
-              ))}
-            </select>
+            <div className="w-full md:w-40">
+              <CustomSelect
+                value={selectedType}
+                options={typeOptions}
+                onChange={setSelectedType}
+                className="w-full"
+                variant="compact"
+              />
+            </div>
 
             {/* City Filter */}
-            <select
-              className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
-              value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-            >
-              <option value="all">All Cities</option>
-              {cities.filter(city => city !== 'all').map(city => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
+            <div className="w-full md:w-40">
+              <CustomSelect
+                value={selectedCity}
+                options={cityOptions}
+                onChange={setSelectedCity}
+                className="w-full"
+                variant="compact"
+              />
+            </div>
           </div>
         </div>
 

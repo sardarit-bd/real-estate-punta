@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import RichTextEditor from '../components/RichTextEditor'
+import CustomSelect from '@/components/dashboard/Admin/CustomSelect'
 
 export default function PostForm({ 
   initialData = {}, 
@@ -31,11 +32,52 @@ export default function PostForm({
   
   const [imageUploading, setImageUploading] = useState(false)
 
+  // Options for dropdowns
+  const statusOptions = [
+    { value: 'draft', label: 'Draft' },
+    { value: 'published', label: 'Published' },
+    { value: 'scheduled', label: 'Scheduled' }
+  ]
+
+  const categoryOptions = [
+    { value: '', label: 'Select Category' },
+    { value: 'technology', label: 'Technology' },
+    { value: 'web-design', label: 'Web Design' },
+    { value: 'accessibility', label: 'Accessibility' },
+    { value: 'backend', label: 'Backend' },
+    { value: 'database', label: 'Database' },
+    { value: 'performance', label: 'Performance' },
+    { value: 'business', label: 'Business' },
+    { value: 'lifestyle', label: 'Lifestyle' },
+    { value: 'travel', label: 'Travel' },
+    { value: 'food', label: 'Food' }
+  ]
+
+  const authorOptions = [
+    { value: 'admin-user', label: 'Admin User' },
+    { value: 'editor-1', label: 'Editor 1' },
+    { value: 'editor-2', label: 'Editor 2' },
+    { value: 'guest-author', label: 'Guest Author' }
+  ]
+
+  const visibilityOptions = [
+    { value: 'public', label: 'Public' },
+    { value: 'private', label: 'Private' },
+    { value: 'password-protected', label: 'Password Protected' }
+  ]
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
+    }))
+  }
+
+  const handleSelectChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
     }))
   }
 
@@ -253,43 +295,50 @@ export default function PostForm({
               {mode === 'create' ? 'Publish' : 'Update'}
             </h3>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Status */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Status
                 </label>
-                <select
-                  name="status"
+                <CustomSelect
                   value={formData.status}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
-                >
-                  <option value="draft">Draft</option>
-                  <option value="published">Published</option>
-                  <option value="scheduled">Scheduled</option>
-                </select>
+                  options={statusOptions}
+                  onChange={(value) => handleSelectChange('status', value)}
+                  className="w-full"
+                  variant="admin"
+                />
               </div>
 
+              {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Category
                 </label>
-                <select
-                  name="category"
+                <CustomSelect
                   value={formData.category}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
-                >
-                  <option value="">Select Category</option>
-                  <option value="Technology">Technology</option>
-                  <option value="Web Design">Web Design</option>
-                  <option value="Business">Business</option>
-                  <option value="Lifestyle">Lifestyle</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Food">Food</option>
-                </select>
+                  options={categoryOptions}
+                  onChange={(value) => handleSelectChange('category', value)}
+                  className="w-full"
+                  variant="admin"
+                />
               </div>
 
+              {/* Author */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Author
+                </label>
+                <CustomSelect
+                  value={formData.author}
+                  options={authorOptions}
+                  onChange={(value) => handleSelectChange('author', value)}
+                  className="w-full"
+                  variant="admin"
+                />
+              </div>
+
+              {/* Tags */}
               <div>
                 <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-2">
                   Tags
@@ -306,18 +355,8 @@ export default function PostForm({
                 <p className="text-sm text-gray-500 mt-1">Separate tags with commas</p>
               </div>
 
-              <div className="pt-4 border-t border-gray-200">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Visibility:</span>
-                  <span className="text-sm font-medium text-gray-800">Public</span>
-                </div>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="text-sm text-gray-600">Author:</span>
-                  <span className="text-sm font-medium text-gray-800">{formData.author}</span>
-                </div>
-              </div>
-
-              <div className="flex space-x-3 pt-4">
+              {/* Action Buttons */}
+              <div className="flex space-x-3 pt-6">
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -332,7 +371,7 @@ export default function PostForm({
                       {mode === 'create' ? 'Publishing...' : 'Updating...'}
                     </span>
                   ) : (
-                    mode === 'create' ? 'Publish' : 'Update'
+                    mode === 'create' ? 'Publish Now' : 'Update Post'
                   )}
                 </button>
                 <button
@@ -345,26 +384,9 @@ export default function PostForm({
               </div>
             </div>
           </div>
+
         </div>
       </div>
-
-      <style jsx>{`
-        .toggle-checkbox:checked {
-          right: 0;
-          border-color: #103B29;
-          transform: translateX(100%);
-        }
-        .toggle-checkbox:checked + .toggle-label {
-          background-color: #103B29;
-        }
-        .toggle-checkbox {
-          transition: all 0.3s;
-          left: 0;
-        }
-        .toggle-label {
-          transition: background-color 0.3s;
-        }
-      `}</style>
     </form>
   )
 }
