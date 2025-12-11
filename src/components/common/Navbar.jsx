@@ -80,7 +80,7 @@ export default function Navbar() {
 
             <Link
               href="/dashboard/owner/properties/add"
-              className="px-5 py-2 border border-[#1F3A34] rounded-full text-sm font-medium hover:bg-[#1F3A34] hover:text-white transition"
+              className="px-5 py-2 border border-[#004087] rounded-full text-sm font-medium hover:bg-[#004087] hover:text-white transition"
             >
               Add Property
             </Link>

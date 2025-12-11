@@ -16,7 +16,7 @@ export default function ContactHero() {
             transition={{ duration: 0.6 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-[#113B28]"
           >
-            Get in Touch With <span className="text-[#E7C464]">Our Real Estate Team</span>
+            Get in Touch With <span className="text-[#004087]">Our Real Estate Team</span>
           </motion.h1>
 
           <motion.p
