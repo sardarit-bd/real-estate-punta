@@ -38,7 +38,7 @@ export default function ContactSection() {
               className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 
               flex items-start gap-4 transition"
             >
-              <PhoneCall size={40} className="text-[#E7C464]" />
+              <PhoneCall size={40} className="text-[#004087]" />
               <div>
                 <h3 className="font-semibold text-lg text-[#113B28]">
                   Call Us Anytime
@@ -61,7 +61,7 @@ export default function ContactSection() {
               className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 
               flex items-start gap-4 transition"
             >
-              <Mail size={40} className="text-[#E7C464]" />
+              <Mail size={40} className="text-[#004087]" />
               <div>
                 <h3 className="font-semibold text-lg text-[#113B28]">
                   Email Support
@@ -84,7 +84,7 @@ export default function ContactSection() {
               className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 
               flex items-start gap-4 transition"
             >
-              <MapPin size={40} className="text-[#E7C464]" />
+              <MapPin size={40} className="text-[#004087]" />
               <div>
                 <h3 className="font-semibold text-lg text-[#113B28]">
                   Visit Our Office
@@ -148,8 +148,8 @@ export default function ContactSection() {
 
             <button
               type="submit"
-              className="w-full bg-[#E7C464] text-[#113B28] py-3 rounded-xl font-semibold
-              shadow-md hover:bg-[#d7b356] transition"
+              className="w-full bg-[#004087] text-white py-3 rounded-xl font-semibold
+              shadow-md hover:bg-[#002b5c] transition"
             >
               Send Message
             </button>
