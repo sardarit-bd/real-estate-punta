@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="w-full bg-[#F8F4F1] py-4 sticky top-0 z-50 shadow-sm">
+      <header className="w-full bg-[#F9F9F9] py-4 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
           {/* LEFT: LOGO + MENUS */}
@@ -37,7 +37,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt="Punta Cana Real Estate"
                 width={150}
                 height={150}

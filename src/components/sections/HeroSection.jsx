@@ -13,7 +13,7 @@ export default function LuxuryHero() {
                     </p>
 
                     <h1 className="text-4xl sm:text-5xl font-bold text-[#113B28] leading-tight">
-                        Your <span className="text-[#E7C464]">Property</span>, Our Priority.
+                        Your <span className="text-[#004087]">Property</span>, Our Priority.
                     </h1>
 
                     {/* SEARCH CARD */}

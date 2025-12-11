@@ -67,7 +67,7 @@ export default function PropertyDetails({ property }) {
                         <h1 className="text-3xl md:text-4xl font-bold text-[#1F2328] leading-tight">
                             {title}
                         </h1>
-                        <p className="mt-3 text-[#E63946] text-2xl md:text-3xl font-semibold">
+                        <p className="mt-3 text-[#004087] text-2xl md:text-3xl font-semibold">
                             ${price}
                         </p>
                     </div>
@@ -137,7 +137,7 @@ export default function PropertyDetails({ property }) {
                                         onClick={() => setCurrentIndex(i)}
                                         className={`min-w-[95px] h-24 rounded-xl overflow-hidden border shadow-sm transition-all duration-200 
                         ${currentIndex === i
-                                                ? "ring-2 ring-red-500 scale-105"
+                                                ? "ring-2 ring-[#004087] scale-105"
                                                 : "hover:scale-105 hover:shadow-md"
                                             }`}
                                     >

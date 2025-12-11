@@ -11,13 +11,13 @@ export default function Footer() {
     }
 
     return (
-        <footer className="bg-[#F8F4F1] text-black py-16 shadow-inner">
+        <footer className="bg-[#F9F9F9] text-black py-16 shadow-inner">
             <div className="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
 
                 {/* About Section */}
                 <div>
                     <h2 className="text-2xl font-bold mb-4">
-                        <Image src="/logo.png"
+                        <Image src="/images/logo.png"
                             width={180}
                             height={80}
                             alt="Logo" />
