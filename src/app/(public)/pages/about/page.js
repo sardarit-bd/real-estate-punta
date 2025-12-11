@@ -10,10 +10,23 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-2 gap-10 items-center">
                 <div>
                     <h1 className="text-4xl md:text-5xl font-bold text-[#1F2328] leading-tight">
-                        About <span className="text-[#E63946]">Punta Cana Real Estate</span>
+                        Why I Created <span className="text-[#E63946]">Casa Viva</span>
                     </h1>
                     <p className="mt-6 text-gray-600 text-lg leading-relaxed">
-                        We help buyers, renters, and investors find the perfect property in the heart of Punta Cana. With years of experience and a passionate team, we offer a seamless, transparent, and trustworthy real estate service.
+                        Casa Viva began after my own struggles with renting out my investment properties in Punta Cana.
+                        I experienced firsthand how difficult it was — confusing platforms, unreliable communication,
+                        and renters who also felt lost in the process.
+                        <br /><br />
+                        After dealing with these challenges repeatedly, I realized something important:
+                        If I was having this much trouble, hundreds of other renters and property owners were facing
+                        the same issues.
+                        <br /><br />
+                        So instead of accepting the frustration, I decided to solve the problem.
+                        Casa Viva was created to make the rental process clearer, easier, and more reliable — not just
+                        for me, but for every owner and every renter who deserves a smooth experience.
+                        <br /><br />
+                        Today, Casa Viva exists to bridge the gap between great properties and the renters searching
+                        for them, making the entire process simpler for everyone.
                     </p>
                 </div>
 

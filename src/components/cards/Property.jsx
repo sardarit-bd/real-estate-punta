@@ -68,7 +68,7 @@ export default function PropertyCard({
                         </span>
                     )}
                     {isFeatured && (
-                        <span className="bg-[#EAB308] text-[#1F2922] text-xs font-semibold px-3 py-1 rounded-md">
+                        <span className="bg-[#004087] text-white text-xs font-semibold px-3 py-1 rounded-md">
                             FEATURED
                         </span>
                     )}

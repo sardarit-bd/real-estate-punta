@@ -123,7 +123,7 @@ export default function SearchCard() {
             <div className="mt-8">
                 <button
                     onClick={handleSearch}
-                    className="flex items-center justify-center gap-2 w-full px-8 py-4 bg-[#E7C464] text-black font-semibold rounded-xl shadow hover:bg-[#d4b356] transition-colors duration-300"
+                    className="flex items-center justify-center gap-2 w-full px-8 py-4 bg-[#004087] text-white font-semibold rounded-xl shadow hover:bg-[#002f64] transition-colors duration-300"
                 >
                     <FaSearch />
                     Search Properties

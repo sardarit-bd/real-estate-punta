@@ -71,8 +71,8 @@ export default function Properties() {
                             onClick={() => setFilter(type)}
                             className={`px-5 py-2 rounded-full border transition-all
                                 ${filter === type
-                                    ? "bg-black text-white"
-                                    : "border-gray-300 text-gray-700 hover:border-black"
+                                    ? "bg-[#004087] text-white"
+                                    : "border-gray-300 text-gray-700 hover:border-[#004087]"
                                 }
                             `}
                         >
@@ -119,7 +119,7 @@ export default function Properties() {
                         className={`px-4 py-2 rounded border transition
                             ${currentPage === 1
                                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                : "bg-white hover:bg-gray-100 hover:border-black"
+                                : "bg-white hover:bg-gray-100 hover:border-[#004087]"
                             }
                         `}
                     >
@@ -136,8 +136,8 @@ export default function Properties() {
                                     onClick={() => setCurrentPage(page)}
                                     className={`w-10 h-10 flex items-center justify-center rounded border text-sm font-medium transition
                                         ${currentPage === page
-                                            ? "bg-black text-white"
-                                            : "bg-white hover:bg-gray-100 hover:border-black"
+                                            ? "bg-[#004087] text-white"
+                                            : "bg-white hover:bg-gray-100 hover:border-[#004087]"
                                         }
                                     `}
                                 >
@@ -156,7 +156,7 @@ export default function Properties() {
                         className={`px-4 py-2 rounded border transition
                             ${currentPage === totalPages
                                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                : "bg-white hover:bg-gray-100 hover:border-black"
+                                : "bg-white hover:bg-gray-100 hover:border-[#004087]"
                             }
                         `}
                     >
