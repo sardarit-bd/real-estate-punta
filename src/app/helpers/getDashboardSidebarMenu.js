@@ -13,6 +13,7 @@ import {
   MessageSquare,
   User,
   Bell,
+  HeartPlus,
 } from "lucide-react";
 
 //
@@ -72,12 +73,9 @@ const tenantMenu = [
   { title: "My Properties", href: "/dashboard/tenant/properties", icon: Building2 },
   { title: "Leases", href: "/dashboard/tenant/leases", icon: FileText },
   { title: "Payments", href: "/dashboard/tenant/payments", icon: CreditCard },
-  { title: "Maintenance", href: "/dashboard/tenant/maintenance", icon: Wrench },
-  { title: "Messages", href: "/dashboard/tenant/messages", icon: MessageSquare },
-  { title: "Notifications", href: "/dashboard/tenant/notifications", icon: Bell },
-
-  { title: "Profile", href: "/dashboard/tenant/profile", icon: User },
-  { title: "Settings", href: "/dashboard/tenant/settings", icon: Settings },
+  // { title: "Maintenance", href: "/dashboard/tenant/maintenance", icon: Wrench },
+  // { title: "Favorites", href: "/dashboard/tenant/favorite", icon: HeartPlus },
+  { title: "Profile", href: "/dashboard/tenant/profile", icon: User }
 ];
 
 //

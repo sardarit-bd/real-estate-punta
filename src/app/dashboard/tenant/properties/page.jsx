@@ -59,13 +59,13 @@ export default function OwnerPropertiesPage() {
           </p>
         </div>
 
-        <Link
+        {/* <Link
           href="/dashboard/owner/properties/add"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#004087] text-white text-sm font-medium hover:opacity-95"
         >
           <PlusCircle size={18} />
           Add New Property
-        </Link>
+        </Link> */}
       </div>
 
       {/* ================= Table ================= */}
