@@ -5,14 +5,16 @@ import { Menu, X, Home } from "lucide-react";
 import SidebarNav from "./Sidebarnav";
 import { getDashboardSideMenu } from "@/app/helpers/getDashboardSidebarMenu";
 import { useAuth } from "@/hooks/userAuth";
+import Image from "next/image";
+import Link from "next/link";
 
 export function DashboardSidebar() {
-    const {user, loading} = useAuth();
-    
+    const { user, loading } = useAuth();
+
     const [isOpen, setIsOpen] = useState(false);
 
-    if(loading){
-        return <h2>Loading...</h2>   
+    if (loading) {
+        return <h2>Loading...</h2>
     }
     const sidebarNavItems = getDashboardSideMenu(user?.role);
 
@@ -25,20 +27,23 @@ export function DashboardSidebar() {
             <aside
                 className="
                     hidden md:flex flex-col fixed left-0 top-0 
-                    bg-white text-[#113B28]
+                    bg-[#F9F9F9] text-[#113B28]
                     border-r border-gray-200 
                     h-screen w-[250px]
                     shadow-xl z-40
                 "
             >
                 {/* Branding Header */}
-                <div className="
-                    flex items-center justify-center 
-                    h-16 border-b border-gray-200 
-                    font-bold tracking-wide text-[22px]
-                    text-[#113B28]
-                ">
-                    RealEstate<span className="text-[#E7C464] ml-1">Panel</span>
+                <div className="flex items-center justify-center gap-2 h-16 border-b border-gray-200font-bold tracking-wide text-[22px] text-[#113B28] " >
+                    <Link href="/" className="flex items-center gap-2">
+                        <Image
+                            src="/images/logo.png"
+                            alt="Punta Cana Real Estate"
+                            width={150}
+                            height={150}
+                            className="w-[150px]"
+                        />
+                    </Link>
                 </div>
 
                 {/* NAVIGATION */}
