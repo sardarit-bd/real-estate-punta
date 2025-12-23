@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Home,
-  DollarSign,
   FileText,
   MessageSquare,
   Settings,
@@ -14,9 +13,7 @@ import {
   HelpCircle,
   LogOut,
   Wrench,
-  Calendar,
   CreditCard,
-  Key
 } from 'lucide-react';
 
 const tenantNavItems = [
@@ -108,6 +105,7 @@ export default function TenantSidebar() {
           })}
         </nav>
       </div>
+
 
       {/* Bottom Section */}
       <div className="p-4 border-t">
