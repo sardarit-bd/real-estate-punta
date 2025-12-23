@@ -80,10 +80,10 @@ export default function AddEditPropertyPage() {
       <div className="bg-white border-b">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col items-center space-x-4">
               <Link
                 href="/dashboard/owner/properties"
-                className="flex items-center text-gray-600 hover:text-gray-900"
+                className="flex items-center text-gray-600 hover:text-gray-900 mb-4 border border-gray-300 rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors"
               >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Back to Properties
@@ -101,7 +101,7 @@ export default function AddEditPropertyPage() {
             </div>
             <div className="flex items-center space-x-3">
               <Link
-                href="/owner/properties"
+                href="/dashboard/owner/properties"
                 className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
               >
                 Cancel
@@ -109,7 +109,7 @@ export default function AddEditPropertyPage() {
               <button
                 type="submit"
                 form="property-form"
-                className="px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45] flex items-center"
+                className="px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797] flex items-center"
               >
                 {isEditMode ? (
                   <>

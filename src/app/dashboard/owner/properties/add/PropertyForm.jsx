@@ -293,7 +293,7 @@ export default function AddEditPropertyPage() {
                             key={type.value}
                             className={`flex items-center justify-center p-3 border rounded-lg cursor-pointer transition-all ${
                               formData.type === type.value
-                                ? 'border-[#1F3A34] bg-[#1F3A34] text-white'
+                                ? 'border-[#004087] bg-[#004087] text-white'
                                 : 'border-gray-300 hover:border-gray-400'
                             }`}
                           >

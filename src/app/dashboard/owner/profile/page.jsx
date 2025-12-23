@@ -291,7 +291,7 @@ export default function AccountPage() {
             {!isEditing ? (
               <button
                 onClick={() => setIsEditing(true)}
-                className="flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45] transition-colors"
+                className="flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#044da1] transition-colors"
               >
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
@@ -308,7 +308,7 @@ export default function AccountPage() {
                   type="submit"
                   form="profile-form"
                   disabled={saving}
-                  className="flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45] disabled:opacity-50 transition-colors"
+                  className="flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#044da1] disabled:opacity-50 transition-colors"
                 >
                   {saving ? (
                     <>

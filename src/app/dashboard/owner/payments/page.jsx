@@ -391,7 +391,7 @@ export default function OwnerPaymentsPage() {
         </div>
 
         {/* Quick Summary */}
-        <div className="bg-gradient-to-r from-[#1F3A34] to-[#2a4d45] rounded-xl p-6 text-white mb-8">
+        <div className="bg-gradient-to-r from-[#004087] to-[#004fa8] rounded-xl p-6 text-white mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between">
             <div>
               <h2 className="text-xl font-bold mb-2">Featured Listing Summary</h2>
@@ -669,7 +669,7 @@ export default function OwnerPaymentsPage() {
               {payments.length === 0 && (
                 <button
                   onClick={() => console.log('Make first payment')}
-                  className="inline-flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45]"
+                  className="inline-flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797]"
                 >
                   <PlusCircle className="h-4 w-4 mr-2" />
                   Make Your First Payment

@@ -180,7 +180,7 @@ export default function PropertiesPage() {
             </div>
             <Link
               href="/dashboard/owner/properties/add"
-              className="flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45]"
+              className="flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797]"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add New Property
@@ -370,7 +370,7 @@ export default function PropertiesPage() {
                 <p className="text-gray-600 mb-6">Try adjusting your search or filters</p>
                 <Link
                   href="/owner/properties/add"
-                  className="inline-flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45]"
+                  className="inline-flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797]"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Your First Property

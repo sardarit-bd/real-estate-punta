@@ -5,10 +5,14 @@ import { Phone, User, ChevronDown, Menu, X, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import UserButtons from "./UserButtons";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [favouriteCount, setFavouriteCount] = useState(0);
+  const [language, setLanguage] = useState("en");
+  const [langOpen, setLangOpen] = useState(false);
+
 
   // Load favourite count from localStorage
   useEffect(() => {
@@ -20,6 +24,16 @@ export default function Navbar() {
 
     return () => window.removeEventListener("favourites-updated", refresh);
   }, []);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang");
+    if (saved) setLanguage(saved);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("lang", language);
+  }, [language]);
+
 
 
   const updateFavouriteCount = () => {
@@ -78,12 +92,26 @@ export default function Navbar() {
 
             <UserButtons />
 
-            <Link
+            {/* <Link
               href="/dashboard/owner/properties/add"
               className="px-5 py-2 border border-[#004087] rounded-full text-sm font-medium hover:bg-[#004087] hover:text-white transition"
             >
               Add Property
-            </Link>
+            </Link> */}
+
+            {/* Language Selector */}
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-[110px] rounded-full border-[#004087] text-sm">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="en">🇺🇸 English</SelectItem>
+                <SelectItem value="es">🇪🇸 Español</SelectItem>
+              </SelectContent>
+            </Select>
+
+
           </div>
 
           {/* MOBILE MENU BUTTON */}
@@ -144,12 +172,25 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <Link
+            {/* <Link
               href="/dashboard/owner/properties/add"
               className="block w-full text-center px-5 py-2 border border-[#1F3A34] rounded-full text-sm font-medium hover:bg-[#1F3A34] hover:text-white transition"
             >
               Add Property
-            </Link>
+            </Link> */}
+
+            {/* Language Switcher */}
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-[110px] rounded-full border-[#004087] text-sm">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="en">🇺🇸 English</SelectItem>
+                <SelectItem value="es">🇪🇸 Español</SelectItem>
+              </SelectContent>
+            </Select>
+
           </div>
         </nav>
       </div>

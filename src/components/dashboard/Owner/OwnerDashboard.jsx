@@ -118,7 +118,7 @@ export default function OwnerDashboard() {
               <p className="text-gray-600">Welcome back! Here is your property overview</p>
             </div>
             <div className="flex items-center space-x-4">
-              <button className="flex items-center px-4 py-2 bg-[#1F3A34] text-white rounded-lg hover:bg-[#2a4d45]">
+              <button className="flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797]">
                 <Download className="h-4 w-4 mr-2" />
                 Export Report
               </button>
