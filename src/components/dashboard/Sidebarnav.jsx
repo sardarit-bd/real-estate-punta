@@ -7,9 +7,6 @@ import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 
 
-
-
-
 function getActiveItem(items, pathname) {
     const sortedItems = [...items].sort(
         (a, b) => b.href.length - a.href.length

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { toast } from 'react-hot-toast';
-import { Home } from "lucide-react";
+import { Home, LayoutGrid, List } from "lucide-react";
 
 // Shadcn UI Components
 import { Button } from "@/components/ui/button";
@@ -286,35 +286,33 @@ export default function TenantPropertiesPage() {
                 </SelectContent>
               </Select>
 
+
+
               <div className="flex border rounded-md overflow-hidden">
+                {/* Grid View */}
                 <Button
                   variant={viewMode === "grid" ? "default" : "ghost"}
                   size="icon"
                   onClick={() => setViewMode("grid")}
-                  className="h-[35px] w-8 rounded-none"
+                  className="h-[35px] w-9 rounded-none"
                 >
-                  <div className={`h-4 w-4 ${viewMode === "grid" ? "text-white" : "text-gray-600"}`}>
-                    <div className="grid grid-cols-2 gap-0.5">
-                      <div className="h-1.5 w-1.5 bg-current"></div>
-                      <div className="h-1.5 w-1.5 bg-current"></div>
-                      <div className="h-1.5 w-1.5 bg-current"></div>
-                      <div className="h-1.5 w-1.5 bg-current"></div>
-                    </div>
-                  </div>
+                  <LayoutGrid
+                    className={`h-4 w-4 ${viewMode === "grid" ? "text-white" : "text-gray-600"
+                      }`}
+                  />
                 </Button>
+
+                {/* List View */}
                 <Button
                   variant={viewMode === "list" ? "default" : "ghost"}
                   size="icon"
                   onClick={() => setViewMode("list")}
-                  className="h-[35px] w-8 rounded-none"
+                  className="h-[35px] w-9 rounded-none"
                 >
-                  <div className={`h-4 w-4 ${viewMode === "list" ? "text-white" : "text-gray-600"}`}>
-                    <div className="space-y-0.5">
-                      <div className="h-0.5 w-full bg-current"></div>
-                      <div className="h-0.5 w-full bg-current"></div>
-                      <div className="h-0.5 w-full bg-current"></div>
-                    </div>
-                  </div>
+                  <List
+                    className={`h-4 w-4 ${viewMode === "list" ? "text-white" : "text-gray-600"
+                      }`}
+                  />
                 </Button>
               </div>
             </div>

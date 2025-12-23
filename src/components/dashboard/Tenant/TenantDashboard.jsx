@@ -222,7 +222,6 @@ export default function TenantDashboard() {
       </div>
 
       <div className="p-6">
-        {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-[#004087] to-[#004087] rounded-xl p-6 text-white mb-8">
           <div className="flex justify-between items-center">
             <div>
@@ -287,7 +286,6 @@ export default function TenantDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Properties */}
           <div className="lg:col-span-2 space-y-6">
-            {/* My Properties */}
             <div className="bg-white rounded-xl shadow-sm border p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-lg font-semibold text-gray-900">My Properties</h2>
