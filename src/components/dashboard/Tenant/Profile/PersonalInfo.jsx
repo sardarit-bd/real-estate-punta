@@ -9,12 +9,12 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
     name: '',
     email: '',
     phone: '',
-    company: '',
+    // company: '',
     location: {
       address: '',
       city: '',
-      state: '',
-      zip: '',
+      // state: '',
+      // zip: '',
       country: '',
     }
   });
@@ -26,12 +26,12 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
         name: user.name || '',
         email: user.email || '',
         phone: user.phone || '',
-        company: user.company || '',
+        // company: user.company || '',
         location: {
           address: user.location?.address || '',
           city: user.location?.city || '',
-          state: user.location?.state || '',
-          zip: user.location?.zip || '',
+          // state: user.location?.state || '',
+          // zip: user.location?.zip || '',
           country: user.location?.country || '',
         }
       });
@@ -182,24 +182,6 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                   />
                 </div>
               </div>
-
-              {/* Company */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Company
-                </label>
-                <div className="relative">
-                  <Home className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
             </div>
           </div>
 
@@ -247,7 +229,7 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
               </div>
 
               {/* State */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   State
                 </label>
@@ -260,10 +242,10 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                   placeholder="State"
                   disabled={loading}
                 />
-              </div>
+              </div> */}
 
               {/* Zip Code */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
                   Zip Code
                 </label>
@@ -276,7 +258,7 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                   placeholder="Zip Code"
                   disabled={loading}
                 />
-              </div>
+              </div> */}
 
               {/* Country */}
               <div className="space-y-2">
@@ -308,7 +290,7 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center"
+              className="flex-1 py-3 bg-[#004087] text-white rounded-lg hover:bg-[#004a9e] disabled:opacity-50 flex items-center justify-center"
             >
               {loading ? (
                 <>
@@ -362,19 +344,6 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                   <Mail className="h-5 w-5 text-gray-500 mr-3" />
                   <span className="font-medium text-gray-900">
                     {user.email || 'Not provided'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Company */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Company
-                </label>
-                <div className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <Home className="h-5 w-5 text-gray-500 mr-3" />
-                  <span className="font-medium text-gray-900">
-                    {user.company || 'Not provided'}
                   </span>
                 </div>
               </div>
@@ -435,7 +404,7 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                 {/* State and Zip Code */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* State */}
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
                       State
                     </label>
@@ -444,10 +413,10 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                         {user.location.state || 'Not provided'}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Zip Code */}
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <label className="block text-sm font-medium text-gray-700">
                       Zip Code
                     </label>
@@ -456,7 +425,7 @@ export function PersonalInfo({ user, editMode, onSave, loading }) {
                         {user.location.zip || 'Not provided'}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ) : (

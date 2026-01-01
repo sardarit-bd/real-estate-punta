@@ -8,9 +8,10 @@ import PersonalInfoSection from '@/components/dashboard/Admin/profile/PersonalIn
 import ProfileCard from '@/components/dashboard/Admin/profile/ProfileCard';
 import SecurityCard from '@/components/dashboard/Admin/profile/SecurityCard';
 import api from '@/lib/api';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-export default function AccountPage() {
+export default function OwnerProfilePage() {
   const [userData, setUserData] = useState({});
   const [formData, setFormData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -83,7 +84,7 @@ export default function AccountPage() {
           bio: formData.bio,
           company: formData.company,
           website: formData.website,
-          avatar: imagePreview, // later replace with cloudinary url
+          avatar: formData.profileImage,
           address: {
             street: formData.address,
             city: formData.city,
@@ -130,6 +131,21 @@ export default function AccountPage() {
     }
   };
 
+  const uploadOwnerAvatar = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/image`,
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return res.data.data.url;
+  };
+
   if (loading) return <LoadingSkeleton />;
 
   return (
@@ -158,6 +174,7 @@ export default function AccountPage() {
                 setFormData={setFormData}
                 errors={errors}
                 setErrors={setErrors}
+                uploadOwnerAvatar={uploadOwnerAvatar}
               />
               <SecurityCard />
             </div>

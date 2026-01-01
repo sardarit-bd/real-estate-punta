@@ -1,16 +1,17 @@
 import { Camera, X, Calendar, CheckCircle } from 'lucide-react';
 
-export default function ProfileCard({ 
-  userData, 
-  formData, 
-  isEditing, 
-  imagePreview, 
-  setImageFile, 
+export default function ProfileCard({
+  userData,
+  formData,
+  isEditing,
+  imagePreview,
+  setImageFile,
   setImagePreview,
   setFormData,
-  errors 
+  errors,
+  uploadOwnerAvatar
 }) {
-  
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -60,7 +61,7 @@ export default function ProfileCard({
               className="w-full h-full object-cover"
             />
           </div>
-          
+
           {isEditing && (
             <>
               <label className="absolute bottom-2 right-2 p-2 bg-[#1F3A34] text-white rounded-full cursor-pointer hover:bg-[#2a4d45] transition-colors">
@@ -68,11 +69,30 @@ export default function ProfileCard({
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={handleImageUpload}
                   className="hidden"
+                  id="owner-avatar-upload"
+                  onChange={async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    try {
+                      const imageUrl = await uploadOwnerAvatar(file);
+
+                      setImagePreview(imageUrl);
+                      setFormData(prev => ({
+                        ...prev,
+                        profileImage: imageUrl,
+                      }));
+
+                    } catch (err) {
+                      console.error(err);
+                      toast.error("Avatar upload failed");
+                    }
+                  }}
                 />
+
               </label>
-              
+
               {imagePreview !== userData.profileImage && (
                 <button
                   type="button"
@@ -96,16 +116,15 @@ export default function ProfileCard({
               type="text"
               name="name"
               value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className={`w-full text-center text-xl font-bold border-b pb-1 focus:outline-none focus:border-[#1F3A34] ${
-                errors.name ? 'border-red-300' : 'border-transparent'
-              }`}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className={`w-full text-center text-xl font-bold border-b pb-1 focus:outline-none focus:border-[#1F3A34] ${errors.name ? 'border-red-300' : 'border-transparent'
+                }`}
             />
           ) : (
             userData.name
           )}
         </h2>
-        
+
         {errors.name && (
           <p className="text-sm text-red-600 mt-1">{errors.name}</p>
         )}
@@ -116,7 +135,7 @@ export default function ProfileCard({
               type="text"
               name="company"
               value={formData.company}
-              onChange={(e) => setFormData({...formData, company: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
               placeholder="Company name"
               className="w-full text-center text-gray-600 border-b pb-1 focus:outline-none focus:border-[#1F3A34] border-transparent"
             />

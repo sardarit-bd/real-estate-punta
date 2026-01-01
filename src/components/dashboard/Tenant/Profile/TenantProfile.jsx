@@ -19,6 +19,7 @@ import { PersonalInfo } from './PersonalInfo';
 import { PropertiesInfo } from './PropertiesInfo';
 import { DocumentsInfo } from './DocumentsInfo';
 import { PreferencesInfo } from './PreferencesInfo';
+import axios from 'axios';
 
 export default function TenantProfile() {
   const { user: authUser, updateProfile } = useAuthContext();
@@ -26,6 +27,9 @@ export default function TenantProfile() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('personal');
   const [editMode, setEditMode] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
+
 
   useEffect(() => {
     if (authUser) {
@@ -66,6 +70,11 @@ export default function TenantProfile() {
         paymentMethods: [],
       };
       setUser(transformedUser);
+
+      setImagePreview(
+        transformedUser.avatar ||
+        `https://api.dicebear.com/7.x/avataaars/svg?seed=${authUser.name}`
+      );
     }
   }, [authUser]);
 
@@ -78,6 +87,7 @@ export default function TenantProfile() {
         profile: {
           phone: formData.phone,
           company: formData.company || '',
+          avatar: imagePreview,
           address: {
             street: formData.location?.address || '',
             city: formData.location?.city || '',
@@ -87,13 +97,13 @@ export default function TenantProfile() {
       };
 
       await updateProfile(payload);
-      
+
       // Update local state
       setUser(prev => ({
         ...prev,
         ...formData
       }));
-      
+
       setEditMode(false);
     } catch (error) {
       console.error("Profile update error:", error);
@@ -103,19 +113,38 @@ export default function TenantProfile() {
     }
   };
 
+  const handleAvatarUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/image`,
+      formData,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+
+    // Cloudinary URL
+    setImagePreview(res.data.data.url);
+
+    return res.data.data.url;
+  };
+
   const handleUploadDocument = async (file) => {
     setLoading(true);
     try {
       // Implement actual file upload logic here
       const formData = new FormData();
       formData.append('file', file);
-      
+
       // Example upload endpoint
       // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload`, formData, {
       //   withCredentials: true,
       //   headers: { 'Content-Type': 'multipart/form-data' }
       // });
-      
+
       await new Promise(resolve => setTimeout(resolve, 1000));
       toast.success('Document uploaded successfully!');
     } catch (error) {
@@ -150,13 +179,40 @@ export default function TenantProfile() {
             <div className="text-center mb-6">
               <div className="relative inline-block mb-4">
                 <img
-                  src={user.avatar}
+                  src={imagePreview}
                   alt={user.name}
-                  className="w-24 h-24 rounded-full mx-auto border-4 border-white shadow-lg"
+                  className="w-24 h-24 rounded-full mx-auto border-4 border-white shadow-lg object-cover"
                 />
-                <button className="absolute bottom-0 right-0 p-2 bg-[#004087] text-white rounded-full hover:bg-[#0250a8]">
-                  <Camera className="h-4 w-4" />
-                </button>
+
+                {editMode && (
+                  <>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="avatar-upload"
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+
+                        try {
+                          const imageUrl = await handleAvatarUpload(file);
+                          setImagePreview(imageUrl);
+                        } catch {
+                          toast.error("Image upload failed");
+                        }
+                      }}
+                    />
+
+
+                    <label
+                      htmlFor="avatar-upload"
+                      className="absolute bottom-0 right-0 p-2 bg-[#004087] text-white rounded-full cursor-pointer hover:bg-[#0250a8]"
+                    >
+                      <Camera className="h-4 w-4" />
+                    </label>
+                  </>
+                )}
               </div>
               <h2 className="text-xl font-bold text-gray-900">{user.name}</h2>
               <p className="text-gray-600">{user.email}</p>
@@ -206,7 +262,7 @@ export default function TenantProfile() {
 
         {/* Main Content */}
         <div className="lg:col-span-3">
-          <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm border">
             {/* Tab Header */}
             <div className="border-b">
               <div className="flex justify-between items-center p-6">
