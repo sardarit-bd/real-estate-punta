@@ -46,6 +46,19 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const updateProfile = async (payload) => {
+        try {
+            const res = await axios.patch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/users/me`,
+                payload,
+                { withCredentials: true }
+            );
+            setUser(res.data.data);
+            return res.data.data;
+        } catch (err) {
+            throw err;
+        }
+    };
 
 
     const register = async (form) => {
@@ -62,7 +75,7 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+        <AuthContext.Provider value={{ user, loading, login, logout, register, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );

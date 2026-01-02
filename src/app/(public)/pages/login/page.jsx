@@ -55,11 +55,10 @@ export default function Login() {
 
         {message && (
           <div
-            className={`mb-4 p-3 rounded ${
-              message.includes("successful")
+            className={`mb-4 p-3 rounded ${message.includes("successful")
                 ? "bg-green-100 text-green-800"
                 : "bg-red-100 text-red-800"
-            }`}
+              }`}
           >
             {message}
           </div>
@@ -105,6 +104,12 @@ export default function Login() {
           Do not have an account?{" "}
           <Link href="/pages/register" className="text-brandColor font-medium">
             Register
+          </Link>
+        </p>
+
+        <p className="mt-2 text-center text-gray-500">
+          <Link href="/pages/forgot-password" className="text-brandColor hover:underline">
+            Forgot your password?
           </Link>
         </p>
       </div>

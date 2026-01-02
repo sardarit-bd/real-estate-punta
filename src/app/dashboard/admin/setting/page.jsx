@@ -443,7 +443,7 @@ export default function AdminSettingsPage() {
        
 
         {/* Danger Zone */}
-        <div className="mt-6 bg-white rounded-xl shadow-sm border border-red-200">
+        {/* <div className="mt-6 bg-white rounded-xl shadow-sm border border-red-200">
           <div className="px-6 py-4 border-b border-red-200">
             <h3 className="font-semibold text-red-800">Danger Zone</h3>
             <p className="text-sm text-red-600 mt-1">
@@ -467,7 +467,7 @@ export default function AdminSettingsPage() {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
