@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/userAuth"
 export default function ResetPasswordContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { resetPasswordConfirm } = useAuth()
+  const { resetPassword } = useAuth()
   
   const token = searchParams.get("token")
   const [form, setForm] = useState({ 
@@ -46,13 +46,16 @@ export default function ResetPasswordContent() {
     setError("")
 
     try {
-      await resetPasswordConfirm(token, form.password)
-      setMessage("Password reset successfully! Redirecting to login...")
-      
-      setTimeout(() => {
+      const res = await resetPassword({ token, password: form.password })
+      if(res?.success){
+         setMessage("Password reset successfully! Redirecting to login...")
         router.push("/pages/login")
-      }, 2000)
+      }else {
+        console.error(res)
+         setError(res?.response?.data?.message || "Failed to reset password")
+      }
     } catch (err) {
+      console.error(err)
       setError(err.response?.data?.message || "Failed to reset password")
     } finally {
       setLoading(false)

@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useAuth } from "@/hooks/userAuth"
 
 export default function ForgotPassword() {
-  const { resetPassword } = useAuth()
+  const { sendResetPassword } = useAuth()
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
@@ -18,9 +18,10 @@ export default function ForgotPassword() {
     setError("")
 
     try {
-      await resetPassword(email)
+      await sendResetPassword({ email })
       setMessage("Password reset link has been sent to your email. Please check your inbox.")
     } catch (err) {
+      console.error(err)
       setError(err.response?.data?.message || "Something went wrong. Please try again.")
     } finally {
       setLoading(false)

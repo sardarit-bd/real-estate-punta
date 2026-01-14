@@ -20,6 +20,7 @@ import { PropertiesInfo } from './PropertiesInfo';
 import { DocumentsInfo } from './DocumentsInfo';
 import { PreferencesInfo } from './PreferencesInfo';
 import axios from 'axios';
+import { ChangePassword } from './ChangePassword';
 
 export default function TenantProfile() {
   const { user: authUser, updateProfile } = useAuthContext();
@@ -163,7 +164,7 @@ export default function TenantProfile() {
   };
 
   if (!user) return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
         <p className="mt-4 text-gray-600">Loading profile...</p>
@@ -172,7 +173,7 @@ export default function TenantProfile() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
+    <div className="min-h-screen  p-4 md:p-6">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
@@ -272,6 +273,9 @@ export default function TenantProfile() {
               ))}
             </nav>
           </div>
+
+          <ChangePassword />
+
         </div>
 
         {/* Main Content */}

@@ -46,6 +46,33 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const sendResetPassword = async (payload) => {
+        try {
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/forgot-password`,
+                payload
+            );
+        } catch (err) {
+            setLoading(false);
+        }
+    };
+    const resetPassword = async (payload) => {
+        try {
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/reset-password`,
+                { password: payload.password },
+                {
+                    headers: {
+                        'Authorization': `${payload.token}`
+                    }
+                }
+            );
+            return res.data;
+        } catch (err) {
+            setLoading(false);
+            return err
+        }
+    };
     const updateProfile = async (payload) => {
         try {
             const res = await axios.patch(
@@ -75,7 +102,7 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, register, updateProfile }}>
+        <AuthContext.Provider value={{ user, loading, login, logout, register, updateProfile, sendResetPassword, resetPassword }}>
             {children}
         </AuthContext.Provider>
     );
