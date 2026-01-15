@@ -2,23 +2,48 @@
 
 import { useState, useEffect } from "react";
 import PropertyCard from "@/components/cards/Property";
-import { usePropertyStore } from "@/store/propertyStore";
 import Link from "next/link";
 
 export default function Properties() {
-    const properties = usePropertyStore((s) => s.properties);
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState("all");
     const [favouriteCount, setFavouriteCount] = useState(0);
 
+
+    useEffect(() => {
+        const fetchFeaturedProperties = async () => {
+            try {
+                setLoading(true);
+
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties?limit=50`
+                );
+
+                const data = await res.json();
+                console.log(data.data)
+
+                if (data.success) {
+                    setProperties(data.data);
+                }
+            } catch (error) {
+                console.error("Failed to load featured properties", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFeaturedProperties();
+    }, []);
     // Load favourite count from localStorage
     useEffect(() => {
         updateFavouriteCount();
-        
+
         // Listen for storage changes (for cross-tab sync)
         const handleStorageChange = () => {
             updateFavouriteCount();
         };
-        
+
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
@@ -31,7 +56,8 @@ export default function Properties() {
     const filteredProperties =
         filter === "all"
             ? properties
-            : properties.filter((item) => item.type === filter);
+            : properties.filter((item) => item.listingType === filter);
+
 
     // PAGINATION CONFIG
     const itemsPerPage = 9;
@@ -86,26 +112,33 @@ export default function Properties() {
 
             {/* GRID SECTION */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-                {currentProperties.map((item) => (
-                    <Link
-                        key={item.id}
-                        href={`/pages/properties/${item.id}`}
-                        className="block"
-                    >
-                        <PropertyCard
-                            id={item.id}
-                            image={item.image}
-                            title={item.title}
-                            price={item.price}
-                            address={item.address}
-                            beds={item.beds}
-                            baths={item.baths}
-                            sqft={item.sqft}
-                            isFeatured={item.isFeatured}
-                            isForSale={item.type === "sale"}
-                        />
-                    </Link>
-                ))}
+                {currentProperties.map((item) => {
+                    const coverImage =
+                        item.images?.find(img => img.isCover)?.url ||
+                        item.images?.[0]?.url ||
+                        "/placeholder.jpg";
+
+                    return (
+                        <Link
+                            key={item._id}
+                            href={`/pages/properties/${item._id}`}
+                        >
+                            <PropertyCard
+                                id={item._id}
+                                image={coverImage}
+                                title={item.title}
+                                price={item.price}
+                                address={item.address}
+                                beds={item.bedrooms}
+                                baths={item.bathrooms}
+                                sqft={item.area}
+                                isFeatured={item.featured}
+                                isForSale={item.listingType === "sale"}
+                            />
+                        </Link>
+                    );
+                })}
+
             </div>
 
             {/* PAGINATION */}

@@ -101,7 +101,6 @@ export default function PropertiesPage() {
     label: city === 'all' ? 'All Cities' : city
   }));
 
-  // Summary statistics
   const stats = {
     total: properties.length,
     active: properties.filter(p => p.status === 'active').length,

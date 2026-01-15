@@ -14,25 +14,32 @@ export default function PropertyDetails({ property }) {
     }
 
     const {
-        image,
-        images = [],
         title,
         price,
         address,
-        beds,
-        baths,
-        sqft,
-        type,
         description,
-        agent = {
-            name: "Not Assigned",
-            phone: "N/A",
-            email: "N/A",
-            image: "/uploads/agent.jpg",
-        },
+        listingType,
+        bedrooms,
+        bathrooms,
+        area,
+        images = [],
+        owner,
+
     } = property;
 
-    const gallery = [image, ...images];
+
+    const agent = {
+        name: owner?.name || "Not Assigned",
+        phone: owner?.phone || "N/A",
+        email: owner?.email || "N/A",
+        image: owner?.avatar || "/agent-placeholder.png",
+    };
+
+    const gallery =
+        images.length > 0
+            ? images.map((img) => img.url).filter(Boolean)
+            : ["/placeholder.jpg"];
+
 
     // Slider settings for bottom section
     const [thumbIndex, setThumbIndex] = useState(0);
@@ -86,7 +93,7 @@ export default function PropertyDetails({ property }) {
                             <div className="flex items-center gap-3">
                                 <BedDouble size={24} className="text-gray-500" />
                                 <div>
-                                    <p className="font-semibold">{beds}</p>
+                                    <p className="font-semibold">{bedrooms}</p>
                                     <p className="text-sm text-gray-500">Bedrooms</p>
                                 </div>
                             </div>
@@ -94,7 +101,7 @@ export default function PropertyDetails({ property }) {
                             <div className="flex items-center gap-3">
                                 <Bath size={24} className="text-gray-500" />
                                 <div>
-                                    <p className="font-semibold">{baths}</p>
+                                    <p className="font-semibold">{bathrooms}</p>
                                     <p className="text-sm text-gray-500">Bathrooms</p>
                                 </div>
                             </div>
@@ -102,14 +109,14 @@ export default function PropertyDetails({ property }) {
                             <div className="flex items-center gap-3">
                                 <Square size={24} className="text-gray-500" />
                                 <div>
-                                    <p className="font-semibold">{sqft} sqft</p>
+                                    <p className="font-semibold">{area} sqft</p>
                                     <p className="text-sm text-gray-500">Area</p>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-3">
                                 <span className="text-lg font-semibold capitalize text-gray-800">
-                                    {type}
+                                    {listingType}
                                 </span>
                             </div>
                         </div>
@@ -142,12 +149,13 @@ export default function PropertyDetails({ property }) {
                                             }`}
                                     >
                                         <Image
-                                            src={img}
+                                            src={img || "/placeholder.jpg"}
                                             alt={`Thumb ${i}`}
                                             width={100}
                                             height={100}
-                                            className="w-full h-full object-cover"
+                                            className="object-cover"
                                         />
+
                                     </button>
                                 ))}
                             </div>
