@@ -16,7 +16,8 @@ import {
   MoreVertical,
   ChevronRight,
   ExternalLink,
-  AlertTriangle
+  AlertTriangle,
+  FileText
 } from 'lucide-react';
 import Link from 'next/link';
 import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
@@ -109,7 +110,7 @@ export default function PropertiesPage() {
     if (!window.confirm('Are you sure you want to delete this property? This action cannot be undone.')) {
       return;
     }
-    
+
     try {
       await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties/${id}`,
@@ -117,11 +118,11 @@ export default function PropertiesPage() {
           withCredentials: true
         }
       );
-      
+
       // Remove property from state
       setProperties(properties.filter(p => p._id !== id));
       setFilteredProperties(filteredProperties.filter(p => p._id !== id));
-      
+
       alert('Property deleted successfully');
     } catch (error) {
       console.error('Failed to delete property', error);
@@ -277,7 +278,7 @@ export default function PropertiesPage() {
                         >
                           <MoreVertical className="h-4 w-4 text-gray-700" />
                         </button>
-                        
+
                         {/* Action Menu Dropdown */}
                         <div className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border transform transition-all duration-200 origin-top-right z-50
                           ${showDeleteConfirm === property._id ? 'scale-100 opacity-100 visible' : 'scale-95 opacity-0 invisible'}`}>
@@ -294,7 +295,7 @@ export default function PropertiesPage() {
                               </div>
                               <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
-                            
+
                             {/* Edit Link */}
                             <Link
                               href={`/dashboard/owner/properties/edit/${property._id}`}
@@ -307,7 +308,7 @@ export default function PropertiesPage() {
                               </div>
                               <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
-                            
+
                             {/* Delete Button */}
                             <button
                               className="flex items-center justify-between w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 group"
@@ -325,7 +326,7 @@ export default function PropertiesPage() {
                               <AlertTriangle className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </button>
                           </div>
-                          
+
                           {/* Confirmation Tooltip (Optional) */}
                           {showDeleteConfirm === property._id && (
                             <div className="px-4 py-2 bg-red-50 border-t border-red-100">
@@ -336,16 +337,16 @@ export default function PropertiesPage() {
                           )}
                         </div>
                       </div>
-                      
+
                       {/* Close dropdown when clicking outside */}
                       {showDeleteConfirm === property._id && (
-                        <div 
-                          className="fixed inset-0 z-40" 
+                        <div
+                          className="fixed inset-0 z-40"
                           onClick={() => setShowDeleteConfirm(null)}
                         />
                       )}
                     </div>
-                    
+
                     {/* Quick View Button */}
                     <Link
                       href={`/dashboard/owner/properties/detail/${property._id}`}
@@ -371,12 +372,20 @@ export default function PropertiesPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-gray-900 text-lg">
+                        {property.listingType === 'rent' ? (<><div className="font-bold text-gray-900 text-lg">
                           ${property.price}/{property.pricePeriod}
                         </div>
-                        <div className="text-xs text-gray-500">
-                          per {property.pricePeriod}
-                        </div>
+                          <div className="text-xs text-gray-500">
+                            per {property.pricePeriod}
+                          </div></>) : (<>
+                            <div className="font-bold text-gray-900 text-lg">
+                              ${property.price}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              One-time Payment
+                            </div>
+                          </>)}
+
                       </div>
                     </div>
 
@@ -395,14 +404,48 @@ export default function PropertiesPage() {
                           {property.bathrooms} baths
                         </span>
                       </div>
-                      <Link
-                        href={`/dashboard/owner/properties/edit/${property._id}`}
-                        className="text-[#1F3A34] hover:text-[#2a4d45] text-sm font-medium flex items-center hover:underline"
-                      >
-                        Edit
-                        <ChevronRight className="h-3 w-3 ml-1" />
-                      </Link>
+                       <Link
+                            href={`/dashboard/owner/properties/edit/${property._id}`}
+                            className="flex items-center justify-center px-4 py-2.5 bg-[#1F3A34] text-white rounded-lg text-sm font-medium hover:bg-[#2a4d45] hover:shadow-sm transition-all duration-200"
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            Edit Property
+                          </Link>
                     </div>
+                    <>
+                      {/* here add three button, make lease, make featured , and edit */}
+                      <div className="mt-4 pt-4 border-t border-gray-100">
+                        <div className="flex justify-between space-y-3">
+                          {/* Make Lease Button */}
+                          <button
+                            onClick={() => handleMakeLease(property._id)}
+                            className={`flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${property.isLeased
+                                ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+                                : 'bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-sm'
+                              }`}
+                            disabled={property.isLeased}
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            {property.isLeased ? 'Already Leased' : 'Make Lease'}
+                          </button>
+
+                          {/* Make Featured Button */}
+                          <button
+                            onClick={() => handleToggleFeatured(property._id)}
+                            className={`flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${property.featured
+                                ? 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100'
+                                : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:shadow-sm'
+                              }`}
+                          >
+                            <Star className={`h-4 w-4 mr-2 ${property.featured ? 'fill-yellow-500' : ''}`} />
+                            {property.featured ? 'Remove Featured' : 'Make Featured'}
+                          </button>
+
+                          {/* Edit Button - Full width variant */}
+                         
+                        </div>
+                      </div>
+                    </>
                   </div>
                 </div>
               );

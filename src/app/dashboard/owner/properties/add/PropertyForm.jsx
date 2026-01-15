@@ -178,7 +178,7 @@ export default function PropertyForm({
         publicId: img.publicId,
         isCover: images.length === 0 && index === 0
       }));
-
+      
       setImages(prev => [...prev, ...uploadedImages]);
     } catch (error) {
       console.error(error);
@@ -216,6 +216,8 @@ export default function PropertyForm({
       }))
     };
 
+    console.log('Submitting form data:', finalData);
+    console.log('With images:', images);  
     onSubmit(finalData);
   };
 
