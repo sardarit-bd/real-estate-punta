@@ -22,6 +22,7 @@ import {
 import Link from 'next/link';
 import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState([]);
@@ -34,6 +35,7 @@ export default function PropertiesPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const itemsPerPage = 8;
 
+  const route = useRouter();
   useEffect(() => {
     const fetchMyProperties = async () => {
       try {
@@ -418,7 +420,7 @@ export default function PropertiesPage() {
                         <div className="flex justify-between space-y-3">
                           {/* Make Lease Button */}
                           <button
-                            onClick={() => handleMakeLease(property._id)}
+                            onClick={() => route.push(`/dashboard/owner/leases/create?id=${property._id}`)}
                             className={`flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${property.isLeased
                                 ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
                                 : 'bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-sm'
