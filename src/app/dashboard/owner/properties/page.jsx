@@ -32,6 +32,7 @@ export default function PropertiesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const itemsPerPage = 8;
+  
 
   useEffect(() => {
     const fetchMyProperties = async () => {

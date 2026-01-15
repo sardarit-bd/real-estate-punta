@@ -19,9 +19,14 @@ import LeasePreview from './LeasePreview';
 import SignatureView from './SignatureView';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FormContent } from './FormContent';
+import { leaseService } from '@/services/lease.service';
+import { useAuthContext } from '@/providers/AuthProvider';
 
 // Validation schema
 const leaseSchema = z.object({
+
+  propertyId: z.string().min(1, "Property is required"),
+  tenantId: z.string().min(1, "Tenant is required"),
   propertyAddress: z.string().min(1, 'Property address is required'),
   landlordName: z.string().min(1, 'Landlord name is required'),
   tenantName: z.string().min(1, 'Tenant name is required'),
@@ -44,14 +49,19 @@ export default function LeaseForm({
   tenantData,
   landlordData,
   mode = 'create',
-  initialData = null
+  initialData = null,
+  onSuccess
 }) {
   const [loading, setLoading] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [signatureMode, setSignatureMode] = useState(false);
   const [leaseSigned, setLeaseSigned] = useState(false);
+  const { user } = useAuthContext();
 
   const defaultValues = initialData || {
+
+    propertyId: propertyData?.id || "",
+    tenantId: tenantData?.id || "",
     propertyAddress: propertyData?.address || '',
     landlordName: landlordData?.name || '',
     tenantName: tenantData?.name || '',
@@ -96,25 +106,67 @@ export default function LeaseForm({
 
   const onSubmit = async (data) => {
     setLoading(true);
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const payload = {
+        title: `Lease for ${data.propertyAddress}`,
+        description: data.additionalTerms || "",
 
-      if (mode === 'create') {
-        toast.success('Lease draft created successfully!');
-      } else {
-        toast.success('Lease updated successfully!');
+        landlord: landlordData?.id || user?._id, 
+        tenant: data.tenantId,                 
+        property: data.propertyId,                
+
+        startDate: data.startDate,
+        endDate: data.endDate,
+
+        rentAmount: Number(data.monthlyRent),
+        rentFrequency: "monthly",
+        securityDeposit: Number(data.securityDeposit),
+
+        terms: {
+          leaseType: data.leaseType,
+          paymentDay: Number(data.paymentDay),
+          paymentMethod: data.paymentMethod,
+          utilitiesIncluded: data.utilitiesIncluded || [],
+          utilitiesTenantPaid: data.utilitiesTenantPaid || [],
+          noticeDays: Number(data.noticeDays),
+          occupants: data.occupants || "",
+          propertyAddress: data.propertyAddress,
+          landlordName: data.landlordName,
+          tenantName: data.tenantName,
+        },
+
+        createdBy: landlordData?.id || user?._id,
+      };
+
+
+      // create
+      if (mode === "create") {
+        const res = await leaseService.createLease(payload);
+
+        toast.success("Lease draft created successfully!");
+
+        const created = res?.data?.data;
+        const leaseId = created?._id || created?.id;
+
+        if (!leaseId) {
+          throw new Error("Lease id missing in response");
+        }
+
+        onSuccess?.({ id: leaseId });
+        return;
       }
 
-      if (signatureMode) {
-        toast.success('Lease sent to tenant for signature!');
-        setSignatureMode(false);
-      }
-    } catch (error) {
-      toast.error('Error saving lease');
+      // edit/update (future)
+      toast.success("Lease updated successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Error saving lease");
     } finally {
       setLoading(false);
     }
   };
+
 
   const generatePDF = async () => {
     setLoading(true);

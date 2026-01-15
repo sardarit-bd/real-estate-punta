@@ -1,11 +1,11 @@
 "use client";
 
 import LeaseStatusBadge from "@/components/dashboard/Owner/leases/LeaseStatusBadge";
-import { dummyLeases } from "@/store/dummyLeases";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LayoutGrid, List } from "lucide-react";
+import { leaseService } from "@/services/lease.service";
 
 const FILTERS = [
   { key: "all", label: "All" },
@@ -32,23 +32,63 @@ export default function LeasesPage() {
   const [q, setQ] = useState("");
   const [viewMode, setViewMode] = useState("list");
   const [selectedLeases, setSelectedLeases] = useState([]);
+  const [leases, setLeases] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const fetchLeases = async () => {
+      try {
+        setLoading(true);
+        const res = await leaseService.getMyLeases({
+          role: "landlord",
+          status: filter !== "all" ? filter : undefined,
+        });
+
+        setLeases(res.data.data);
+      } catch (err) {
+        console.error("Failed to fetch leases", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeases();
+  }, [filter]);
+
 
   const rows = useMemo(() => {
     const text = q.trim().toLowerCase();
 
-    return dummyLeases
-      .filter((l) => (filter === "all" ? true : l.status === filter))
-      .filter((l) => {
+    return leases
+      .filter(l => {
         if (!text) return true;
         return (
-          l.id.toLowerCase().includes(text) ||
-          l.propertyTitle.toLowerCase().includes(text) ||
-          l.propertyAddress.toLowerCase().includes(text) ||
-          l.tenantName.toLowerCase().includes(text)
+          l._id.toLowerCase().includes(text) ||
+          l.property?.title?.toLowerCase().includes(text) ||
+          l.property?.address?.toLowerCase().includes(text) ||
+          l.tenant?.name?.toLowerCase().includes(text)
         );
       })
-      .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
-  }, [filter, q]);
+      .map(l => ({
+        id: l._id,
+        propertyTitle: l.property?.title,
+        propertyAddress: `${l.property?.address || ""}, ${l.property?.city || ""}`,
+        tenantName: l.tenant?.name,
+        tenantEmail: l.tenant?.email,
+        rent: l.rentAmount,
+        status: l.status,
+        startDate: new Date(l.startDate).toLocaleDateString(),
+        endDate: new Date(l.endDate).toLocaleDateString(),
+        updatedAt: new Date(l.updatedAt).toLocaleDateString(),
+        signedDate: l.isFullySigned
+          ? new Date(l.updatedAt).toLocaleDateString()
+          : null,
+        leaseType: "fixed_term",
+        paymentDay: 1,
+      }));
+  }, [leases, q]);
+
 
   const handleCreateLease = () => {
     router.push("/dashboard/owner/leases/create?prefill=true");
@@ -77,6 +117,16 @@ export default function LeasesPage() {
   const handleDownloadPDF = (leaseId) => {
     console.log('Downloading PDF for lease:', leaseId);
   };
+
+
+  // if (loading) {
+  //   return (
+  //     <div className="p-6 flex justify-center items-center">
+  //       <div className="animate-spin h-10 w-10 border-2 border-[#004087] border-t-transparent rounded-full" />
+  //     </div>
+  //   );
+  // }
+
 
   return (
     <div className="p-6">
@@ -302,7 +352,7 @@ export default function LeasesPage() {
                       <td className="px-5 py-4">
                         <LeaseStatusBadge status={l.status} />
                         <div className="text-xs text-gray-500 mt-1">
-                          {l.signatureProgress || 'Not signed'}
+                          {l.signedDate ? "Signed" : "Not signed"}
                         </div>
                       </td>
 
