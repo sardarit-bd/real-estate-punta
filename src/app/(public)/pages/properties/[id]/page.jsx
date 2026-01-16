@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { use } from "react";
 import PropertyDetails from "@/components/properties/PropertyDetails";
+import { useAuth } from "@/hooks/userAuth";
 
 export default function PropertyDetailsPage({ params }) {
     const { id } = use(params);
+    const {user} =  useAuth()
 
     const [property, setProperty] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -39,5 +41,5 @@ export default function PropertyDetailsPage({ params }) {
         return <div className="text-center py-20">Property not found.</div>;
     }
 
-    return <PropertyDetails property={property} />;
+    return <PropertyDetails property={property} user={user} />;
 }

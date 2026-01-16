@@ -10,8 +10,36 @@ import PropertyResults from "./PropertyResults";
 export default function PropertiesPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const properties = usePropertyStore((s) => s.properties);
+    // const properties = usePropertyStore((s) => s.properties);
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
 
+    // Fetch properties from the store on component mount
+
+      useEffect(() => {
+        const fetchFeaturedProperties = async () => {
+            try {
+                setLoading(true);
+
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties?limit=50`
+                );
+
+                const data = await res.json();
+                console.log(data.data)
+
+                if (data.success) {
+                    setProperties(data.data);
+                }
+            } catch (error) {
+                console.error("Failed to load featured properties", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFeaturedProperties();
+    }, []);
     // STATES FROM PARAMS
     const [query, setQuery] = useState(searchParams.get("query") || "");
     const [city, setCity] = useState(searchParams.get("city") || "all");
@@ -21,11 +49,12 @@ export default function PropertiesPage() {
     const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
 
     // FILTERING LOGIC
-    const filtered = properties.filter((item) => {
+    console.log(city)
+    const filtered = properties?.filter((item) => {
         return (
-            (type === "all" || item.type === type) &&
-            (city === "all" || item.city === city) &&
-            (bedrooms === "all" || item.beds == bedrooms) &&
+            (type === "all" || item.listingType === type) &&
+            (city === "all" || item.city?.toLowerCase() === city?.toLowerCase()) &&
+            (bedrooms === "all" || item.bedrooms == bedrooms) &&
             (!minPrice || item.price >= Number(minPrice)) &&
             (!maxPrice || item.price <= Number(maxPrice)) &&
             (query === "" || item.title.toLowerCase().includes(query.toLowerCase()))
@@ -55,6 +84,14 @@ export default function PropertiesPage() {
 
         router.replace(`?${params.toString()}`);
     }, [query, city, type, bedrooms, minPrice, maxPrice]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center brandBg px-6 py-16">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
 
     return (
         <section className="max-w-7xl mx-auto px-5 py-16">

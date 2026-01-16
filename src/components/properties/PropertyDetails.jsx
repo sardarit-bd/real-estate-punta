@@ -1,10 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { MapPin, BedDouble, Bath, Square, Phone, Mail, StepBack } from "lucide-react";
+import { MapPin, BedDouble, Bath, Square, Phone, Mail, StepBack, Home } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { leaseService } from "@/services/lease.service";
+import toast from "react-hot-toast";
 
-export default function PropertyDetails({ property }) {
+export default function PropertyDetails({ property, user }) {
+    const router = useRouter();
+    const [myLease, setMyLease] = useState(false)
     if (!property) {
         return (
             <div className="max-w-7xl mx-auto px-5 py-20 text-center text-gray-600">
@@ -14,8 +19,11 @@ export default function PropertyDetails({ property }) {
     }
 
     const {
+        _id: id,
         title,
         price,
+        pricePeriod,
+        type,
         address,
         description,
         listingType,
@@ -24,10 +32,37 @@ export default function PropertyDetails({ property }) {
         area,
         images = [],
         owner,
-
     } = property;
 
+    useEffect(() => {
+        const fetchLease = async () => {
+            const res = await leaseService.getMyLeases();
+            const lease = res.data?.data?.find(lease => lease?.property?._id === id)
+            if (lease) {
+                setMyLease(true)
+            } else {
+                setMyLease(false)
+            }
+        }
+        fetchLease()
+    }, [])
 
+    const requestHandler = async () => {
+        if (!user) {
+            router.push("/pages/login");
+            return;
+        }
+        // Further request handling logic here
+        const payload = { property: property._id, tenant: user._id, landlord: owner._id };
+        const res = await leaseService.createLease(payload)
+
+        if (res.data?.success) {
+            toast.success("Request is sent to Landlord.")
+        } else {
+            toast.error(res?.data?.message || "Failed to send.")
+        }
+        console.log(res)
+    }
     const agent = {
         name: owner?.name || "Not Assigned",
         phone: owner?.phone || "N/A",
@@ -39,7 +74,6 @@ export default function PropertyDetails({ property }) {
         images.length > 0
             ? images.map((img) => img.url).filter(Boolean)
             : ["/placeholder.jpg"];
-
 
     // Slider settings for bottom section
     const [thumbIndex, setThumbIndex] = useState(0);
@@ -54,6 +88,25 @@ export default function PropertyDetails({ property }) {
     const prevSlide = () => {
         setCurrentIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
     };
+
+    // Button logic
+    const isLoggedIn = !!user;
+    const isTenant = user?.role === "tenant";
+    const hasLease = myLease;
+    
+    // Determine button text based on conditions
+    let buttonText = "";
+    if (!isLoggedIn) {
+        buttonText = "Login to Request";
+    } else if (hasLease) {
+        buttonText = "Requested";
+    } else if (listingType === "rent") {
+        buttonText = "Request to Rent";
+    } else {
+        buttonText = "Request to Buy";
+    }
+    
+    const isButtonDisabled = !isLoggedIn || !isTenant || hasLease;
 
     return (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
@@ -75,7 +128,7 @@ export default function PropertyDetails({ property }) {
                             {title}
                         </h1>
                         <p className="mt-3 text-[#004087] text-2xl md:text-3xl font-semibold">
-                            ${price}
+                            ${price} {listingType === "rent" && pricePeriod ? `/${pricePeriod}` : "One-time"}
                         </p>
                     </div>
 
@@ -83,6 +136,34 @@ export default function PropertyDetails({ property }) {
                         <MapPin size={20} />
                         <span>{address}</span>
                     </div>
+
+                    {/* Action Button - Placed after price and address for good visibility */}
+                    <button
+                        disabled={isButtonDisabled}
+                        className={`w-full py-3.5 px-6 rounded-xl font-semibold text-lg transition-all duration-200 ${
+                            hasLease
+                                ? "bg-gray-400 text-white cursor-not-allowed"
+                                : !isLoggedIn
+                                ? "bg-[#014087] hover:bg-[#014087]/90 text-white"
+                                : isTenant
+                                ? "bg-[#004087] hover:bg-[#003366] text-white"
+                                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        }`}
+                        onClick={() => {
+                            if (!isLoggedIn) {
+                                // Redirect to login
+                                router.push("/pages/login");
+                            } else if (isTenant && !hasLease) {
+                                // Handle request action
+                                requestHandler()
+                            }
+                        }}
+                    >
+                        {buttonText}
+                        {!isLoggedIn && !hasLease && " (Login Required)"}
+                        {isLoggedIn && !isTenant && !hasLease && " (Tenants Only)"}
+                        {hasLease && " (Already Requested)"}
+                    </button>
 
                     <div className="bg-white border rounded-xl p-5 md:p-6 shadow-sm">
                         <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-900">
@@ -115,8 +196,10 @@ export default function PropertyDetails({ property }) {
                             </div>
 
                             <div className="flex items-center gap-3">
+                                <Home size={24} className="text-gray-500" />
                                 <span className="text-lg font-semibold capitalize text-gray-800">
-                                    {listingType}
+                                    <p className="font-semibold">{type}</p>
+                                    <p className="text-sm text-gray-500">Type</p>
                                 </span>
                             </div>
                         </div>

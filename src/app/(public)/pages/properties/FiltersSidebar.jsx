@@ -52,8 +52,7 @@ export default function FiltersSidebar({
 
     // Handle changes with proper mapping
     const handleCityChange = (value) => {
-        const internalValue = value === "all cities" ? "all" : 
-                             value.replace(" ", "-");
+        const internalValue = value === "all cities" ? "all" : value
         setCity(internalValue);
     };
 

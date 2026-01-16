@@ -45,26 +45,33 @@ export default function PropertyResults({ filtered }) {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {currentItems.map((item) => (
+                    
+                    {currentItems.map((item) => {
+                    const coverImage =
+                        item.images?.find(img => img.isCover)?.url ||
+                        item.images?.[0]?.url ||
+                        "/placeholder.jpg";
+
+                    return (
                         <Link
-                            key={item.id}
-                            href={`/pages/properties/${item.id}`}
-                            className="block fade-up"
+                            key={item._id}
+                            href={`/pages/properties/${item._id}`}
                         >
                             <PropertyCard
-                                id={item.id}
-                                image={item.image}
+                                id={item._id}
+                                image={coverImage}
                                 title={item.title}
                                 price={item.price}
                                 address={item.address}
-                                beds={item.beds}
-                                baths={item.baths}
-                                sqft={item.sqft}
-                                isFeatured={item.isFeatured}
-                                isForSale={item.type === "sale"}
+                                beds={item.bedrooms}
+                                baths={item.bathrooms}
+                                sqft={item.area}
+                                isFeatured={item.featured}
+                                isForSale={item.listingType === "sale"}
                             />
                         </Link>
-                    ))}
+                    );
+                })}
                 </div>
             )}
 
