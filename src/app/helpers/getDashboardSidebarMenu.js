@@ -50,7 +50,7 @@ const adminMenu = [
   { title: "Manage Users", href: "/dashboard/admin/users", icon: Users },
 
   // Property Moderation
-  { title: "Manage Properties", href: "/dashboard/admin/properties", icon: Building2 },
+  // { title: "Manage Properties", href: "/dashboard/admin/properties", icon: Building2 },
   { title: "Blogs", href: "/dashboard/admin/blog", icon: Pen },
 
   // Finance
