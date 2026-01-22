@@ -35,9 +35,18 @@ export default function TenantSignLeasePage() {
     }
   };
 
-  const handleSigned = async ({ signatureDataUrl }) => {
+  const handleSigned = async ({
+    signatureDataUrl,
+    signatureMode,
+    typedSignature,
+  }) => {
     try {
-      await leaseService.signLease(id, signatureDataUrl);
+      await leaseService.signLease(id, {
+        signatureDataUrl,
+        signatureMode,
+        typedSignature,
+      });
+
       alert("Lease signed successfully");
       router.push(`/dashboard/tenant/leases/${id}`);
     } catch (err) {

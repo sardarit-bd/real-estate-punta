@@ -1,5 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DollarSign, FileText, Save, User } from "lucide-react";
+import { DollarSign, FileText, Save, User, Wrench } from "lucide-react";
 
 export function FormContent({
   register,
@@ -137,18 +137,6 @@ export function FormContent({
               <p className="text-red-500 text-sm mt-1">{errors.tenantName.message}</p>
             )}
           </div>
-
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Occupants
-            </label>
-            <textarea
-              {...register('occupants')}
-              className="w-full px-4 py-2 border rounded-lg"
-              placeholder="List all occupants (e.g., John Doe, Jane Doe)"
-              rows="3"
-            />
-          </div> */}
         </div>
       </div>
 
@@ -183,7 +171,6 @@ export function FormContent({
               </p>
             )}
           </div>
-
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -264,11 +251,15 @@ export function FormContent({
         </div>
       </div>
 
-      {/* Utilities */}
+      {/* Utilities & Maintenance - UPDATED SECTION */}
       <div className="bg-white rounded-xl shadow-sm border p-6">
-        <h2 className="text-xl font-semibold text-[#1F3A34] mb-6">Utilities</h2>
+        <h2 className="text-xl font-semibold text-[#1F3A34] mb-6 flex items-center">
+          <Wrench className="mr-3 h-5 w-5" />
+          Utilities & Maintenance
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Utilities */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
           <div>
             <h3 className="font-medium text-gray-700 mb-4">Included in Rent</h3>
             <div className="space-y-2">
@@ -313,6 +304,25 @@ export function FormContent({
                 </label>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Maintenance Terms - NEW SECTION */}
+        <div className="border-t pt-6">
+          <h3 className="font-medium text-gray-700 mb-4">Maintenance Responsibilities</h3>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Maintenance Terms
+            </label>
+            <textarea
+              {...register('maintenanceTerms')}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
+              placeholder="Describe maintenance responsibilities (e.g., 'Tenant responsible for minor repairs under $100. Landlord handles all major repairs and appliance replacements.')"
+              rows="4"
+            />
+            <p className="text-sm text-gray-500 mt-2">
+              Specify who is responsible for various types of maintenance and repairs
+            </p>
           </div>
         </div>
       </div>

@@ -87,10 +87,8 @@ export default function SignatureView({ data, onSign, loading }) {
     const canvas = getCanvas();
     const rect = canvas.getBoundingClientRect();
 
-    const clientX =
-      "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY =
-      "touches" in e ? e.touches[0].clientY : e.clientY;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
 
     return {
       x: clientX - rect.left,
@@ -244,15 +242,21 @@ export default function SignatureView({ data, onSign, loading }) {
       (sigMode === "upload" && !!uploadedSignature);
 
     return tenantAgreed && hasAnySignature && !loading;
-  }, [tenantAgreed, sigMode, hasDrawn, typedSignature, uploadedSignature, loading]);
+  }, [
+    tenantAgreed,
+    sigMode,
+    hasDrawn,
+    typedSignature,
+    uploadedSignature,
+    loading,
+  ]);
 
   const handleSubmitSign = () => {
     const signatureDataUrl = getSignatureDataUrl();
-    // onSign কে signature পাঠানো (optional)
     onSign?.({
       signatureDataUrl,
       signatureMode: sigMode,
-      typedSignature: typedSignature.trim(),
+      typedSignature: typedSignature,
     });
   };
 
@@ -270,7 +274,9 @@ export default function SignatureView({ data, onSign, loading }) {
       <div className="space-y-6">
         {/* Agreement Summary */}
         <div className="bg-blue-50 p-6 rounded-lg">
-          <h3 className="font-semibold text-blue-900 mb-4">Agreement Summary</h3>
+          <h3 className="font-semibold text-blue-900 mb-4">
+            Agreement Summary
+          </h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-gray-600">Property</p>
@@ -283,8 +289,13 @@ export default function SignatureView({ data, onSign, loading }) {
             <div>
               <p className="text-sm text-gray-600">Lease Term</p>
               <p className="font-medium">
-                {data?.startDate ? new Date(data.startDate).toLocaleDateString() : "—"} -{" "}
-                {data?.endDate ? new Date(data.endDate).toLocaleDateString() : "—"}
+                {data?.startDate
+                  ? new Date(data.startDate).toLocaleDateString()
+                  : "—"}{" "}
+                -{" "}
+                {data?.endDate
+                  ? new Date(data.endDate).toLocaleDateString()
+                  : "—"}
               </p>
             </div>
             <div>
@@ -305,10 +316,12 @@ export default function SignatureView({ data, onSign, loading }) {
             />
             <div>
               <p className="font-medium text-gray-900">
-                I have read and agree to all terms and conditions of this lease agreement
+                I have read and agree to all terms and conditions of this lease
+                agreement
               </p>
               <p className="text-sm text-gray-600 mt-2">
-                By checking this box and providing your signature, you agree to be legally bound by all terms of this agreement.
+                By checking this box and providing your signature, you agree to
+                be legally bound by all terms of this agreement.
               </p>
             </div>
           </label>
@@ -324,7 +337,9 @@ export default function SignatureView({ data, onSign, loading }) {
                 type="button"
                 onClick={() => setSigMode("draw")}
                 className={`px-3 py-2 rounded-lg text-sm border ${
-                  sigMode === "draw" ? "bg-[#1F3A34] text-white border-[#1F3A34]" : "hover:bg-gray-50"
+                  sigMode === "draw"
+                    ? "bg-[#1F3A34] text-white border-[#1F3A34]"
+                    : "hover:bg-gray-50"
                 }`}
               >
                 Draw
@@ -333,19 +348,28 @@ export default function SignatureView({ data, onSign, loading }) {
                 type="button"
                 onClick={() => setSigMode("type")}
                 className={`px-3 py-2 rounded-lg text-sm border ${
-                  sigMode === "type" ? "bg-[#1F3A34] text-white border-[#1F3A34]" : "hover:bg-gray-50"
+                  sigMode === "type"
+                    ? "bg-[#1F3A34] text-white border-[#1F3A34]"
+                    : "hover:bg-gray-50"
                 }`}
               >
                 Type
               </button>
               <label
                 className={`px-3 py-2 rounded-lg text-sm border cursor-pointer flex items-center gap-2 ${
-                  sigMode === "upload" ? "bg-[#1F3A34] text-white border-[#1F3A34]" : "hover:bg-gray-50"
+                  sigMode === "upload"
+                    ? "bg-[#1F3A34] text-white border-[#1F3A34]"
+                    : "hover:bg-gray-50"
                 }`}
               >
                 <Upload className="w-4 h-4" />
                 Upload
-                <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleUpload}
+                />
               </label>
 
               <button
@@ -416,7 +440,10 @@ export default function SignatureView({ data, onSign, loading }) {
               />
               <div className="border rounded-lg p-4 bg-gray-50">
                 <p className="text-sm text-gray-500 mb-2">Preview:</p>
-                <p className="text-3xl text-center" style={{ fontFamily: "serif" }}>
+                <p
+                  className="text-3xl text-center"
+                  style={{ fontFamily: "serif" }}
+                >
                   {typedSignature || "—"}
                 </p>
               </div>

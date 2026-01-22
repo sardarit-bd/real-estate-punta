@@ -1,4 +1,3 @@
-// frontend/src/app/dashboard/tenant/leases/page.js
 "use client";
 
 import { useEffect, useState } from "react";
