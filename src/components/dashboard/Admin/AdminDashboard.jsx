@@ -50,7 +50,7 @@ export default function AdminOverview() {
             {/* ================================
           RECENT LISTINGS
       ================================= */}
-            <RecentListings />
+            {/* <RecentListings /> */}
 
             {/* ================================
           RECENT USER ACTIVITY
