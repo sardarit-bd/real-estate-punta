@@ -14,6 +14,7 @@ const FILTERS = [
   { key: "pending_request", label: "Pending Requests" },
   { key: "draft", label: "Drafts" },
   { key: "sent_to_tenant", label: "Sent" },
+  { key: "signed_by_landlord", label: "Owner Signed" },
   { key: "changes_requested", label: "Changes" },
   { key: "signed_by_tenant", label: "Tenant Signed" },
   { key: "fully_executed", label: "Executed" },
@@ -90,7 +91,10 @@ export default function LeasesPage() {
       if (res.success) {
         setStats({
           total: res.data.counts?.total || 0,
-          pendingSignatures: res.data.byStatus?.find(s => s.status === 'sent_to_tenant')?.count || 0,
+          pendingSignatures:
+            res.data.byStatus?.find(s =>
+              ["sent_to_tenant", "signed_by_tenant"].includes(s.status)
+            )?.count || 0,
           active: res.data.byStatus?.find(s => s.status === 'fully_executed')?.count || 0,
           expiringSoon: res.data.expiringSoon || 0
         });
@@ -137,26 +141,28 @@ export default function LeasesPage() {
       .map(l => {
         const rentValue = l.rentAmount || l.property?.price || 0;
         return {
-           id: l._id,
-        propertyTitle: l.property?.title || 'N/A',
-        propertyAddress: `${l.property?.address || ""}, ${l.property?.city || ""}`,
-        tenantName: l.tenant?.name || 'N/A',
-        tenantEmail: l.tenant?.email || 'N/A',
-        rent: rentValue,
-        status: l.status || 'draft',
-        startDate: l.startDate ? new Date(l.startDate).toLocaleDateString() : 'Not set',
-        endDate: l.endDate ? new Date(l.endDate).toLocaleDateString() : 'Not set',
-        updatedAt: l.updatedAt ? new Date(l.updatedAt).toLocaleDateString() : 'N/A',
-        signedDate: l.signatures?.tenant?.signedAt
-          ? new Date(l.signatures.tenant.signedAt).toLocaleDateString()
-          : l.signatures?.landlord?.signedAt
-            ? new Date(l.signatures.landlord.signedAt).toLocaleDateString()
-            : null,
-        isFullySigned: l.signatures?.tenant?.signedAt && l.signatures?.landlord?.signedAt,
-        leaseType: l.rentFrequency === 'monthly' ? 'fixed_term' : 'variable',
-        paymentDay: 1,
-        securityDeposit: l.securityDeposit || 0,
-        landlordName: l.landlord?.name || 'N/A',
+          id: l._id,
+          propertyTitle: l.property?.title || 'N/A',
+          propertyAddress: `${l.property?.address || ""}, ${l.property?.city || ""}`,
+          tenantName: l.tenant?.name || 'N/A',
+          tenantEmail: l.tenant?.email || 'N/A',
+          rent: rentValue,
+          status: l.status || 'draft',
+          startDate: l.startDate ? new Date(l.startDate).toLocaleDateString() : 'Not set',
+          endDate: l.endDate ? new Date(l.endDate).toLocaleDateString() : 'Not set',
+          updatedAt: l.updatedAt ? new Date(l.updatedAt).toLocaleDateString() : 'N/A',
+          signedDate:
+            l.signatures?.tenant?.signedAt &&
+              l.signatures?.landlord?.signedAt
+              ? new Date(
+                l.signatures.tenant.signedAt
+              ).toLocaleDateString()
+              : null,
+          isFullySigned: l.signatures?.tenant?.signedAt && l.signatures?.landlord?.signedAt,
+          leaseType: l.rentFrequency === 'monthly' ? 'fixed_term' : 'variable',
+          paymentDay: 1,
+          securityDeposit: l.securityDeposit || 0,
+          landlordName: l.landlord?.name || 'N/A',
         }
       });
   }, [leases, q]);
@@ -312,7 +318,7 @@ export default function LeasesPage() {
             ))}
           </div>
 
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <div className="w-full lg:w-[360px]">
               <input
                 value={q}
@@ -326,7 +332,7 @@ export default function LeasesPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
               </svg>
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -454,7 +460,13 @@ export default function LeasesPage() {
                       <td className="px-5 py-4">
                         <LeaseStatusBadge status={l.status} />
                         <div className="text-xs text-gray-500 mt-1">
-                          {l.isFullySigned ? "Fully Signed" : "Not signed"}
+                          {l.isFullySigned
+                            ? "Fully Signed"
+                            : l.signatures?.landlord?.signedAt
+                              ? "Owner Signed"
+                              : l.signatures?.tenant?.signedAt
+                                ? "Tenant Signed"
+                                : "Not Signed"}
                         </div>
                       </td>
 
@@ -470,6 +482,15 @@ export default function LeasesPage() {
                             </svg>
                             View
                           </Link>
+
+                          {l.status === "signed_by_tenant" && !l.signatures?.landlord?.signedAt && (
+                            <Link
+                              href={`/dashboard/owner/leases/${l.id}?sign=true`}
+                              className="px-3 py-2 rounded-full text-sm bg-purple-600 text-white hover:opacity-95 flex items-center"
+                            >
+                              Sign
+                            </Link>
+                          )}
 
                           {l.status === "pending_request" && (
                             <button
@@ -582,7 +603,7 @@ export default function LeasesPage() {
 
                 {(lease.status === 'draft' || lease.status === 'changes_requested') && (
                   <Link
-                    href={`/dashboard/owner/leases/${lease._id}/edit`}
+                    href={`/dashboard/owner/leases/${lease.id}/edit`}
                     className="px-3 py-2 rounded-full text-sm border border-gray-200 hover:bg-white"
                   >
                     Edit

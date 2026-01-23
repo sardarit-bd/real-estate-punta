@@ -162,7 +162,7 @@ export default function TenantLeasesPage() {
                         View
                       </button>
 
-                      {lease.status === "sent_to_tenant" && (
+                      {lease.status === "signed_by_landlord" && (
                         <button
                           onClick={() => handleSign(lease._id)}
                           className="px-3 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
@@ -171,6 +171,7 @@ export default function TenantLeasesPage() {
                           Sign
                         </button>
                       )}
+
 
                       {lease.status === "fully_executed" && (
                         <button

@@ -210,7 +210,7 @@ export function FormContent({
               <input
                 {...register('securityDeposit')}
                 type="number"
-                step="0.01"
+                st ep="0.01"
                 className="w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
                 placeholder="0.00"
               />

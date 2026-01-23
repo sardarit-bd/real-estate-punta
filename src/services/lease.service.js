@@ -156,6 +156,36 @@ export const leaseService = {
     }
   },
 
+  sendToLandlordForSignature: async (leaseId, message = "") => {
+    try {
+      console.log("Sending lease to landlord for signature:", leaseId);
+
+      const response = await api.post(`/leases/${leaseId}/send-to-landlord`, {
+        message
+      });
+
+      console.log("Send to landlord response:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error sending to landlord:", error);
+      throw error;
+    }
+  },
+
+  updateLeaseStatus: async (leaseId, status, reason = "") => {
+    try {
+      const response = await api.put(`/leases/${leaseId}/status`, {
+        status,
+        reason
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating lease status:", error);
+      throw error;
+    }
+  },
+
+
   // Sign lease
   signLease: async (leaseId, payload) => {
     const response = await api.post(`/leases/${leaseId}/sign`, {

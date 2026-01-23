@@ -18,7 +18,7 @@ export default function CreateLeasePage() {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Create lease using API
       const response = await leaseService.createLease({
         property: leaseData.propertyId,
@@ -36,7 +36,7 @@ export default function CreateLeasePage() {
           additionalTerms: leaseData.additionalTerms
         }
       });
-      
+
       if (response.success) {
         // Navigate to the new lease details
         router.push(`/dashboard/owner/leases/${response.data._id}`);
@@ -88,7 +88,7 @@ export default function CreateLeasePage() {
       )}
 
       <LeaseForm
-      propertyData={selectedProperty}
+        propertyData={selectedProperty}
         landlordData={landlordData}
         mode="create"
         onSuccess={handleSuccess}

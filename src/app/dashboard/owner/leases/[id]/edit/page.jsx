@@ -106,8 +106,21 @@ export default function EditLeasePage() {
     paymentDay: lease.terms?.paymentDay?.toString() || '1',
     securityDeposit: lease.securityDeposit?.toString() || '',
     paymentMethod: lease.terms?.paymentMethod || 'bank_transfer',
-    utilitiesIncluded: lease.terms?.utilitiesIncluded || [],
-    utilitiesTenantPaid: lease.terms?.utilitiesTenantPaid || [],
+    utilitiesIncluded:
+      lease.utilities?.includedInRent ||
+      lease.terms?.utilitiesIncluded ||
+      [],
+
+    utilitiesTenantPaid:
+      lease.utilities?.paidByTenant ||
+      lease.terms?.utilitiesTenantPaid ||
+      [],
+
+    maintenanceTerms:
+      lease.maintenanceTerms ||
+      lease.terms?.maintenanceTerms ||
+      "",
+
     occupants: lease.terms?.occupants || '',
     noticeDays: lease.terms?.noticeDays?.toString() || '30',
     additionalTerms: lease.terms?.additionalTerms || lease.description || '',

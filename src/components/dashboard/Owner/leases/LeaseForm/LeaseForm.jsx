@@ -45,6 +45,7 @@ const leaseSchema = z.object({
   utilitiesTenantPaid: z.array(z.string()).optional(),
   occupants: z.string().optional(),
   noticeDays: z.string().min(1, "Notice period is required"),
+  maintenanceTerms: z.string().optional(),
   additionalTerms: z.string().optional(),
   leaseType: z.enum(["fixed_term", "month_to_month"]),
 });
@@ -95,6 +96,7 @@ export default function LeaseForm({
       utilitiesTenantPaid: [],
       occupants: "",
       noticeDays: "30",
+      maintenanceTerms: "",
       additionalTerms: "",
       leaseType: "fixed_term",
     };
