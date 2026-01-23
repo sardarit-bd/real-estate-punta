@@ -176,7 +176,7 @@ export default function PostForm({
               onChange={handleTitleChange}
               required
               maxLength={100}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent text-lg"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#004087] focus:border-transparent text-lg"
               placeholder="Enter a compelling title for your post"
             />
             <p className="text-sm text-gray-500 mt-2">
@@ -196,7 +196,7 @@ export default function PostForm({
               onChange={handleChange}
               rows="3"
               maxLength={160}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#004087] focus:border-transparent"
               placeholder="A brief summary of your post (appears in listings and social media)"
             />
             <p className="text-sm text-gray-500 mt-2">
@@ -266,7 +266,7 @@ export default function PostForm({
                     <button
                       type="button"
                       onClick={() => document.getElementById('featuredImage').click()}
-                      className="mt-4 px-4 py-2 bg-[#103B29] text-white rounded-lg hover:bg-[#0c2d20] transition duration-200"
+                      className="mt-4 px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004087] transition duration-200"
                       disabled={imageUploading}
                     >
                       {imageUploading ? 'Uploading...' : 'Choose Image'}
@@ -326,7 +326,7 @@ export default function PostForm({
                   name="tags"
                   value={formData.tags}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#004087] focus:border-transparent"
                   placeholder="tag1, tag2, tag3"
                 />
                 <p className="text-sm text-gray-500 mt-1">Separate tags with commas</p>
@@ -337,7 +337,7 @@ export default function PostForm({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 bg-[#103B29] hover:bg-[#0c2d20] text-white px-6 py-3 rounded-lg font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-[#004087] hover:bg-[#004087] text-white px-6 py-3 rounded-lg font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center justify-center">

@@ -15,13 +15,13 @@ export default function TenantFavouritesPage() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // 🔐 Tenant-only guard
-  if (!loading && (!user || user.role !== "tenant")) {
-    return (
-      <div className="py-20 text-center text-gray-600">
-        This page is available for tenants only.
-      </div>
-    );
-  }
+  // if (!loading && (!user || user.role !== "tenant")) {
+  //   return (
+  //     <div className="py-20 text-center text-gray-600">
+  //       This page is available for tenants only.
+  //     </div>
+  //   );
+  // }
 
   useEffect(() => {
     loadFavourites();

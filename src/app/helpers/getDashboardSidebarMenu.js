@@ -55,6 +55,7 @@ const adminMenu = [
 
   // Finance
   { title: "All Transactions", href: "/dashboard/admin/transactions", icon: CreditCard },
+   { title: "Leases", href: "/dashboard/admin/leases", icon: FileText },
 
   // Tools
   { title: "Export CSV", href: "/dashboard/admin/export", icon: FileSpreadsheet },

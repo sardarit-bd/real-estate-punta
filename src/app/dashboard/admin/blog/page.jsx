@@ -162,7 +162,7 @@ export default function PostsPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <svg className="animate-spin h-12 w-12 text-[#103B29] mx-auto mb-4" fill="none" viewBox="0 0 24 24">
+          <svg className="animate-spin h-12 w-12 text-[#004087] mx-auto mb-4" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
           </svg>
@@ -181,7 +181,7 @@ export default function PostsPage() {
         </div>
         <Link 
           href="/dashboard/admin/blog/add-post" 
-          className="bg-[#103B29] hover:bg-[#0c2d20] text-white px-6 py-3 rounded-lg font-medium transition duration-200 flex items-center"
+          className="bg-[#004087] hover:bg-[#004087] text-white px-6 py-3 rounded-lg font-medium transition duration-200 flex items-center"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -370,7 +370,7 @@ export default function PostsPage() {
           <p className="text-gray-600 mb-6">Try adjusting your search or filter to find what you're looking for.</p>
           <button
             onClick={resetFilters}
-            className="bg-[#103B29] hover:bg-[#0c2d20] text-white px-6 py-2 rounded-lg"
+            className="bg-[#004087] hover:bg-[#004087] text-white px-6 py-2 rounded-lg"
           >
             Reset Filters
           </button>
