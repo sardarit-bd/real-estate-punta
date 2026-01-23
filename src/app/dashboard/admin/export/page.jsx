@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { FileSpreadsheet, Download, Database, Users, CreditCard } from "lucide-react";
 
 export default function ExportCSVPage() {
@@ -8,19 +9,58 @@ export default function ExportCSVPage() {
       title: "Properties Data",
       subtitle: "Export all listed properties (CSV format)",
       icon: Database,
-      action: () => alert("Export Properties CSV"),
+      action: async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/exports/properties`, {
+          responseType: "blob",
+        });
+
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "properties.csv");
+
+        document.body.appendChild(link);
+        link.click();
+      },
     },
     {
       title: "Users Data",
       subtitle: "Export all registered users",
       icon: Users,
-      action: () => alert("Export Users CSV"),
+      action: async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/exports/users`, {
+          responseType: "blob",
+        });
+
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "users.csv");
+
+        document.body.appendChild(link);
+        link.click();
+      },
     },
     {
-      title: "Payments / Featured Posts",
-      subtitle: "Export Stripe payments & featured listing data",
+      title: "Payments",
+      subtitle: "Export Stripe payments",
       icon: CreditCard,
-      action: () => alert("Export Payments CSV"),
+      action: async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/exports/payments`, {
+          responseType: "blob",
+        });
+
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "payments.csv");
+
+        document.body.appendChild(link);
+        link.click();
+      },
     },
   ];
 
@@ -48,11 +88,11 @@ export default function ExportCSVPage() {
             >
               {/* Icon */}
               <div className="w-12 h-12 rounded-xl bg-[#E6F4F1] flex items-center justify-center mb-4">
-                <Icon className="text-[#1F3A34]" size={26} />
+                <Icon className="text-[#004087]" size={26} />
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-semibold text-[#05314A]">
+              <h3 className="text-lg font-semibold text-[#004087]">
                 {item.title}
               </h3>
 
@@ -63,7 +103,7 @@ export default function ExportCSVPage() {
               <button
                 onClick={item.action}
                 className="mt-5 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl 
-                           bg-[#1F3A34] hover:bg-[#1F3A34] text-white transition"
+                           bg-[#004087] hover:bg-[#004087] text-white transition"
               >
                 <Download size={16} />
                 Download CSV

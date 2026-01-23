@@ -1,69 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, ArrowUpDown, Calendar, FileDown } from "lucide-react";
 import CustomSelect from "@/components/dashboard/Admin/CustomSelect";
+import { paymentService } from "@/services/payment.service";
+import Loader from "@/components/common/Loader";
 
 
 export default function TransactionsPage() {
   const [search, setSearch] = useState("");
-  const [sortField, setSortField] = useState("date");
+  const [sortField, setSortField] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [loading, setLoading] = useState(true)
 
   // FILTER STATES
   const [filterType, setFilterType] = useState("All");
   const [filterStatus, setFilterStatus] = useState("All");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [transactions, setTransaction] = useState([])
 
-  const transactions = [
-    {
-      id: "TXN-8734",
-      user: "John Miller",
-      amount: 24.99,
-      type: "Featured Listing",
-      date: "2025-01-14",
-      status: "Completed",
-    },
-    {
-      id: "TXN-8735",
-      user: "Sarah Khan",
-      amount: 24.99,
-      type: "Featured Listing",
-      date: "2025-01-10",
-      status: "Failed",
-    },
-    {
-      id: "TXN-8736",
-      user: "Carlos Perez",
-      amount: 24.99,
-      type: "Featured Listing",
-      date: "2025-01-08",
-      status: "Completed",
-    },
-  ];
+    useEffect(() => {
+      fetchLeases();
+    }, []);
+  
+    const fetchLeases = async () => {
+      try {
+        setLoading(true);
+        const response = await paymentService.getPaymentHistory()
+        console.log(response.data?.data?.payments)
+       setTransaction(response.data?.data?.payments)
+      } catch (err) {
+        console.error('Error fetching leases:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+  
   // SORTING LOGIC
+  if(loading) return <Loader />
+
   const sortedData = [...transactions].sort((a, b) => {
     if (sortOrder === "asc") return a[sortField] > b[sortField] ? 1 : -1;
     return a[sortField] < b[sortField] ? 1 : -1;
   });
 
+
   // FILTER LOGIC
   const filteredData = sortedData.filter((t) => {
-    const matchesSearch =
-      t.id.toLowerCase().includes(search.toLowerCase()) ||
-      t.user.toLowerCase().includes(search.toLowerCase());
+    // const matchesSearch =
+    //   t.id.toLowerCase().includes(search.toLowerCase()) ||
+    //   t.user.toLowerCase().includes(search.toLowerCase());
 
-    const matchesType = filterType === "All" || t.type === filterType;
-    const matchesStatus = filterStatus === "All" || t.status === filterStatus;
+    // const matchesType = filterType === "All" || t.paymentType?.toLowerCase() === filterType.toLowerCase().replace(' ', '_');
+    const matchesStatus = filterStatus === "All" || t.status?.toLowerCase() === filterStatus?.toLowerCase();
 
-    const matchesDateFrom = dateFrom ? t.date >= dateFrom : true;
-    const matchesDateTo = dateTo ? t.date <= dateTo : true;
+    const matchesDateFrom = dateFrom ? t.createdAt >= dateFrom : true;
+    const matchesDateTo = dateTo ? t.createdAt <= dateTo : true;
 
     return (
-      matchesSearch &&
-      matchesType &&
+      // matchesSearch &&
+      // matchesType &&
       matchesStatus &&
       matchesDateFrom &&
       matchesDateTo
@@ -77,7 +75,7 @@ export default function TransactionsPage() {
 
       {/* SEARCH + EXPORT */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <div className="flex items-center gap-2 bg-white border rounded-xl px-4 py-2 w-full md:w-80 shadow-sm">
+        {/* <div className="flex items-center gap-2 bg-white border rounded-xl px-4 py-2 w-full md:w-80 shadow-sm">
           <Search className="text-gray-500" size={18} />
           <input
             type="text"
@@ -86,11 +84,11 @@ export default function TransactionsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-        </div>
+        </div> */}
 
-        <button className="flex items-center gap-2 bg-[#05314A] text-white px-4 py-2 rounded-xl shadow-sm hover:bg-[#074469] transition">
+        {/* <button className="flex items-center gap-2 bg-[#05314A] text-white px-4 py-2 rounded-xl shadow-sm hover:bg-[#074469] transition">
           <FileDown size={16} /> Export CSV
-        </button>
+        </button> */}
       </div>
 
       {/* FILTER PANEL */}
@@ -98,7 +96,7 @@ export default function TransactionsPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
           {/* TYPE FILTER */}
-          <div>
+          {/* <div>
             <label className="text-sm text-gray-600 mb-1 block">
               Transaction Type
             </label>
@@ -107,14 +105,14 @@ export default function TransactionsPage() {
               options={["All", "Featured Listing"]}
               onChange={setFilterType}
             />
-          </div>
+          </div> */}
 
           {/* STATUS FILTER */}
           <div>
             <label className="text-sm text-gray-600 mb-1 block">Status</label>
             <CustomSelect
               value={filterStatus}
-              options={["All", "Completed", "Failed"]}
+              options={["All", "Paid", "Failed", "Pending"]}
               onChange={setFilterStatus}
             />
           </div>
@@ -184,18 +182,18 @@ export default function TransactionsPage() {
           </thead>
 
           <tbody>
-            {filteredData.map((t) => (
-              <tr key={t.id} className="border-t hover:bg-[#F8F8F8] transition">
-                <td className="py-3 px-4 font-medium text-[#05314A]">{t.id}</td>
-                <td className="py-3 px-4">{t.user}</td>
+            {filteredData.map((t, index) => (
+              <tr key={index} className="border-t hover:bg-[#F8F8F8] transition">
+                <td className="py-3 px-4 font-medium text-[#05314A]">{index + 1}</td>
+                <td className="py-3 px-4">{t.user?.name || 'N/A'}</td>
                 <td className="py-3 px-4">${t.amount.toFixed(2)}</td>
-                <td className="py-3 px-4">{t.type}</td>
-                <td className="py-3 px-4">{t.date}</td>
+                <td className="py-3 px-4">{t.paymentType}</td>
+                <td className="py-3 px-4">{new Date(t.createdAt).toLocaleString()}</td>
 
                 <td className="py-3 px-4">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      t.status === "Completed"
+                      t.status === "paid"
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
                     }`}
