@@ -22,6 +22,7 @@ import { PreferencesInfo } from './PreferencesInfo';
 import axios from 'axios';
 import { ChangePassword } from './ChangePassword';
 import { set } from 'zod';
+import Loader from '@/components/common/Loader';
 
 export default function TenantProfile() {
   const { user: authUser, updateProfile, getProfile } = useAuthContext();
@@ -50,7 +51,7 @@ export default function TenantProfile() {
           address: profile?.tenantInfo?.address || '',
           city: profile?.tenantInfo?.city || '',
           country: profile?.tenantInfo?.country || '',
-
+          verified: profile?.verified,
           documents: profile?.tenantInfo?.documents || [],
         };
         setUser(transformedUser);
@@ -126,7 +127,6 @@ export default function TenantProfile() {
     setLoading(true);
     try {
       // Update documents state
-      console.log({ newDocument });
       await updateProfile({
         documents: [...documents, newDocument]
       });
@@ -138,14 +138,9 @@ export default function TenantProfile() {
     }
   };
 
-  if (!user) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Loading profile...</p>
-      </div>
-    </div>
-  );
+  if (!user) {
+    return <Loader />
+  }
 
   return (
     <div className="min-h-screen  p-4 md:p-6">
@@ -207,9 +202,19 @@ export default function TenantProfile() {
               <h2 className="text-xl font-bold text-gray-900">{user.name}</h2>
               <p className="text-gray-600">{user.email}</p>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mt-2">
-                <CheckCircle className="h-3 w-3 mr-1" />
-                Active Tenant
+                <svg className="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                {user?.verified ? "Verified" : "Not Verified"}
               </span>
+
+              {!user?.verified && (
+                <p className="text-xs text-gray-500 mt-1">
+                  {documents?.length > 0
+                    ? "Documents submitted for verification"
+                    : "Upload documents to verify your account"}
+                </p>
+              )}
             </div>
 
             {/* Stats */}
@@ -297,7 +302,7 @@ export default function TenantProfile() {
                 />
               )}
 
-              
+
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { usePropertyStore } from "@/store/propertyStore";
 import FiltersSidebar from "./FiltersSidebar";
 import PropertyResults from "./PropertyResults";
+import Loader from "@/components/common/Loader";
 
 
 export default function PropertiesPage() {
@@ -61,6 +62,7 @@ export default function PropertiesPage() {
         );
     });
 
+    console.log(filtered)
     // CLEAR FILTERS
     const clearFilters = () => {
         setQuery("");
@@ -87,9 +89,7 @@ export default function PropertiesPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center brandBg px-6 py-16">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-            </div>
+            <Loader />
         );
     }
 

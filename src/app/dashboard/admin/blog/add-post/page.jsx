@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import PostForm from './PostForm'
+import toast from 'react-hot-toast'
 
 export default function AddPostPage() {
   const router = useRouter()
@@ -10,13 +11,31 @@ export default function AddPostPage() {
 
   const handleSubmit = async (formData) => {
     setIsSubmitting(true)
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    console.log('Creating post:', formData)
-    alert('Post created successfully!')
-    router.push('/posts')
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData)
+      })
+
+      const data = await res.json()
+
+      if (data.success) {
+        toast.success('Post created successfully!')
+        router.push('/dashboard/admin/blog')
+      } else {
+        toast.error(data.message || 'Failed to create post')
+      }
+    } catch (error) {
+      console.error('Failed to create post:', error)
+      toast.error('An error occurred while creating the post')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleCancel = () => {

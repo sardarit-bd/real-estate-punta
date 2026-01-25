@@ -15,13 +15,13 @@ export default function TenantFavouritesPage() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // 🔐 Tenant-only guard
-  if (!loading && (!user || user.role !== "tenant")) {
-    return (
-      <div className="py-20 text-center text-gray-600">
-        This page is available for tenants only.
-      </div>
-    );
-  }
+  // if (!loading && (!user || user.role !== "tenant")) {
+  //   return (
+  //     <div className="py-20 text-center text-gray-600">
+  //       This page is available for tenants only.
+  //     </div>
+  //   );
+  // }
 
   useEffect(() => {
     loadFavourites();
@@ -37,8 +37,19 @@ export default function TenantFavouritesPage() {
     const ids = JSON.parse(
       localStorage.getItem("favouriteProperties") || "[]"
     );
-    const favProps = properties.filter((p) => ids.includes(p.id));
-    setFavouriteProperties(favProps);
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties/fetchByIds`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ids: ids }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Fetched blogs:", data);
+         setFavouriteProperties(data);
+      })
+      .catch(err => console.error(err));
   };
 
   const clearAllFavourites = () => {
@@ -95,16 +106,35 @@ export default function TenantFavouritesPage() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {favouriteProperties.map((item) => (
-            <Link
-              key={item.id}
-              href={`/pages/properties/${item.id}`}
-            >
-              <PropertyCard {...item} />
-            </Link>
-          ))}
-        </div>
+       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+                {favouriteProperties.map((item) => {
+                    const coverImage =
+                        item.images?.find(img => img.isCover)?.url ||
+                        item.images?.[0]?.url ||
+                        "/placeholder.jpg";
+
+                    return (
+                        <Link
+                            key={item._id}
+                            href={`/pages/properties/${item._id}`}
+                        >
+                            <PropertyCard
+                                id={item._id}
+                                image={coverImage}
+                                title={item.title}
+                                price={item.price}
+                                address={item.address}
+                                beds={item.bedrooms}
+                                baths={item.bathrooms}
+                                sqft={item.area}
+                                isFeatured={item.featured}
+                                isForSale={item.listingType === "sale"}
+                            />
+                        </Link>
+                    );
+                })}
+
+            </div>
       </div>
 
       {/* Confirm Modal */}

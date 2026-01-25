@@ -10,7 +10,7 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-2 gap-10 items-center">
                 <div>
                     <h1 className="text-4xl md:text-5xl font-bold text-[#1F2328] leading-tight">
-                        Why I Created <span className="text-[#E63946]">Casa Viva</span>
+                        Why I Created <span className="text-[#004087]">Casa Viva</span>
                     </h1>
                     <p className="mt-6 text-gray-600 text-lg leading-relaxed">
                         Casa Viva began after my own struggles with renting out my investment properties in Punta Cana.

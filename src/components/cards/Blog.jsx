@@ -5,13 +5,13 @@ import { CalendarDays, User } from "lucide-react";
 import Link from "next/link";
 
 export default function BlogCard({
-    image,
+    featuredImage,
     title,
     excerpt,
     author,
-    date,
     category,
-    id,
+    _id,
+    updatedAt
 }) {
     return (
         <div className="w-full max-w-md bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-all duration-200 cursor-pointer">
@@ -19,7 +19,7 @@ export default function BlogCard({
             {/* IMAGE */}
             <div className="relative w-full h-48">
                 <Image
-                    src={image}
+                    src={featuredImage}
                     alt={title}
                     fill
                     className="object-cover"
@@ -36,7 +36,7 @@ export default function BlogCard({
 
                 {/* TITLE */}
                 <h3 className="text-[18px] font-semibold text-[#1F2328] leading-snug hover:text-[#0FA958] transition">
-                    <Link href={`/pages/blog/${id}`}>
+                    <Link href={`/pages/blog/${_id}`}>
                         {title}
                     </Link>
                 </h3>
@@ -51,12 +51,12 @@ export default function BlogCard({
 
                     <div className="flex items-center gap-1">
                         <User size={14} />
-                        <span>{author}</span>
+                        <span>{author?.name}</span>
                     </div>
 
                     <div className="flex items-center gap-1">
                         <CalendarDays size={14} />
-                        <span>{date}</span>
+                        {new Date(updatedAt).toLocaleString()}
                     </div>
                 </div>
             </div>

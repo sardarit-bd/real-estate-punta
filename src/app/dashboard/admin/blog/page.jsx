@@ -1,35 +1,61 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Link from "next/link"
 import PostCard from "./components/PostCard"
-
-import { mockPosts } from './mockPosts'
 import CustomSelect from '@/components/dashboard/Admin/CustomSelect'
 
 const ITEMS_PER_PAGE = 6
-const CATEGORIES = ['All', 'Technology', 'Web Design', 'Accessibility', 'Backend', 'Database', 'Performance']
+
+const CATEGORIES = ['All', "real estate", "guide", "design"]
 const STATUS_OPTIONS = ['All', 'published', 'draft']
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
   { value: 'oldest', label: 'Oldest First' },
   { value: 'title-asc', label: 'Title (A-Z)' },
-  { value: 'title-desc', label: 'Title (Z-A)' },
-  { value: 'popular', label: 'Most Popular' },
+  { value: 'title-desc', label: 'Title (Z-A)' }
 ]
 
 export default function PostsPage() {
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedStatus, setSelectedStatus] = useState('All')
   const [sortBy, setSortBy] = useState('newest')
   const [showFeatured, setShowFeatured] = useState(false)
-  const [showPinned, setShowPinned] = useState(false)
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
+  const fetchPosts = async () => {
+    try {
+      setLoading(true)
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?limit=100`,
+        {
+          credentials: 'include'
+        }
+      )
+
+      const data = await res.json()
+
+      if (data.success) {
+        setPosts(data.data)
+      }
+    } catch (error) {
+      console.error('Failed to load blog posts:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   // Filter and search posts
   const filteredPosts = useMemo(() => {
-    let filtered = [...mockPosts]
+    let filtered = [...posts]
 
     // Search filter
     if (searchQuery) {
@@ -37,8 +63,7 @@ export default function PostsPage() {
       filtered = filtered.filter(post => 
         post.title.toLowerCase().includes(query) ||
         post.excerpt.toLowerCase().includes(query) ||
-        post.tags.some(tag => tag.toLowerCase().includes(query)) ||
-        post.author.toLowerCase().includes(query)
+        post.tags?.some(tag => tag.toLowerCase().includes(query))
       )
     }
 
@@ -50,16 +75,6 @@ export default function PostsPage() {
     // Status filter
     if (selectedStatus !== 'All') {
       filtered = filtered.filter(post => post.status === selectedStatus)
-    }
-
-    // Featured filter
-    if (showFeatured) {
-      filtered = filtered.filter(post => post.featured)
-    }
-
-    // Pinned filter
-    if (showPinned) {
-      filtered = filtered.filter(post => post.pinned)
     }
 
     // Sorting
@@ -76,15 +91,12 @@ export default function PostsPage() {
       case 'title-desc':
         filtered.sort((a, b) => b.title.localeCompare(a.title))
         break
-      case 'popular':
-        filtered.sort((a, b) => b.views - a.views)
-        break
       default:
         break
     }
 
     return filtered
-  }, [searchQuery, selectedCategory, selectedStatus, sortBy, showFeatured, showPinned])
+  }, [posts, searchQuery, selectedCategory, selectedStatus, sortBy, showFeatured])
 
   // Pagination logic
   const totalPages = Math.ceil(filteredPosts.length / ITEMS_PER_PAGE)
@@ -104,17 +116,14 @@ export default function PostsPage() {
     setSelectedStatus('All')
     setSortBy('newest')
     setShowFeatured(false)
-    setShowPinned(false)
     setCurrentPage(1)
   }
 
   // Calculate stats
   const stats = {
-    total: mockPosts.length,
-    published: mockPosts.filter(p => p.status === 'published').length,
-    draft: mockPosts.filter(p => p.status === 'draft').length,
-    featured: mockPosts.filter(p => p.featured).length,
-    pinned: mockPosts.filter(p => p.pinned).length,
+    total: posts.length,
+    published: posts.filter(p => p.status === 'published').length,
+    draft: posts.filter(p => p.status === 'draft').length
   }
 
   // Prepare options for CustomSelect components
@@ -149,6 +158,20 @@ export default function PostsPage() {
     setCurrentPage(1)
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <svg className="animate-spin h-12 w-12 text-[#004087] mx-auto mb-4" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+          <p className="text-gray-600">Loading blog posts...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
@@ -158,7 +181,7 @@ export default function PostsPage() {
         </div>
         <Link 
           href="/dashboard/admin/blog/add-post" 
-          className="bg-[#103B29] hover:bg-[#0c2d20] text-white px-6 py-3 rounded-lg font-medium transition duration-200 flex items-center"
+          className="bg-[#004087] hover:bg-[#004087] text-white px-6 py-3 rounded-lg font-medium transition duration-200 flex items-center"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -168,7 +191,7 @@ export default function PostsPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="bg-white p-4 rounded-lg shadow border">
           <div className="text-2xl font-bold text-gray-800">{stats.total}</div>
           <div className="text-sm text-gray-600">Total Posts</div>
@@ -180,14 +203,6 @@ export default function PostsPage() {
         <div className="bg-white p-4 rounded-lg shadow border">
           <div className="text-2xl font-bold text-yellow-600">{stats.draft}</div>
           <div className="text-sm text-gray-600">Drafts</div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-blue-600">{stats.featured}</div>
-          <div className="text-sm text-gray-600">Featured</div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow border">
-          <div className="text-2xl font-bold text-purple-600">{stats.pinned}</div>
-          <div className="text-sm text-gray-600">Pinned</div>
         </div>
       </div>
 
@@ -269,29 +284,13 @@ export default function PostsPage() {
           </div>
         </div>
 
-        {/* Toggle Filters */}
-        <div className="mt-6 flex flex-wrap gap-4">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              checked={showFeatured}
-              onChange={(e) => {
-                setShowFeatured(e.target.checked)
-                setCurrentPage(1)
-              }}
-              className="w-4 h-4 text-[#103B29] rounded focus:ring-[#103B29] border-gray-300"
-            />
-            <span className="ml-2 text-sm text-gray-700">Show Featured Only</span>
-          </label>
-        </div>
-
         {/* Results Count */}
         <div className="mt-6 pt-6 border-t border-gray-200">
           <div className="flex justify-between items-center">
             <div className="text-sm text-gray-600">
               Showing <span className="font-semibold">{filteredPosts.length}</span> posts
-              {filteredPosts.length !== mockPosts.length && (
-                <span className="ml-2">(filtered from {mockPosts.length} total)</span>
+              {filteredPosts.length !== posts.length && (
+                <span className="ml-2">(filtered from {posts.length} total)</span>
               )}
             </div>
             <div className="text-sm text-gray-600">
@@ -306,7 +305,7 @@ export default function PostsPage() {
         <>
           <div className="grid grid-cols-1 gap-6 mb-8">
             {paginatedPosts.map(post => (
-              <PostCard key={post.id} post={post} />
+              <PostCard key={post?._id} post={post} />
             ))}
           </div>
 
@@ -371,7 +370,7 @@ export default function PostsPage() {
           <p className="text-gray-600 mb-6">Try adjusting your search or filter to find what you're looking for.</p>
           <button
             onClick={resetFilters}
-            className="bg-[#103B29] hover:bg-[#0c2d20] text-white px-6 py-2 rounded-lg"
+            className="bg-[#004087] hover:bg-[#004087] text-white px-6 py-2 rounded-lg"
           >
             Reset Filters
           </button>

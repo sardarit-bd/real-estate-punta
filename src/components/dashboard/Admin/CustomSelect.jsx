@@ -84,7 +84,7 @@ export default function CustomSelect({
                 }}
                 className={`w-full text-left px-3 py-2.5 text-sm cursor-pointer transition-all duration-200
                           ${value === optionValue 
-                            ? 'bg-[#103B29] text-white font-medium' 
+                            ? 'bg-[#004087] text-white font-medium' 
                             : 'hover:bg-gray-50 text-gray-700'
                           }`}
                 role="option"

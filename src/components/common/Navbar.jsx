@@ -6,12 +6,15 @@ import Image from "next/image";
 import Link from "next/link";
 import UserButtons from "./UserButtons";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [favouriteCount, setFavouriteCount] = useState(0);
   const [language, setLanguage] = useState("en");
   const [langOpen, setLangOpen] = useState(false);
+  const {user} = useAuthContext()
+
 
 
   // Load favourite count from localStorage

@@ -3,42 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import PostForm from '../../add-post/PostForm'
-
-// Mock post data - in a real app, fetch from API
-const mockPost = {
-  id: 1,
-  title: 'Getting Started with Next.js 14',
-  excerpt: 'Learn how to build modern web applications using Next.js 14 with the new App Router and server components.',
-  content: `<h2>Introduction to Next.js 14</h2>
-    <p>Next.js 14 brings significant improvements to the framework, making it even more powerful for building modern web applications.</p>
-    
-    <h3>Key Features</h3>
-    <ul>
-      <li><strong>App Router:</strong> Stable and production-ready with improved performance</li>
-      <li><strong>Server Components:</strong> Reduced JavaScript bundle sizes</li>
-      <li><strong>Enhanced Caching:</strong> Better performance out of the box</li>
-      <li><strong>Partial Prerendering:</strong> Experimental feature for dynamic content</li>
-    </ul>
-    
-    <h3>Getting Started</h3>
-    <p>To create a new Next.js 14 project:</p>
-    <pre><code>npx create-next-app@latest my-app</code></pre>`,
-  category: 'Technology',
-  status: 'published',
-  author: 'John Doe',
-  tags: 'nextjs, react, web-development, javascript',
-  featuredImagePreview: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop',
-  metaTitle: 'Getting Started with Next.js 14 - Complete Guide',
-  metaDescription: 'Learn how to build modern web applications using Next.js 14 with our complete beginner guide.',
-  slug: 'getting-started-with-nextjs-14',
-  enableComments: true,
-  featuredPost: true,
-  pinToTop: false,
-  createdAt: '2024-01-15',
-  updatedAt: '2024-01-15',
-  views: 1250,
-  comments: 24
-}
+import toast from 'react-hot-toast'
 
 export default function EditPostPage() {
   const router = useRouter()
@@ -50,30 +15,81 @@ export default function EditPostPage() {
   const [post, setPost] = useState(null)
 
   useEffect(() => {
-    // Simulate fetching post data
-    const fetchPost = async () => {
-      setIsLoading(true)
-      await new Promise(resolve => setTimeout(resolve, 800))
-      setPost(mockPost)
-      setIsLoading(false)
-    }
-    
     fetchPost()
   }, [postId])
+
+  const fetchPost = async () => {
+    try {
+      setIsLoading(true)
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/${postId}`,
+        {
+          credentials: 'include'
+        }
+      )
+
+      const data = await res.json()
+
+      if (data.success) {
+        // Format data for PostForm
+        const formattedPost = {
+          title: data.data.title,
+          excerpt: data.data.excerpt,
+          content: data.data.content,
+          category: data.data.category,
+          status: data.data.status,
+          tags: data.data.tags.join(', '), // Convert array to comma-separated string
+          featuredImage: data.data.featuredImage || ''
+        }
+        setPost(formattedPost)
+      } else {
+        toast.error('Post not found')
+        router.push('/dashboard/admin/blog')
+      }
+    } catch (error) {
+      console.error('Failed to fetch post:', error)
+      toast.error('Failed to load post')
+      router.push('/dashboard/admin/blog')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleSubmit = async (formData) => {
     setIsSubmitting(true)
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    console.log('Updating post:', { ...formData, id: postId })
-    alert('Post updated successfully!')
-    router.push('/posts')
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs/${postId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify(formData)
+        }
+      )
+
+      const data = await res.json()
+
+      if (data.success) {
+        toast.error('Post updated successfully!')
+        router.push('/dashboard/admin/blog')
+      } else {
+        toast.error(data.message || 'Failed to update post')
+      }
+    } catch (error) {
+      console.error('Failed to update post:', error)
+      toast.error('An error occurred while updating the post')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleCancel = () => {
-    router.back()
+    router.push('/dashboard/admin/blog')
   }
 
   if (isLoading) {
@@ -92,7 +108,7 @@ export default function EditPostPage() {
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Post not found</h2>
         <button
-          onClick={() => router.push('/posts')}
+          onClick={() => router.push('/dashboard/admin/blog')}
           className="text-[#103B29] hover:text-[#0c2d20] font-medium"
         >
           ← Back to Posts
@@ -108,15 +124,12 @@ export default function EditPostPage() {
           <h1 className="text-3xl font-bold text-gray-800">Edit Post</h1>
           <div className="flex items-center gap-4 mt-2">
             <p className="text-gray-600">Editing: {post.title}</p>
-            <span className="px-2 py-1 bg-gray-100 text-gray-700 text-sm rounded">
-              ID: {postId}
-            </span>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.push(`/pages/blog/${postId}`)}
-            className="px-4 py-2 bg-[#1F3A34] hover:bg-[#1F3A34] text-white rounded-lg transition duration-200"
+            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition duration-200"
           >
             View Post
           </button>

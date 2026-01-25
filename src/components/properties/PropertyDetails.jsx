@@ -6,15 +6,14 @@ import { MapPin, BedDouble, Bath, Square, Phone, Mail, StepBack, Home } from "lu
 import { useRouter } from "next/navigation";
 import { leaseService } from "@/services/lease.service";
 import toast from "react-hot-toast";
+import Loader from "../common/Loader";
 
 export default function PropertyDetails({ property, user }) {
     const router = useRouter();
     const [myLease, setMyLease] = useState(false)
     if (!property) {
         return (
-            <div className="max-w-7xl mx-auto px-5 py-20 text-center text-gray-600">
-                Loading property details...
-            </div>
+            <Loader />
         );
     }
 
@@ -103,6 +102,8 @@ export default function PropertyDetails({ property, user }) {
     let buttonText = "";
     if (!isLoggedIn) {
         buttonText = "Login to Request";
+    }else if (!user?.verified) {
+        buttonText = "Verify your Account";
     } else if (hasLease) {
         buttonText = "Requested";
     } else if (listingType === "rent") {
@@ -111,7 +112,7 @@ export default function PropertyDetails({ property, user }) {
         buttonText = "Request to Buy";
     }
 
-    const isButtonDisabled = !isLoggedIn || !isTenant || hasLease;
+    const isButtonDisabled = !isLoggedIn || !user?.verified || !isTenant || hasLease ;
 
     return (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
@@ -145,13 +146,13 @@ export default function PropertyDetails({ property, user }) {
                     {/* Action Button - Placed after price and address for good visibility */}
                     <button
                         disabled={isButtonDisabled}
-                        className={`w-full py-3.5 px-6 rounded-xl font-semibold text-lg transition-all duration-200 ${hasLease
-                            ? "bg-gray-400 text-white cursor-not-allowed"
-                            : !isLoggedIn
-                                ? "bg-[#014087] hover:bg-[#014087]/90 text-white"
-                                : isTenant
-                                    ? "bg-[#004087] hover:bg-[#003366] text-white"
-                                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        className={`w-full py-3.5 px-6 rounded-xl font-semibold text-lg transition-all duration-200 ${hasLease || !user?.verified
+                                ? "bg-gray-400 text-white cursor-not-allowed"
+                                : !isLoggedIn
+                                    ? "bg-[#014087] hover:bg-[#014087]/90 text-white"
+                                    : isTenant
+                                        ? "bg-[#004087] hover:bg-[#003366] text-white"
+                                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
                             }`}
                         onClick={() => {
                             if (!isLoggedIn) {

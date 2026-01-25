@@ -9,20 +9,19 @@ export default function BlogSidebar({ category, date, author }) {
 
             <div className="space-y-4 text-sm text-gray-600">
                 <div>
-                    <p className="font-medium text-gray-800">Author:</p>
-                    <p>{author}</p>
+                    <p className=" text-gray-800"><b>Author: </b>  <span>{author}</span></p>
+
                 </div>
 
                 <div>
-                    <p className="font-medium text-gray-800">Published:</p>
-                    <p>{date}</p>
+                    <p className=" text-gray-800"><b>Published: </b> <span>{new Date(date).toLocaleDateString()}</span></p>
                 </div>
 
                 <div>
-                    <p className="font-medium text-gray-800 mb-2">Category:</p>
-                    <span className="px-3 py-1 bg-emerald-600 text-white text-xs rounded-md">
+                    <p className=" text-gray-800 mb-2"><b>Category: </b>  <span className="px-3 py-1 bg-emerald-600 text-white text-xs rounded-md">
                         {category}
-                    </span>
+                    </span></p>
+
                 </div>
             </div>
 
@@ -30,9 +29,24 @@ export default function BlogSidebar({ category, date, author }) {
 
             <h4 className="font-semibold text-gray-800 mb-3">Share:</h4>
             <div className="flex gap-3">
-                <button className="px-3 py-2 border rounded-lg hover:bg-gray-100"><FaFacebook /></button>
-                <button className="px-3 py-2 border rounded-lg hover:bg-gray-100"><FaTwitter /></button>
-                <button className="px-3 py-2 border rounded-lg hover:bg-gray-100"><FaLinkedin /></button>
+                <button
+                    className="px-3 py-2 border rounded-lg hover:bg-gray-100"
+                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                >
+                    <FaFacebook />
+                </button>
+                <button
+                    className="px-3 py-2 border rounded-lg hover:bg-gray-100"
+                    onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`, '_blank')}
+                >
+                    <FaTwitter />
+                </button>
+                <button
+                    className="px-3 py-2 border rounded-lg hover:bg-gray-100"
+                    onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}
+                >
+                    <FaLinkedin />
+                </button>
             </div>
         </aside>
     );

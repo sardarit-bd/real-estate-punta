@@ -1,12 +1,23 @@
 "use client"
-import React, { useRef, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function VideoPlayer() {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playButtonVisible, setPlayButtonVisible] = useState(true);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [videoUrl, setVideoUrl] = useState('/videos/hero-video.mp4')
 
+    useEffect(() => {
+        const fetchSite = async () => {
+            const res = await axios.get(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site`,
+            )
+           setVideoUrl(res?.data?.data[0]?.featuredVideo)
+        }
+        fetchSite()
+    }, [])
     const handlePlayClick = () => {
         if (videoRef.current && !isAnimating) {
             setIsAnimating(true);
@@ -53,7 +64,7 @@ export default function VideoPlayer() {
             <div className="relative w-[600px] h-[435px] rounded-3xl overflow-hidden group">
                 <video
                     ref={videoRef}
-                    src="/videos/hero-video.mp4"
+                    src={videoUrl}
                     loop
                     playsInline
                     className="w-full h-full object-cover rounded-3xl transition-all duration-300 group-hover:brightness-90"

@@ -1,24 +1,78 @@
+"use client"
+
 import Image from "next/image";
 import { citiesData } from "@/data/cities";
 import PropertyCard from "@/components/cards/PropertyCard";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import PropertyResults from "@/app/(public)/pages/properties/PropertyResults";
 
-export default async function CityPage({ params }) {
-  const { slug } = await params;
+export default function CityPage({ params }) {
+  const [slug, setSlug] = useState(null);
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    params.then(p => setSlug(p.slug));
+  }, [params]);
+
+  useEffect(() => {
+    if (!slug) return;
+
+    const fetchFeaturedProperties = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties?limit=50`
+        );
+
+        const data = await res.json();
+
+        if (data.success) {
+          const filtered = data?.data?.filter(p => p.city.toLowerCase() === slug.replace("-", ' '))
+          setProperties(filtered);
+        }
+      } catch (error) {
+        console.error("Failed to load featured properties", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedProperties();
+  }, [slug]);
+
+  if (!slug) return null;
+
   const city = citiesData.find((c) => c.slug === slug);
 
   if (!city) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">City Not Found</h1>
-          <p className="text-gray-600">The city you're looking for doesn't exist.</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
+        <div className="text-center max-w-md">
+          <div className="mb-8">
+            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-r from-gray-200 to-gray-300 mb-6">
+              <svg className="w-12 h-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h1 className="text-4xl font-bold text-gray-800 mb-3 tracking-tight">City Not Found</h1>
+            <p className="text-gray-600 text-lg leading-relaxed">
+              We couldn't locate the city you're searching for. Please check the spelling or try another location.
+            </p>
+          </div>
+          <div className="pt-4 border-t border-gray-200">
+            <p className="text-gray-500 text-sm">
+              Try searching with a different name or nearby city
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
-  const totalProperties = city.properties.length;
+  const totalProperties = properties?.length;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,7 +124,7 @@ export default async function CityPage({ params }) {
             </div>
 
             {/* Sort Options */}
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <Select>
                 <SelectTrigger className="w-[220px] border-gray-300">
                   <SelectValue placeholder="Sort by: Price (Low to High)" />
@@ -93,16 +147,17 @@ export default async function CityPage({ params }) {
                 </svg>
                 Filter
               </button>
-            </div>
+            </div> */}
 
           </div>
 
           {/* Properties Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {city.properties.map((property) => (
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {properties?.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
-          </div>
+          </div> */}
+          <PropertyResults filtered={properties} />
         </div>
       </div>
     </div>

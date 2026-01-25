@@ -41,7 +41,7 @@ export default function SearchCard() {
     const handleCityChange = (value) => {
         // Convert display value to internal value
         const internalValue = value === "all cities" ? "all" :
-            value.replace(" ", "-");
+            value
         setCity(internalValue);
     };
 

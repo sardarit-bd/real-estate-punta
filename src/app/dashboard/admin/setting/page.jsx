@@ -15,54 +15,28 @@ import {
   AlertCircle,
   CheckCircle
 } from 'lucide-react';
+import { useAuthContext } from '@/providers/AuthProvider';
+import toast from 'react-hot-toast';
+import { ChangePassword } from '@/components/dashboard/Tenant/Profile/ChangePassword';
+import axios from 'axios';
 
 export default function AdminSettingsPage() {
-  // Admin data
-  const [adminData, setAdminData] = useState({
-    name: '',
-    email: '',
-    role: 'admin'
-  });
 
+
+  const { user: adminData, updateProfile } = useAuthContext()
   // Video state
   const [instructionVideo, setInstructionVideo] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
+  const [name, setName] = useState(adminData?.name)
   const [videoPreview, setVideoPreview] = useState('');
-  
+
   // Form states
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Load admin data
-  useEffect(() => {
-    fetchAdminData();
-  }, []);
-
-  const fetchAdminData = async () => {
-    setLoading(true);
-    try {
-      // Simulate API call
-      setTimeout(() => {
-        const mockAdminData = {
-          name: 'Admin User',
-          email: 'admin@puntacana.com',
-          role: 'admin',
-          instructionVideo: 'https://example.com/admin-instructions.mp4'
-        };
-        
-        setAdminData(mockAdminData);
-        setInstructionVideo(mockAdminData.instructionVideo);
-        setVideoPreview(mockAdminData.instructionVideo);
-        setLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Error fetching admin data:', error);
-      setLoading(false);
-    }
-  };
 
   // Handle video upload
   const handleVideoUpload = (e) => {
@@ -82,11 +56,13 @@ export default function AdminSettingsPage() {
     }
 
     setVideoFile(file);
-    
+
     // Create preview URL
     const videoURL = URL.createObjectURL(file);
     setVideoPreview(videoURL);
-    
+
+
+
     // Clear video error
     if (errors.video) {
       setErrors(prev => ({ ...prev, video: '' }));
@@ -106,20 +82,14 @@ export default function AdminSettingsPage() {
   // Handle admin info update
   const handleAdminUpdate = async (e) => {
     e.preventDefault();
-    
+
     setSaving(true);
-    setSuccessMessage('');
-
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setSuccessMessage('Admin information updated successfully!');
-      
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000);
+      await updateProfile({
+        name: name
+      })
 
+      toast.success("Name is Updated!")
     } catch (error) {
       console.error('Error updating admin:', error);
       setErrors({ submit: 'Failed to update. Please try again.' });
@@ -139,19 +109,29 @@ export default function AdminSettingsPage() {
     setErrors({});
 
     try {
-      // Simulate video upload
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // In real app, upload to server and get URL
-      const uploadedVideoUrl = videoPreview;
-      setInstructionVideo(uploadedVideoUrl);
-      
-      setSuccessMessage('Instruction video uploaded successfully!');
-      
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000);
+      const fd = new FormData()
+      fd.append("file", videoFile)
 
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/video`,
+        fd,
+        { withCredentials: true }
+      )
+
+      console.log(res)
+      const imageUrl = res.data.data.url
+      if (imageUrl) {
+        const res = await axios.patch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site`,
+          {
+            featuredVideo: imageUrl
+          },
+          { withCredentials: true }
+        )
+        console.log(res)
+      }
+      console.log(imageUrl)
+      setInstructionVideo(imageUrl)
     } catch (error) {
       console.error('Error uploading video:', error);
       setErrors({ video: 'Failed to upload video. Please try again.' });
@@ -231,7 +211,8 @@ export default function AdminSettingsPage() {
                 <div className="flex items-center">
                   <input
                     type="text"
-                    defaultValue={adminData.name}
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
                     className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
                   />
                 </div>
@@ -245,6 +226,7 @@ export default function AdminSettingsPage() {
                 </label>
                 <div className="flex items-center">
                   <input
+                    readOnly
                     type="email"
                     defaultValue={adminData.email}
                     className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent"
@@ -285,17 +267,9 @@ export default function AdminSettingsPage() {
 
               {/* Password Change */}
               <div className="pt-6 border-t">
-                <h3 className="font-medium text-gray-900 mb-3 flex items-center">
-                  <Lock className="h-5 w-5 mr-2" />
-                  Security
-                </h3>
-                <button
-                  onClick={() => console.log('Change password')}
-                  className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  Change Password
-                </button>
+
               </div>
+              <ChangePassword />
             </div>
           </div>
 
@@ -312,10 +286,9 @@ export default function AdminSettingsPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Upload Video Instructions
                 </label>
-                
-                <div className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                  errors.video ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-[#1F3A34]'
-                }`}>
+
+                <div className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${errors.video ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-[#1F3A34]'
+                  }`}>
                   <input
                     type="file"
                     id="video-upload"
@@ -323,7 +296,7 @@ export default function AdminSettingsPage() {
                     onChange={handleVideoUpload}
                     className="hidden"
                   />
-                  
+
                   <label
                     htmlFor="video-upload"
                     className="cursor-pointer flex flex-col items-center justify-center"
@@ -345,11 +318,11 @@ export default function AdminSettingsPage() {
                     </button>
                   </label>
                 </div>
-                
+
                 {errors.video && (
                   <p className="mt-2 text-sm text-red-600">{errors.video}</p>
                 )}
-                
+
                 <p className="mt-2 text-sm text-gray-500">
                   Maximum file size: 50MB. Supported formats: MP4, MOV, AVI, WMV
                 </p>
@@ -361,7 +334,7 @@ export default function AdminSettingsPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-4">
                     Video Preview
                   </label>
-                  
+
                   <div className="relative rounded-lg overflow-hidden bg-gray-900">
                     <video
                       src={videoPreview || instructionVideo}
@@ -370,7 +343,7 @@ export default function AdminSettingsPage() {
                     >
                       Your browser does not support the video tag.
                     </video>
-                    
+
                     <div className="absolute top-3 right-3 flex space-x-2">
                       <button
                         onClick={() => window.open(videoPreview || instructionVideo, '_blank')}
@@ -388,7 +361,7 @@ export default function AdminSettingsPage() {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="mt-3 flex items-center justify-between text-sm text-gray-600">
                     <div className="flex items-center">
                       <Play className="h-4 w-4 mr-1" />
@@ -440,7 +413,7 @@ export default function AdminSettingsPage() {
             </div>
           </div>
         </div>
-       
+
 
         {/* Danger Zone */}
         {/* <div className="mt-6 bg-white rounded-xl shadow-sm border border-red-200">

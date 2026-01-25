@@ -1,41 +1,44 @@
 "use client";
 
+import BlogList from "@/app/(public)/pages/blog/BlogList";
 import BlogCard from "@/components/cards/Blog";
+import { useEffect, useState } from "react";
+import Loader from "../common/Loader";
 
 export default function Blogs() {
-  const blogs = [
-    {
-      id: 1,
-      image: "/images/6.jpg",
-      title: "Top 10 Property Investment Tips for Beginners",
-      excerpt:
-        "Learn the essential strategies to maximize your real-estate investment profits with expert-approved techniques.",
-      author: "Admin",
-      date: "Jan 10, 2025",
-      category: "REAL ESTATE",
-    },
-    {
-      id: 2,
-      image: "/images/1.jpg",
-      title: "How to Choose the Right Location for Your Dream Home",
-      excerpt:
-        "Location plays the most important part when buying a house. Here’s how to choose the perfect one.",
-      author: "Sarah",
-      date: "Jan 15, 2025",
-      category: "GUIDE",
-    },
-    {
-      id: 3,
-      image: "/images/3.jpg",
-      title: "Best Interior Designs That Increase Property Value",
-      excerpt:
-        "These modern interior trends not only beautify your home but also boost resale value significantly.",
-      author: "Michael",
-      date: "Jan 20, 2025",
-      category: "DESIGN",
-    },
-  ];
 
+  const [blogs, setBlogs] = useState([])
+  const [loading, setLoading] = useState(true)
+  // FETCH DATA FROM API
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true)
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?status=published&limit=4`,
+          {
+            credentials: 'include'
+          }
+        )
+
+        const data = await res.json()
+
+        if (data.success) {
+          setBlogs(data.data)
+        }
+      } catch (error) {
+        console.error('Failed to load blog posts:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPosts()
+  }, []);
+
+  if (loading) {
+    return <Loader />
+  }
   return (
     <section className="max-w-7xl mx-auto px-5 py-16">
       {/* HEADER */}
@@ -49,11 +52,7 @@ export default function Blogs() {
       </div>
 
       {/* BLOG GRID */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog) => (
-          <BlogCard key={blog.id} {...blog} />
-        ))}
-      </div>
+      <BlogList blogs={blogs} />
     </section>
   );
 }

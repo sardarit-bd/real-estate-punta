@@ -3,11 +3,13 @@
 import { useState } from 'react'
 import RichTextEditor from '../components/RichTextEditor'
 import CustomSelect from '@/components/dashboard/Admin/CustomSelect'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
-export default function PostForm({ 
-  initialData = {}, 
-  onSubmit, 
-  onCancel, 
+export default function PostForm({
+  initialData = {},
+  onSubmit,
+  onCancel,
   isSubmitting = false,
   mode = 'create'
 }) {
@@ -17,60 +19,32 @@ export default function PostForm({
     content: '',
     category: '',
     status: 'draft',
-    author: 'Admin User',
     tags: '',
-    featuredImage: null,
-    featuredImagePreview: '',
-    metaTitle: '',
-    metaDescription: '',
-    slug: '',
-    enableComments: true,
-    featuredPost: false,
-    pinToTop: false,
+    featuredImage: '',
     ...initialData
   })
-  
+
   const [imageUploading, setImageUploading] = useState(false)
+  const [imagePreview, setImagePreview] = useState(initialData.featuredImage || '')
 
   // Options for dropdowns
   const statusOptions = [
     { value: 'draft', label: 'Draft' },
-    { value: 'published', label: 'Published' },
-    { value: 'scheduled', label: 'Scheduled' }
+    { value: 'published', label: 'Published' }
   ]
 
   const categoryOptions = [
     { value: '', label: 'Select Category' },
-    { value: 'technology', label: 'Technology' },
-    { value: 'web-design', label: 'Web Design' },
-    { value: 'accessibility', label: 'Accessibility' },
-    { value: 'backend', label: 'Backend' },
-    { value: 'database', label: 'Database' },
-    { value: 'performance', label: 'Performance' },
-    { value: 'business', label: 'Business' },
-    { value: 'lifestyle', label: 'Lifestyle' },
-    { value: 'travel', label: 'Travel' },
-    { value: 'food', label: 'Food' }
-  ]
-
-  const authorOptions = [
-    { value: 'admin-user', label: 'Admin User' },
-    { value: 'editor-1', label: 'Editor 1' },
-    { value: 'editor-2', label: 'Editor 2' },
-    { value: 'guest-author', label: 'Guest Author' }
-  ]
-
-  const visibilityOptions = [
-    { value: 'public', label: 'Public' },
-    { value: 'private', label: 'Private' },
-    { value: 'password-protected', label: 'Password Protected' }
+    { value: 'real estate', label: 'Real Estate' },
+    { value: 'guide', label: 'Guide' },
+    { value: 'design', label: 'Design' }
   ]
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value
     }))
   }
 
@@ -84,7 +58,7 @@ export default function PostForm({
   const handleContentChange = (content) => {
     setFormData(prev => ({
       ...prev,
-      content
+      content: content.target.value
     }))
   }
 
@@ -94,73 +68,94 @@ export default function PostForm({
 
     // Check file type
     if (!file.type.match('image.*')) {
-      alert('Please select an image file (JPG, PNG, GIF, etc.)')
+      toast.error('Please select an image file (JPG, PNG, GIF, etc.)')
       return
     }
 
     // Check file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      alert('Image size should be less than 5MB')
+      toast.error('Image size should be less than 5MB')
       return
     }
 
     setImageUploading(true)
 
-    // In a real app, you would upload to a server/cloud storage
-    // For demo, we'll create a local preview
-    const reader = new FileReader()
-    reader.onloadend = () => {
+    try {
+      const fd = new FormData()
+      fd.append("image", file)
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/image`,
+        fd,
+        { withCredentials: true }
+      )
+
+      const imageUrl = res.data.data.url
       setFormData(prev => ({
         ...prev,
-        featuredImage: file,
-        featuredImagePreview: reader.result
+        featuredImage: imageUrl
       }))
+      setImagePreview(imageUrl)
+    } catch (error) {
+      console.error('Image upload failed:', error)
+      toast.error('Failed to upload image')
+    } finally {
       setImageUploading(false)
     }
-    reader.readAsDataURL(file)
   }
 
   const removeImage = () => {
     setFormData(prev => ({
       ...prev,
-      featuredImage: null,
-      featuredImagePreview: ''
+      featuredImage: ''
     }))
-  }
-
-  const generateSlug = (title) => {
-    return title
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .replace(/\s+/g, '-')
-      .substring(0, 100)
+    setImagePreview('')
   }
 
   const handleTitleChange = (e) => {
     const title = e.target.value
     setFormData(prev => ({
       ...prev,
-      title,
-      slug: prev.slug || generateSlug(title),
-      metaTitle: prev.metaTitle || title.substring(0, 60)
+      title
     }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+
     // Validate required fields
     if (!formData.title.trim()) {
-      alert('Please enter a post title')
-      return
-    }
-    
-    if (!formData.content.trim()) {
-      alert('Please enter post content')
+      toast.error('Please enter a post title')
       return
     }
 
-    onSubmit(formData)
+    if (!formData.content.trim()) {
+      toast.error('Please enter post content')
+      return
+    }
+
+    if (!formData.category) {
+      toast.error('Please select a category')
+      return
+    }
+
+    // Convert tags string to array
+    const tagsArray = formData.tags
+      .split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag !== '')
+
+    const submitData = {
+      title: formData.title,
+      excerpt: formData.excerpt,
+      content: formData.content,
+      category: formData.category,
+      status: formData.status,
+      tags: tagsArray,
+      featuredImage: formData.featuredImage
+    }
+
+    onSubmit(submitData)
   }
 
   return (
@@ -180,7 +175,8 @@ export default function PostForm({
               value={formData.title}
               onChange={handleTitleChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent text-lg"
+              maxLength={100}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#004087] focus:border-transparent text-lg"
               placeholder="Enter a compelling title for your post"
             />
             <p className="text-sm text-gray-500 mt-2">
@@ -199,7 +195,8 @@ export default function PostForm({
               value={formData.excerpt}
               onChange={handleChange}
               rows="3"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
+              maxLength={160}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#004087] focus:border-transparent"
               placeholder="A brief summary of your post (appears in listings and social media)"
             />
             <p className="text-sm text-gray-500 mt-2">
@@ -224,13 +221,13 @@ export default function PostForm({
             <label className="block text-sm font-semibold text-gray-800 mb-3">
               Featured Image
             </label>
-            
-            {formData.featuredImagePreview ? (
+
+            {imagePreview ? (
               <div className="space-y-4">
                 <div className="relative">
-                  <img 
-                    src={formData.featuredImagePreview} 
-                    alt="Preview" 
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
                     className="w-full h-64 object-cover rounded-lg"
                   />
                   <button
@@ -243,12 +240,6 @@ export default function PostForm({
                     </svg>
                   </button>
                 </div>
-                <div className="text-sm text-gray-600">
-                  <p>File: {formData.featuredImage?.name || 'Existing image'}</p>
-                  {formData.featuredImage?.size && (
-                    <p>Size: {(formData.featuredImage.size / 1024 / 1024).toFixed(2)} MB</p>
-                  )}
-                </div>
               </div>
             ) : (
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:bg-gray-100 transition duration-200">
@@ -259,6 +250,7 @@ export default function PostForm({
                   accept="image/*"
                   onChange={handleImageUpload}
                   className="hidden"
+                  disabled={imageUploading}
                 />
                 <label htmlFor="featuredImage" className="cursor-pointer">
                   <div className="flex flex-col items-center">
@@ -266,8 +258,7 @@ export default function PostForm({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <p className="text-gray-700 font-medium mb-2">
-                      {imageUploading ? 'Uploading...' : 
-                       formData.featuredImagePreview ? 'Change Image' : 'Upload Featured Image'}
+                      {imageUploading ? 'Uploading...' : 'Upload Featured Image'}
                     </p>
                     <p className="text-sm text-gray-500">
                       JPG, PNG, GIF up to 5MB
@@ -275,7 +266,7 @@ export default function PostForm({
                     <button
                       type="button"
                       onClick={() => document.getElementById('featuredImage').click()}
-                      className="mt-4 px-4 py-2 bg-[#103B29] text-white rounded-lg hover:bg-[#0c2d20] transition duration-200"
+                      className="mt-4 px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004087] transition duration-200"
                       disabled={imageUploading}
                     >
                       {imageUploading ? 'Uploading...' : 'Choose Image'}
@@ -294,7 +285,7 @@ export default function PostForm({
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               {mode === 'create' ? 'Publish' : 'Update'}
             </h3>
-            
+
             <div className="space-y-6">
               {/* Status */}
               <div>
@@ -313,26 +304,12 @@ export default function PostForm({
               {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Category
+                  Category *
                 </label>
                 <CustomSelect
                   value={formData.category}
                   options={categoryOptions}
                   onChange={(value) => handleSelectChange('category', value)}
-                  className="w-full"
-                  variant="admin"
-                />
-              </div>
-
-              {/* Author */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Author
-                </label>
-                <CustomSelect
-                  value={formData.author}
-                  options={authorOptions}
-                  onChange={(value) => handleSelectChange('author', value)}
                   className="w-full"
                   variant="admin"
                 />
@@ -349,7 +326,7 @@ export default function PostForm({
                   name="tags"
                   value={formData.tags}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#103B29] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#004087] focus:border-transparent"
                   placeholder="tag1, tag2, tag3"
                 />
                 <p className="text-sm text-gray-500 mt-1">Separate tags with commas</p>
@@ -360,7 +337,7 @@ export default function PostForm({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 bg-[#103B29] hover:bg-[#0c2d20] text-white px-6 py-3 rounded-lg font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-[#004087] hover:bg-[#004087] text-white px-6 py-3 rounded-lg font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center justify-center">
@@ -379,7 +356,7 @@ export default function PostForm({
                   onClick={onCancel}
                   className="px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200"
                 >
-                  {mode === 'create' ? 'Save Draft' : 'Cancel'}
+                  Cancel
                 </button>
               </div>
             </div>

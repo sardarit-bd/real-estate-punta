@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import PropertyCard from "@/components/cards/Property";
 import Link from "next/link";
+import Loader from "../common/Loader";
 
 export default function Properties() {
     const [properties, setProperties] = useState([]);
@@ -17,7 +18,7 @@ export default function Properties() {
                 setLoading(true);
 
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties?limit=50`
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/properties?limit=50&featured=true`
                 );
 
                 const data = await res.json();
@@ -77,6 +78,9 @@ export default function Properties() {
         startIndex + itemsPerPage
     );
 
+    if(loading){
+        return <Loader />
+    }
     return (
         <section className="max-w-7xl mx-auto px-5 py-16">
 
