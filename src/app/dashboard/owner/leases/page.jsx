@@ -353,14 +353,10 @@ export default function OwnerLeasesPage() {
   ];
 
   // Loading state
-  if (loading && !leases.length) {
+    if (loading) {
     return (
-      <div className="min-h-screen p-6 flex flex-col items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="h-12 w-12 animate-spin text-[#004087] mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">Loading Lease Dashboard</h3>
-          <p className="text-gray-500">Fetching your lease data...</p>
-        </div>
+      <div className="min-h-screen p-6 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1F3A34]"></div>
       </div>
     );
   }

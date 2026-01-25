@@ -388,13 +388,21 @@ export default function LeaseDetailPage() {
     return `${months} months (${Math.floor(months / 12)} years ${months % 12} months)`;
   }, [lease]);
 
-  if (loading) {
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen p-6 flex items-center justify-center">
+  //       <div className="flex flex-col items-center gap-4">
+  //         <Loader2 className="h-12 w-12 animate-spin text-[#1F3A34]" />
+  //         <p className="text-gray-600">Loading lease details...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  
+    if (loading) {
     return (
       <div className="min-h-screen p-6 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-12 w-12 animate-spin text-[#1F3A34]" />
-          <p className="text-gray-600">Loading lease details...</p>
-        </div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#1F3A34]"></div>
       </div>
     );
   }

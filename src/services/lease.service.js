@@ -354,15 +354,4 @@ export const leaseService = {
     // This is now handled by reviewApplication with action="approve"
     return await leaseService.reviewApplication(leaseId, "approve");
   },
-
-  // Test API
-  testAPI: async () => {
-    try {
-      const response = await api.get("/leases/debug/test");
-      return response.data;
-    } catch (error) {
-      console.error("API test failed:", error);
-      throw error;
-    }
-  },
 };
