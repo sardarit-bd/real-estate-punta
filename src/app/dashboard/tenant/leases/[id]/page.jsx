@@ -62,6 +62,7 @@ import {
 import { leaseService } from "@/services/lease.service";
 import toast from "react-hot-toast";
 import LeaseStatusTimeline from "@/components/dashboard/Tenant/LeaseStatusTimeline";
+import axios from "axios";
 // import LeaseStatusTimeline from "@/components/dashboard/Owner/leases/LeaseStatusTimeline";
 
 export default function TenantLeaseViewPage() {
@@ -133,6 +134,27 @@ export default function TenantLeaseViewPage() {
       console.error("Error navigating to sign page:", err);
     }
   };
+
+  const handleLeasePayment = async (id) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payment/lease-checkout`,
+        { leaseId: id },
+        {
+          withCredentials: true
+        }
+      );
+
+      console.log('Received response for featured status toggle:', res?.data?.data);
+      if(res?.data?.data?.url){
+        window.location.href = res.data.data.url;
+      }
+    } catch (error) {
+      console.error('Failed to toggle featured status', error);
+      alert('Failed to update featured status');
+      return;
+    }
+  }
 
   const handleReviewLease = async () => {
     try {
@@ -588,7 +610,7 @@ export default function TenantLeaseViewPage() {
               </button>
             )}
 
-            {statusConfig.actions.primary === "sign" && (
+            {/* {statusConfig.actions.primary === "sign" && (
               <button
                 onClick={handleSignLease}
                 className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
@@ -596,7 +618,7 @@ export default function TenantLeaseViewPage() {
                 <PenTool size={20} />
                 Sign Lease Agreement
               </button>
-            )}
+            )} */}
 
             {statusConfig.actions.primary === "approve_and_send" && (
               <button
@@ -1161,10 +1183,18 @@ export default function TenantLeaseViewPage() {
                 </button>
               )}
 
+            {!lease.paid && <button
+                  onClick={() => handleLeasePayment(lease?._id)}
+                  className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm flex items-center justify-center gap-2"
+                >
+                  <PenTool size={16} />
+                  Pay First
+                </button>}
               {lease.status === "signed_by_landlord" && (
                 <button
                   onClick={handleSignLease}
-                  className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm flex items-center justify-center gap-2"
+                  disabled={!lease.paid}
+                  className={`w-full px-4 py-2 bg-green-600 text-white rounded-lg text-sm flex items-center justify-center gap-2 ${!lease.paid ? "opacity-40 cursor-none" : ""}`}
                 >
                   <PenTool size={16} />
                   Sign Now

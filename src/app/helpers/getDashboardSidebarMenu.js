@@ -71,7 +71,7 @@ const adminMenu = [
 const tenantMenu = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
 
-  { title: "My Leases", href: "/dashboard/tenant/properties", icon: Building2 },
+  // { title: "My Leases", href: "/dashboard/tenant/properties", icon: Building2 },
   // { title: "My Requests", href: "/dashboard/tenant/requests", icon: Building2 },
   { title: "Leases", href: "/dashboard/tenant/leases", icon: FileText },
   { title: "Payments", href: "/dashboard/tenant/payments", icon: CreditCard },
