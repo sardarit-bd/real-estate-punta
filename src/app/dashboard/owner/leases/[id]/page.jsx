@@ -227,7 +227,14 @@ export default function LeaseDetailPage() {
         icon: AlertCircle,
         title: "Pending Approval",
         description: "Tenant has requested to rent this property",
-        actions: ["approve", "message", "cancel"],
+        actions: ["approve", "message", "cancel", "edit", 'send'],
+      },
+      approved: {
+        color: "yellow",
+        icon: AlertCircle,
+        title: "Approved",
+        description: "Tenant has requested to rent this property",
+        actions: ["approve", "message", "cancel", "edit", 'send'],
       },
       draft: {
         color: "gray",

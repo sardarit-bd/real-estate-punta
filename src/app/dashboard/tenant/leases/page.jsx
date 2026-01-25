@@ -174,16 +174,16 @@ export default function TenantLeasesPage() {
           </button>
         );
       
-      case "signed_by_landlord":
-        return (
-          <button
-            onClick={() => handleSign(lease._id)}
-            className="px-3 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
-          >
-            <PenTool className="w-4 h-4" />
-            Sign Now
-          </button>
-        );
+      // case "signed_by_landlord":
+      //   return (
+      //     <button
+      //       onClick={() => handleSign(lease._id)}
+      //       className="px-3 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
+      //     >
+      //       <PenTool className="w-4 h-4" />
+      //       Sign Now
+      //     </button>
+      //   );
       
       case "fully_executed":
         return (

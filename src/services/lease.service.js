@@ -85,6 +85,8 @@ export const leaseService = {
   },
 
   // ================= DRAFT PHASE =================
+   createLease: (payload) =>
+    api.post("/leases", {...payload, status: "draft"}),
   
   // Create/update lease draft
   createOrUpdateDraft: async (leaseId, updates) => {

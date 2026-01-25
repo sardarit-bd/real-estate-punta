@@ -55,12 +55,16 @@ export default function PropertyDetails({ property, user }) {
         }
 
         try {
-            const res = await leaseService.createLease(property._id);
+            const payload = { property: property._id, tenant: user._id, landlord: owner._id };
+            const res = await leaseService.createLease(payload)
 
-            if (res.success) {
-                toast.success("Request sent to landlord");
-                setMyLease(true);
+            if (res.data?.success) {
+                toast.success("Request is sent to Landlord.")
+            } else {
+                toast.error(res?.data?.message || "Failed to send.")
             }
+            console.log(res)
+
         } catch (err) {
             toast.error(err?.response?.data?.message || "Request failed");
         }
@@ -102,7 +106,7 @@ export default function PropertyDetails({ property, user }) {
     let buttonText = "";
     if (!isLoggedIn) {
         buttonText = "Login to Request";
-    }else if (!user?.verified) {
+    } else if (!user?.verified) {
         buttonText = "Verify your Account";
     } else if (hasLease) {
         buttonText = "Requested";
@@ -112,7 +116,7 @@ export default function PropertyDetails({ property, user }) {
         buttonText = "Request to Buy";
     }
 
-    const isButtonDisabled = !isLoggedIn || !user?.verified || !isTenant || hasLease ;
+    const isButtonDisabled = !isLoggedIn || !user?.verified || !isTenant || hasLease;
 
     return (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
@@ -147,12 +151,12 @@ export default function PropertyDetails({ property, user }) {
                     <button
                         disabled={isButtonDisabled}
                         className={`w-full py-3.5 px-6 rounded-xl font-semibold text-lg transition-all duration-200 ${hasLease || !user?.verified
-                                ? "bg-gray-400 text-white cursor-not-allowed"
-                                : !isLoggedIn
-                                    ? "bg-[#014087] hover:bg-[#014087]/90 text-white"
-                                    : isTenant
-                                        ? "bg-[#004087] hover:bg-[#003366] text-white"
-                                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                            ? "bg-gray-400 text-white cursor-not-allowed"
+                            : !isLoggedIn
+                                ? "bg-[#014087] hover:bg-[#014087]/90 text-white"
+                                : isTenant
+                                    ? "bg-[#004087] hover:bg-[#003366] text-white"
+                                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
                             }`}
                         onClick={() => {
                             if (!isLoggedIn) {
