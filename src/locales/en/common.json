@@ -1,0 +1,37 @@
+{
+  "home": "Home",
+  "about": "About",
+  "properties": "Properties",
+  "blog": "Blog",
+  "contact": "Contact",
+  "menu": "Menu",
+  "favourites": "Favourites",
+
+
+   "heroSubtitle": "From as low as $10 per day with limited time offer discounts.",
+  "heroTitleBefore": "Your",
+  "heroTitleHighlight": "Property",
+  "heroTitleAfter": "Our Priority",
+
+  "city": "City",
+  "status": "Status",
+  "bedrooms": "Bedrooms",
+  "bedroom": "Bedroom",
+
+  "allCities": "All cities",
+  "allStatus": "All status",
+  "forRent": "For rent",
+  "forSale": "For sale",
+
+  "any": "Any",
+  "oneBedroom": "1 bedroom",
+  "twoBedrooms": "2 bedrooms",
+  "threeBedrooms": "3 bedrooms",
+  "fourPlusBedrooms": "4+ bedrooms",
+
+  "searchProperties": "Search Properties"
+}
+
+
+
+

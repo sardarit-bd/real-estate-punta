@@ -1,0 +1,32 @@
+{
+  "home": "Inicio",
+  "about": "Sobre Nosotros",
+  "properties": "Propiedades",
+  "blog": "Blog",
+  "contact": "Contacto",
+  "menu": "Menú",
+  "favourites": "Favoritos",
+  
+  "heroSubtitle": "Desde tan solo $10 por día con descuentos por tiempo limitado.",
+  "heroTitleBefore": "Tu",
+  "heroTitleHighlight": "Propiedad",
+  "heroTitleAfter": "Nuestra Prioridad",
+
+  "city": "Ciudad",
+  "status": "Estado",
+  "bedrooms": "Habitaciones",
+  "bedroom": "Habitación",
+
+  "allCities": "Todas las ciudades",
+  "allStatus": "Todos los estados",
+  "forRent": "En alquiler",
+  "forSale": "En venta",
+
+  "any": "Cualquiera",
+  "oneBedroom": "1 habitación",
+  "twoBedrooms": "2 habitaciones",
+  "threeBedrooms": "3 habitaciones",
+  "fourPlusBedrooms": "4+ habitaciones",
+
+  "searchProperties": "Buscar Propiedades"
+}
