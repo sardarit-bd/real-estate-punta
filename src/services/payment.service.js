@@ -3,6 +3,8 @@ import api from "@/lib/api";
 export const paymentService = {
     getPaymentHistory: () =>
         api.get("/payment/history"),
+    getMyPaymentHistory: () =>
+        api.get("/payment/my-history"),
     //   getMyLeases: (params) =>
     //     api.get("/leases/my-leases", { params }),
 

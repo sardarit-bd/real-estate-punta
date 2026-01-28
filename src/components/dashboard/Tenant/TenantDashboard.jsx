@@ -247,8 +247,7 @@ export default function TenantDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {statCards.map((stat, index) => (
-            <Link key={index} href={stat.link}>
-              <div className="bg-white rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow cursor-pointer">
+           <div className="bg-white rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow cursor-pointer">
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="text-gray-500 text-sm font-medium">{stat.title}</p>
@@ -260,12 +259,11 @@ export default function TenantDashboard() {
                   </div>
                 </div>
               </div>
-            </Link>
           ))}
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickActions.map((action, index) => (
@@ -281,7 +279,7 @@ export default function TenantDashboard() {
               </Link>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Properties */}
