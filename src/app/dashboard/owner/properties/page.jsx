@@ -486,7 +486,7 @@ export default function PropertiesPage() {
                   Try adjusting your search or filters
                 </p>
                 <Link
-                  href="/owner/properties/add"
+                  href="/dashboard/owner/properties/add"
                   className="inline-flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797] hover:shadow-md transition-all duration-200"
                 >
                   <Plus className="h-4 w-4 mr-2" />
