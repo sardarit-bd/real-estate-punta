@@ -400,13 +400,13 @@ export default function OwnerLeasesPage() {
                 )}
               </button>
               
-              <Link
+              {/* <Link
                 href="/dashboard/owner/leases/create"
                 className="px-4 py-2 rounded-lg bg-[#004087] text-white hover:opacity-90 flex items-center gap-2"
               >
                 <FileText size={18} />
                 Create New Lease
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -571,7 +571,7 @@ export default function OwnerLeasesPage() {
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
               No leases found
             </h3>
-            <p className="text-gray-500 mb-6">
+            {/* <p className="text-gray-500 mb-6">
               {filter !== "all" 
                 ? `No leases with status "${ENHANCED_FILTERS.find(f => f.key === filter)?.label}"`
                 : "Get started by creating your first lease agreement"}
@@ -581,7 +581,7 @@ export default function OwnerLeasesPage() {
               className="px-4 py-2 bg-[#004087] text-white rounded-lg hover:opacity-90"
             >
               Create New Lease
-            </Link>
+            </Link> */}
           </div>
         ) : viewMode === "list" ? (
           // Enhanced List View
