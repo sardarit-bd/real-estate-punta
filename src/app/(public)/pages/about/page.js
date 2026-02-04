@@ -1,145 +1,219 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export default function AboutPage() {
-    return (
-        <section className="max-w-7xl mx-auto px-5 py-16 space-y-24">
+  const { t } = useTranslation();
 
-            {/* HERO SECTION */}
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-                <div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-[#1F2328] leading-tight">
-                        Why I Created <span className="text-[#004087]">Casa Viva</span>
-                    </h1>
-                    <p className="mt-6 text-gray-600 text-lg leading-relaxed">
-                        Casa Viva began after my own struggles with renting out my investment properties in Punta Cana.
-                        I experienced firsthand how difficult it was — confusing platforms, unreliable communication,
-                        and renters who also felt lost in the process.
-                        <br /><br />
-                        After dealing with these challenges repeatedly, I realized something important:
-                        If I was having this much trouble, hundreds of other renters and property owners were facing
-                        the same issues.
-                        <br /><br />
-                        So instead of accepting the frustration, I decided to solve the problem.
-                        Casa Viva was created to make the rental process clearer, easier, and more reliable — not just
-                        for me, but for every owner and every renter who deserves a smooth experience.
-                        <br /><br />
-                        Today, Casa Viva exists to bridge the gap between great properties and the renters searching
-                        for them, making the entire process simpler for everyone.
-                    </p>
-                </div>
+  return (
+    <section className="max-w-7xl mx-auto px-5 py-16 space-y-24">
+      {/* HERO SECTION */}
+      <div className="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1F2328] leading-tight">
+            {t("about.heroTitle")}{" "}
+            <span className="text-[#004087]">Casa Viva</span>
+          </h1>
 
-                <div className="relative w-full h-[320px] md:h-[400px] rounded-3xl overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
-                    <Image
-                        src="/images/about.png"
-                        alt="About Us"
-                        fill
-                        className="object-cover"
-                    />
-                </div>
+          <p className="mt-6 text-gray-600 text-lg leading-relaxed">
+            {t("about.heroText1")}
+            <br />
+            <br />
+            {t("about.heroText2")}
+            <br />
+            <br />
+            {t("about.heroText3")}
+            <br />
+            <br />
+            {t("about.heroText4")}
+          </p>
+        </div>
+
+        <div className="relative w-full h-[320px] md:h-[400px] rounded-3xl overflow-hidden shadow-xl hover:scale-105 transition-transform duration-300">
+          <Image
+            src="/images/about.png"
+            alt="About Us"
+            fill
+            className="object-cover"
+          />
+        </div>
+      </div>
+
+      {/* MISSION & VISION */}
+      <div className="grid md:grid-cols-2 gap-10">
+        {[
+          {
+            title: t("about.missionTitle"),
+            text: t("about.missionText"),
+          },
+          {
+            title: t("about.visionTitle"),
+            text: t("about.visionText"),
+          },
+        ].map((item, i) => (
+          <div
+            key={i}
+            className="bg-gradient-to-r from-[#FFEDEB] to-[#FFF3F1] border rounded-3xl p-8 shadow-lg hover:shadow-2xl transition"
+          >
+            <h2 className="text-2xl font-semibold text-[#1F2328]">
+              {item.title}
+            </h2>
+            <p className="mt-4 text-gray-600 leading-relaxed">
+              {item.text}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* OUR VALUES */}
+      <div>
+        <h2 className="text-3xl font-semibold text-[#1F2328] text-center mb-10">
+          {t("about.coreValues")}
+        </h2>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            {
+              title: t("about.values.trustTitle"),
+              text: t("about.values.trustText"),
+            },
+            {
+              title: t("about.values.customerTitle"),
+              text: t("about.values.customerText"),
+            },
+            {
+              title: t("about.values.innovationTitle"),
+              text: t("about.values.innovationText"),
+            },
+            {
+              title: t("about.values.integrityTitle"),
+              text: t("about.values.integrityText"),
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white border rounded-2xl p-6 shadow-md hover:shadow-xl transition hover:scale-105 duration-300"
+            >
+              <h3 className="text-lg font-semibold text-[#1F2328]">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-gray-600 text-sm">
+                {item.text}
+              </p>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* MISSION & VISION */}
-            <div className="grid md:grid-cols-2 gap-10">
-                {[
-                    {
-                        title: "Our Mission",
-                        text: "Provide exceptional real estate solutions that simplify property buying, selling, and renting in Punta Cana. We combine industry expertise, technology, and personalized service."
-                    },
-                    {
-                        title: "Our Vision",
-                        text: "To become the most trusted real estate platform in the Dominican Republic — where transparency, customer satisfaction, and innovation set a new industry standard."
-                    }
-                ].map((item, i) => (
-                    <div key={i} className="bg-gradient-to-r from-[#FFEDEB] to-[#FFF3F1] border rounded-3xl p-8 shadow-lg hover:shadow-2xl transition">
-                        <h2 className="text-2xl font-semibold text-[#1F2328]">{item.title}</h2>
-                        <p className="mt-4 text-gray-600 leading-relaxed">{item.text}</p>
-                    </div>
-                ))}
+      {/* WHY CHOOSE US */}
+      <div className="bg-gradient-to-r from-[#FFF5F3] to-[#FFE9E5] border rounded-3xl p-10">
+        <h2 className="text-3xl font-semibold text-[#1F2328] mb-8 text-center">
+          {t("about.whyChooseUs")}
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              title: t("about.choose.expertTitle"),
+              text: t("about.choose.expertText"),
+            },
+            {
+              title: t("about.choose.verifiedTitle"),
+              text: t("about.choose.verifiedText"),
+            },
+            {
+              title: t("about.choose.seamlessTitle"),
+              text: t("about.choose.seamlessText"),
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white border rounded-2xl p-6 shadow-md hover:shadow-xl transition hover:scale-105 duration-300 text-center"
+            >
+              <h3 className="text-xl font-semibold text-[#1F2328]">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-gray-600 text-sm">
+                {item.text}
+              </p>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* OUR VALUES */}
-            <div>
-                <h2 className="text-3xl font-semibold text-[#1F2328] text-center mb-10">
-                    Our Core Values
-                </h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[
-                        { title: "Trust & Transparency", text: "Every transaction is honest, clear, and professional." },
-                        { title: "Customer First", text: "Your goals and satisfaction guide everything we do." },
-                        { title: "Innovation", text: "We use modern tools to make your property search easier." },
-                        { title: "Integrity", text: "We act with honesty and strong moral principles." }
-                    ].map((item, i) => (
-                        <div key={i} className="bg-white border rounded-2xl p-6 shadow-md hover:shadow-xl transition hover:scale-105 duration-300">
-                            <h3 className="text-lg font-semibold text-[#1F2328]">{item.title}</h3>
-                            <p className="mt-3 text-gray-600 text-sm">{item.text}</p>
-                        </div>
-                    ))}
-                </div>
+      {/* TEAM SECTION */}
+      <div>
+        <h2 className="text-3xl font-semibold text-[#1F2328] text-center mb-10">
+          {t("about.teamTitle")}
+        </h2>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
+          {[
+            {
+              img: "/images/man.avif",
+              name: "Johnathan Miller",
+              role: t("about.teamRoles.consultant"),
+            },
+            {
+              img: "/images/girl.jpg",
+              name: "Sophia Rodriguez",
+              role: t("about.teamRoles.manager"),
+            },
+            {
+              img: "/images/miller.png",
+              name: "Carlos Ramirez",
+              role: t("about.teamRoles.investment"),
+            },
+          ].map((member, i) => (
+            <div key={i} className="text-center">
+              <div className="w-36 h-36 mx-auto rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
+                <Image
+                  src={member.img}
+                  alt={member.name}
+                  width={144}
+                  height={144}
+                  className="object-cover"
+                />
+              </div>
+
+              <h3 className="mt-4 text-xl font-semibold text-[#1F2328]">
+                {member.name}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {member.role}
+              </p>
             </div>
+          ))}
+        </div>
+      </div>
 
-            {/* WHY CHOOSE US */}
-            <div className="bg-gradient-to-r from-[#FFF5F3] to-[#FFE9E5] border rounded-3xl p-10">
-                <h2 className="text-3xl font-semibold text-[#1F2328] mb-8 text-center">
-                    Why Choose Us?
-                </h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                    {[
-                        { title: "Expert Local Knowledge", text: "We know every neighborhood in Punta Cana." },
-                        { title: "Verified Properties", text: "Every listing is checked for accuracy and legitimacy." },
-                        { title: "Seamless Process", text: "From search to paperwork, we guide you at every step." }
-                    ].map((item, i) => (
-                        <div key={i} className="bg-white border rounded-2xl p-6 shadow-md hover:shadow-xl transition hover:scale-105 duration-300 text-center">
-                            <h3 className="text-xl font-semibold text-[#1F2328]">{item.title}</h3>
-                            <p className="mt-3 text-gray-600 text-sm">{item.text}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* TEAM SECTION */}
-            <div>
-                <h2 className="text-3xl font-semibold text-[#1F2328] text-center mb-10">
-                    Meet Our Team
-                </h2>
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10">
-                    {[
-                        { img: "/images/man.avif", name: "Johnathan Miller", role: "Lead Property Consultant" },
-                        { img: "/images/girl.jpg", name: "Sophia Rodriguez", role: "Client Relations Manager" },
-                        { img: "/images/miller.png", name: "Carlos Ramirez", role: "Investment Specialist" }
-                    ].map((member, i) => (
-                        <div key={i} className="text-center">
-                            <div className="w-36 h-36 mx-auto rounded-full overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
-                                <Image
-                                    src={member.img}
-                                    alt={member.name}
-                                    width={144}
-                                    height={144}
-                                    className="object-cover"
-                                />
-                            </div>
-                            <h3 className="mt-4 text-xl font-semibold text-[#1F2328]">{member.name}</h3>
-                            <p className="text-gray-600 text-sm">{member.role}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* STATS SECTION */}
-            <div className="grid sm:grid-cols-3 gap-10 text-center">
-                {[
-                    { label: "Properties Listed", value: "450+" },
-                    { label: "Happy Clients", value: "900+" },
-                    { label: "Years Experience", value: "10+" }
-                ].map((stat, i) => (
-                    <div key={i}>
-                        <p className="text-4xl font-bold text-[#E63946]">{stat.value}</p>
-                        <p className="text-gray-600 mt-2">{stat.label}</p>
-                    </div>
-                ))}
-            </div>
-
-        </section>
-    );
+      {/* STATS */}
+      <div className="grid sm:grid-cols-3 gap-10 text-center">
+        {[
+          {
+            label: t("about.stats.properties"),
+            value: "450+",
+          },
+          {
+            label: t("about.stats.clients"),
+            value: "900+",
+          },
+          {
+            label: t("about.stats.experience"),
+            value: "10+",
+          },
+        ].map((stat, i) => (
+          <div key={i}>
+            <p className="text-4xl font-bold text-[#E63946]">
+              {stat.value}
+            </p>
+            <p className="text-gray-600 mt-2">
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
