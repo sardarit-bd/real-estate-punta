@@ -90,52 +90,55 @@ export default function SearchCard() {
   };
 
   return (
-    <div className="mt-10 bg-white shadow-lg rounded-3xl p-6 border">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="mt-6 sm:mt-8 md:mt-10 bg-white shadow-lg rounded-2xl lg:rounded-3xl p-4 sm:p-5 md:p-6 border">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
         {/* CITY */}
-        <div>
-          <label className="text-gray-600 text-sm block mb-2">
+        <div className="sm:col-span-2 lg:col-span-1">
+          <label className="text-gray-600 text-xs sm:text-sm block mb-1 sm:mb-2">
             {t("city")}
           </label>
           <CustomSelect
             value={getCityDisplayValue()}
             options={cityOptions}
             onChange={handleCityChange}
+            size="responsive"
           />
         </div>
 
         {/* STATUS */}
         <div>
-          <label className="text-gray-600 text-sm block mb-2">
+          <label className="text-gray-600 text-xs sm:text-sm block mb-1 sm:mb-2">
             {t("status")}
           </label>
           <CustomSelect
             value={getTypeDisplayValue()}
             options={typeOptions}
             onChange={handleTypeChange}
+            size="responsive"
           />
         </div>
 
         {/* BEDROOMS */}
         <div>
-          <label className="text-gray-600 text-sm block mb-2">
+          <label className="text-gray-600 text-xs sm:text-sm block mb-1 sm:mb-2">
             {t("bedrooms")}
           </label>
           <CustomSelect
             value={getBedroomDisplayValue()}
             options={bedroomOptions}
             onChange={handleBedroomChange}
+            size="responsive"
           />
         </div>
       </div>
 
       {/* SEARCH BUTTON */}
-      <div className="mt-8">
+      <div className="mt-6 sm:mt-8">
         <button
           onClick={handleSearch}
-          className="flex items-center justify-center gap-2 w-full px-8 py-4 bg-[#004087] text-white font-semibold rounded-xl hover:bg-[#002f64]"
+          className="flex items-center justify-center gap-2 w-full px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-[#004087] text-white font-semibold rounded-lg sm:rounded-xl hover:bg-[#002f64] transition-colors duration-300 text-sm sm:text-base"
         >
-          <FaSearch />
+          <FaSearch className="text-sm sm:text-base" />
           {t("searchProperties")}
         </button>
       </div>
