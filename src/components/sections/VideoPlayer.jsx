@@ -1,195 +1,150 @@
-"use client"
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+"use client";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { CircularPlayButton } from "./CircularPlayButton";
 
 export default function VideoPlayer() {
-    const videoRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [playButtonVisible, setPlayButtonVisible] = useState(true);
-    const [isAnimating, setIsAnimating] = useState(false);
-    const [videoUrl, setVideoUrl] = useState('/videos/hero-video.mp4')
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playButtonVisible, setPlayButtonVisible] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("/videos/hero-video.mp4");
 
-    useEffect(() => {
-        const fetchSite = async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site`,
-            )
-           setVideoUrl(res?.data?.data[0]?.featuredVideo)
-        }
-        fetchSite()
-    }, [])
-    const handlePlayClick = () => {
-        if (videoRef.current && !isAnimating) {
-            setIsAnimating(true);
+  const [buttonSize, setButtonSize] = useState(150);
 
-            if (isPlaying) {
-                // Pause korle - play button appear hobe
-                videoRef.current.pause();
-                setPlayButtonVisible(true);
-
-                // Animation complete houar por
-                setTimeout(() => {
-                    setIsPlaying(false);
-                    setIsAnimating(false);
-                }, 300);
-            } else {
-                // Play korle - play button disappear hobe
-                setPlayButtonVisible(false);
-
-                // Animation complete houar por video play hobe
-                setTimeout(() => {
-                    videoRef.current.play();
-                    setIsPlaying(true);
-                    setIsAnimating(false);
-                }, 300);
-            }
-        }
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setButtonSize(100);
+      } else if (window.innerWidth < 768) {
+        setButtonSize(120);
+      } else {
+        setButtonSize(150);
+      }
     };
 
-    // Video manually pause korle
-    const handleVideoPause = () => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  useEffect(() => {
+    const fetchSite = async () => {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site`
+      );
+      setVideoUrl(res?.data?.data[0]?.featuredVideo);
+    };
+    fetchSite();
+  }, []);
+
+  const handlePlayClick = () => {
+    if (!videoRef.current || isAnimating) return;
+
+    setIsAnimating(true);
+
+    if (isPlaying) {
+      videoRef.current.pause();
+      setPlayButtonVisible(true);
+
+      setTimeout(() => {
         setIsPlaying(false);
-        setPlayButtonVisible(true);
-    };
+        setIsAnimating(false);
+      }, 300);
+    } else {
+      setPlayButtonVisible(false);
 
-    // Video manually play korle
-    const handleVideoPlay = () => {
+      setTimeout(() => {
+        videoRef.current.play();
         setIsPlaying(true);
-        setPlayButtonVisible(false);
-    };
+        setIsAnimating(false);
+      }, 300);
+    }
+  };
 
-    return (
-        <div className="relative">
-            {/* Video Container */}
-            <div className="relative w-[600px] h-[435px] rounded-3xl overflow-hidden group">
-                <video
-                    ref={videoRef}
-                    src={videoUrl}
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover rounded-3xl transition-all duration-300 group-hover:brightness-90"
-                    onPlay={handleVideoPlay}
-                    onPause={handleVideoPause}
-                />
+  const handleVideoPause = () => {
+    setIsPlaying(false);
+    setPlayButtonVisible(true);
+  };
 
-                {/* Big Play Button with Animation */}
+  const handleVideoPlay = () => {
+    setIsPlaying(true);
+    setPlayButtonVisible(false);
+  };
+
+  return (
+    <div className="relative w-full">
+      {/* Video Container */}
+      <div className="relative w-full max-w-full sm:max-w-[500px] md:max-w-[600px] mx-auto aspect-video md:h-[435px] rounded-xl sm:rounded-2xl md:rounded-3xl overflow-hidden group">
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          loop
+          playsInline
+          className="w-full h-full object-cover rounded-xl sm:rounded-2xl md:rounded-3xl transition-all duration-300 group-hover:brightness-90"
+          onPlay={handleVideoPlay}
+          onPause={handleVideoPause}
+        />
+        {playButtonVisible && (
+          <div
+            className="absolute inset-0 flex items-center justify-center z-20 cursor-pointer"
+            onClick={handlePlayClick}
+          >
+            <CircularPlayButton
+              text="Play Video · Play Video · Play Video · Play Video ·"
+              size={buttonSize}
+              className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32"
+            />
+          </div>
+        )}
+
+        {/* Small Play / Pause Button (Top Left) */}
+        <div
+          className={`absolute top-2 sm:top-3 md:top-4 left-2 sm:left-3 md:left-4 transition-all duration-500 ${isPlaying
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
+            }`}
+          onClick={handlePlayClick}
+        >
+          <div className="relative group/button">
+            <div className="absolute -inset-2 sm:-inset-3 bg-yellow-400/30 rounded-full blur-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-300 -z-10"></div>
+
+            <div className="bg-black/80 backdrop-blur-sm rounded-full p-2 sm:p-3 cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-lg">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
+                {/* Pause Icon */}
                 <div
-                    className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${playButtonVisible ? 'opacity-100 scale-75 pointer-events-auto' : 'opacity-0 pointer-events-none scale-75'}`}
-                    onClick={handlePlayClick}
+                  className={`absolute transition-all duration-300 ${isPlaying
+                      ? "opacity-100 rotate-0 scale-100"
+                      : "opacity-0 rotate-90 scale-50"
+                    }`}
                 >
-                    <div className="relative">
-                        {/* Glow Effect - Blue based on primary color */}
-                        <div className="absolute -inset-6 bg-blue-500/30 rounded-full blur-xl animate-glow-slow -z-10"></div>
-
-                        {/* Outer Ring with Pulse Animation - using primary color */}
-                        <div className="absolute -inset-4 border-2 border-[#004087]/60 rounded-full animate-pulse-ring -z-5"></div>
-
-                        {/* Main Play Button */}
-                        <div className="relative w-28 h-28 bg-gradient-to-br from-[#004087] to-[#002a5e] rounded-full flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 hover:from-[#0050a0] hover:to-[#003870] shadow-2xl group">
-                            {/* Inner Glow */}
-                            <div className="absolute inset-4 bg-blue-400/20 rounded-full blur-sm"></div>
-
-                            {/* Play Icon */}
-                            <svg
-                                className="w-16 h-16 text-white ml-2 relative z-10 group-hover:text-blue-100 transition-colors duration-300"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path d="M8 5v14l11-7z" />
-                            </svg>
-
-                            {/* Hover Effect Ring */}
-                            <div className="absolute inset-0 border-4 border-transparent rounded-full transition-all duration-300 group-hover:border-[#004087]/40"></div>
-
-                            {/* Subtle shine effect */}
-                            <div className="absolute top-2 left-2 right-2 h-4 bg-gradient-to-b from-white/10 to-transparent rounded-t-full opacity-50"></div>
-                        </div>
-                    </div>
+                  <div className="flex space-x-0.5 sm:space-x-1">
+                    <div className="w-1 h-4 sm:w-1.5 sm:h-5 bg-white rounded-full"></div>
+                    <div className="w-1 h-4 sm:w-1.5 sm:h-5 bg-white rounded-full"></div>
+                  </div>
                 </div>
 
-                {/* Small Animated Play/Pause Button */}
+                {/* Play Icon */}
                 <div
-                    className={`absolute top-4 left-4 transition-all duration-500 ${isPlaying ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
-                    onClick={handlePlayClick}
+                  className={`absolute transition-all duration-300 ${isPlaying
+                      ? "opacity-0 -rotate-90 scale-50"
+                      : "opacity-100 rotate-0 scale-100"
+                    }`}
                 >
-                    <div className="relative group/button">
-                        {/* Button Glow Effect */}
-                        <div className="absolute -inset-3 bg-yellow-400/30 rounded-full blur-md opacity-0 group-hover/button:opacity-100 transition-opacity duration-300 -z-10"></div>
-
-                        {/* Main Button */}
-                        <div className="bg-black/80 backdrop-blur-sm rounded-full p-3 cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-lg">
-                            <div className="relative w-10 h-10 flex items-center justify-center">
-                                {/* Pause Icon (two bars) */}
-                                <div className={`absolute transition-all duration-300 ${isPlaying ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-50'}`}>
-                                    <div className="flex space-x-1">
-                                        <div className="w-1.5 h-5 bg-white rounded-full"></div>
-                                        <div className="w-1.5 h-5 bg-white rounded-full"></div>
-                                    </div>
-                                </div>
-
-                                {/* Play Icon (triangle) */}
-                                <div className={`absolute transition-all duration-300 ${isPlaying ? 'opacity-0 -rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
-                                    <svg
-                                        className="w-5 h-5 text-white ml-0.5"
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M8 5v14l11-7z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-white ml-0 sm:ml-0.5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
                 </div>
+              </div>
             </div>
-
-            {/* Custom CSS for animations */}
-            <style jsx>{`
-                @keyframes glow {
-                    0%, 100% {
-                        opacity: 0.4;
-                        transform: scale(1);
-                    }
-                    50% {
-                        opacity: 0.7;
-                        transform: scale(1.05);
-                    }
-                }
-                
-                @keyframes pulse-ring {
-                    0% {
-                        transform: scale(0.8);
-                        opacity: 0.5;
-                    }
-                    50% {
-                        transform: scale(1.2);
-                        opacity: 0.2;
-                    }
-                    100% {
-                        transform: scale(0.8);
-                        opacity: 0.5;
-                    }
-                }
-                
-                .animate-glow-slow {
-                    animation: glow 3s ease-in-out infinite;
-                }
-                
-                .animate-pulse-ring {
-                    animation: pulse-ring 2s ease-in-out infinite;
-                }
-                
-                /* Smooth scale animation for play button */
-                .transition-all {
-                    transition-property: all;
-                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                }
-                
-                /* Button click animation */
-                .group:hover .hover\:scale-110 {
-                    transform: scale(1.1);
-                }
-            `}</style>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
