@@ -2,13 +2,22 @@
 
 import { motion } from "framer-motion";
 import { PhoneCall, Mail, MapPin, Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ContactSection() {
+  const { t } = useTranslation();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return null;
+
   return (
     <section className="relative py-20 overflow-hidden">
-
       <div className="max-w-7xl mx-auto px-6 md:px-0 relative z-10">
-        
         {/* Heading */}
         <div className="text-center mb-14">
           <motion.h2
@@ -17,61 +26,47 @@ export default function ContactSection() {
             transition={{ duration: 0.5 }}
             className="text-3xl md:text-4xl font-bold text-[#113B28]"
           >
-            Get In Touch
+            {t("contactSection.title")}
           </motion.h2>
 
           <p className="text-[#6F6F6F] mt-4 max-w-2xl mx-auto text-sm md:text-base">
-            Have questions about properties, investment advice, or scheduling a property tour?
-            Our team is ready to assist you anytime.
+            {t("contactSection.subtitle")}
           </p>
         </div>
 
         {/* Grid */}
         <div className="grid md:grid-cols-2 gap-10">
-
-          {/* LEFT: Contact Info */}
+          {/* LEFT */}
           <div className="space-y-6">
-
             {/* Phone */}
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 
-              flex items-start gap-4 transition"
-            >
-              <PhoneCall size={40} className="text-[#004087]" />
+            <motion.div whileHover={{ y: -4 }} className="card">
+              <PhoneCall size={40} className="icon" />
               <div>
-                <h3 className="font-semibold text-lg text-[#113B28]">
-                  Call Us Anytime
+                <h3 className="card-title">
+                  {t("contactSection.phone.title")}
                 </h3>
-                <p className="text-[#6F6F6F] text-sm mb-2">
-                  For property visits & investment guidance
+                <p className="card-desc">
+                  {t("contactSection.phone.desc")}
                 </p>
-                <a
-                  href="tel:+1800123456"
-                  className="text-[#113B28] font-semibold hover:underline text-lg"
-                >
+                <a href="tel:+1800123456" className="card-link">
                   +1 800 123 456
                 </a>
               </div>
             </motion.div>
 
             {/* Email */}
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 
-              flex items-start gap-4 transition"
-            >
-              <Mail size={40} className="text-[#004087]" />
+            <motion.div whileHover={{ y: -4 }} className="card">
+              <Mail size={40} className="icon" />
               <div>
-                <h3 className="font-semibold text-lg text-[#113B28]">
-                  Email Support
+                <h3 className="card-title">
+                  {t("contactSection.email.title")}
                 </h3>
-                <p className="text-[#6F6F6F] text-sm mb-2">
-                  Get quick responses within 12–24 hours
+                <p className="card-desc">
+                  {t("contactSection.email.desc")}
                 </p>
                 <a
                   href="mailto:info@realestate.com"
-                  className="text-[#113B28] font-semibold hover:underline"
+                  className="card-link"
                 >
                   info@realestate.com
                 </a>
@@ -79,31 +74,27 @@ export default function ContactSection() {
             </motion.div>
 
             {/* Location */}
-            <motion.div
-              whileHover={{ y: -4 }}
-              className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 
-              flex items-start gap-4 transition"
-            >
-              <MapPin size={40} className="text-[#004087]" />
+            <motion.div whileHover={{ y: -4 }} className="card">
+              <MapPin size={40} className="icon" />
               <div>
-                <h3 className="font-semibold text-lg text-[#113B28]">
-                  Visit Our Office
+                <h3 className="card-title">
+                  {t("contactSection.location.title")}
                 </h3>
-                <p className="text-[#6F6F6F] text-sm mb-2">
-                  Come meet our real-estate specialists
+                <p className="card-desc">
+                  {t("contactSection.location.desc")}
                 </p>
                 <p className="text-[#113B28] text-sm font-medium">
-                  Punta Cana, Dominican Republic
+                  {t("contactSection.location.address")}
                 </p>
                 <div className="flex items-center gap-2 text-[#6F6F6F] text-sm mt-1">
                   <Clock size={14} />
-                  <span>Mon–Sat, 9:00 AM – 7:00 PM</span>
+                  <span>{t("contactSection.location.hours")}</span>
                 </div>
               </div>
             </motion.div>
           </div>
 
-          {/* RIGHT: Contact Form */}
+          {/* RIGHT: FORM */}
           <motion.form
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -111,23 +102,23 @@ export default function ContactSection() {
             className="bg-white shadow-lg rounded-2xl p-8 border border-gray-200 space-y-5"
             onSubmit={(e) => {
               e.preventDefault();
-              alert("Message sent! We will contact you shortly.");
+              alert(t("contactSection.form.success"));
             }}
           >
             <h3 className="text-xl font-semibold text-[#113B28] mb-4">
-              Send Us a Message
+              {t("contactSection.form.title")}
             </h3>
 
             <div className="grid md:grid-cols-2 gap-5">
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder={t("contactSection.form.name")}
                 required
                 className="input-field"
               />
               <input
                 type="email"
-                placeholder="Email Address"
+                placeholder={t("contactSection.form.email")}
                 required
                 className="input-field"
               />
@@ -135,44 +126,52 @@ export default function ContactSection() {
 
             <input
               type="tel"
-              placeholder="Phone Number"
+              placeholder={t("contactSection.form.phone")}
               required
               className="input-field"
             />
 
             <textarea
-              placeholder="Your Message"
+              placeholder={t("contactSection.form.message")}
               rows={4}
               className="input-field resize-none"
             />
 
-            <button
-              type="submit"
-              className="w-full bg-[#004087] text-white py-3 rounded-xl font-semibold
-              shadow-md hover:bg-[#002b5c] transition"
-            >
-              Send Message
+            <button type="submit" className="submit-btn">
+              {t("contactSection.form.button")}
             </button>
           </motion.form>
         </div>
       </div>
 
-      {/* INPUT FIELD STYLES */}
+      {/* styles */}
       <style>{`
+        .card {
+          background: white;
+          border-radius: 16px;
+          padding: 24px;
+          border: 1px solid #e5e7eb;
+          display: flex;
+          gap: 16px;
+        }
+        .icon { color: #004087; }
+        .card-title { font-weight: 600; font-size: 18px; color: #113B28; }
+        .card-desc { color: #6F6F6F; font-size: 14px; margin-bottom: 6px; }
+        .card-link { color: #113B28; font-weight: 600; }
+        .submit-btn {
+          width: 100%;
+          background: #004087;
+          color: white;
+          padding: 12px;
+          border-radius: 12px;
+          font-weight: 600;
+        }
+        .submit-btn:hover { background: #002b5c; }
         .input-field {
           width: 100%;
           padding: 14px 16px;
           border-radius: 12px;
           border: 1px solid #ddd;
-          background: #FFF;
-          font-size: 14px;
-          color: #113B28;
-          outline: none;
-          transition: 0.2s;
-        }
-        .input-field:focus {
-          border-color: #E7C464;
-          box-shadow: 0 0 0 3px rgba(231,196,100,0.25);
         }
       `}</style>
     </section>

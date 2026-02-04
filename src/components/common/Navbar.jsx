@@ -1,3 +1,4 @@
+// app/components/layout/Navbar.jsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -19,40 +20,69 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [favouriteCount, setFavouriteCount] = useState(0);
   const [language, setLanguage] = useState("en");
+  const [isClient, setIsClient] = useState(false); // Add client check
 
   const { user } = useAuthContext();
   const { t, i18n } = useTranslation();
 
+  /* -------------------- CLIENT CHECK -------------------- */
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  /* -------------------- LANGUAGE INITIALIZATION -------------------- */
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("lang") || "en";
+      setLanguage(savedLang);
+      i18n.changeLanguage(savedLang);
+    }
+  }, [i18n]);
+
   /* -------------------- FAVOURITES -------------------- */
   useEffect(() => {
-    updateFavouriteCount();
+    if (typeof window !== "undefined") {
+      updateFavouriteCount();
 
-    const refresh = () => updateFavouriteCount();
-    window.addEventListener("favourites-updated", refresh);
+      const refresh = () => updateFavouriteCount();
+      window.addEventListener("favourites-updated", refresh);
 
-    return () =>
-      window.removeEventListener("favourites-updated", refresh);
+      return () =>
+        window.removeEventListener("favourites-updated", refresh);
+    }
   }, []);
 
   const updateFavouriteCount = () => {
-    const favourites = JSON.parse(
-      localStorage.getItem("favouriteProperties") || "[]"
-    );
-    setFavouriteCount(favourites.length);
+    if (typeof window !== "undefined") {
+      const favourites = JSON.parse(
+        localStorage.getItem("favouriteProperties") || "[]"
+      );
+      setFavouriteCount(favourites.length);
+    }
   };
 
-  /* -------------------- LANGUAGE -------------------- */
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang") || "en";
-    setLanguage(savedLang);
-    i18n.changeLanguage(savedLang);
-  }, [i18n]);
-
+  /* -------------------- LANGUAGE CHANGE HANDLER -------------------- */
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
-    localStorage.setItem("lang", lang);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("lang", lang);
+    }
     i18n.changeLanguage(lang);
   };
+
+  // Show loading on server, render on client
+  if (!isClient) {
+    return (
+      <header className="w-full bg-[#F9F9F9] py-4 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          {/* Loading skeleton */}
+          <div className="flex items-center gap-12">
+            <div className="w-[150px] h-[40px] bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <>
@@ -68,13 +98,14 @@ export default function Navbar() {
                 width={150}
                 height={150}
                 className="w-[150px]"
+                priority
               />
             </Link>
 
             {/* DESKTOP MENU */}
             <nav className="hidden md:flex items-center gap-8 text-sm text-[#1F3A34]">
               <NavItem title={t("home")} href="/" />
-              <NavItem title={t("about")} href="/pages/about" />
+              <NavItem title={t("navAbout")} href="/pages/about" />
               <NavItem title={t("properties")} href="/pages/properties" />
               <Link href="/pages/blog">{t("blog")}</Link>
               <Link href="/pages/contact">{t("contact")}</Link>
@@ -136,9 +167,8 @@ export default function Navbar() {
 
       {/* ================= MOBILE DRAWER ================= */}
       <div
-        className={`fixed top-0 left-0 h-full w-[280px] bg-white z-50 transform ${
-          open ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300`}
+        className={`fixed top-0 left-0 h-full w-[280px] bg-white z-50 transform ${open ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300`}
       >
         <div className="flex items-center justify-between px-5 py-4 border-b">
           <span className="text-lg font-semibold">
@@ -151,7 +181,7 @@ export default function Navbar() {
 
         <nav className="flex flex-col px-5 py-4 gap-4">
           <MobileItem title={t("home")} href="/" />
-          <MobileItem title={t("about")} href="/pages/about" />
+          <MobileItem title={t("navAbout")} href="/pages/about" />
           <MobileItem
             title={t("properties")}
             href="/pages/properties"
