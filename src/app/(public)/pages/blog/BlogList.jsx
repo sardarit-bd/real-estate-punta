@@ -4,8 +4,11 @@
 import BlogCard from "@/components/cards/Blog";
 import BlogSkeleton from "./BlogSkeleton";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function BlogList({ blogs }) {
+    const {t} = useTranslation();
+
     const ITEMS_PER_PAGE = 6;
 
     const [page, setPage] = useState(1);
@@ -17,8 +20,8 @@ export default function BlogList({ blogs }) {
 
     useEffect(() => {
         setLoading(true);
-        const t = setTimeout(() => setLoading(false), 500);
-        return () => clearTimeout(t);
+        const tmr = setTimeout(() => setLoading(false), 500);
+        return () => clearTimeout(tmr);
     }, [page]);
 
     const totalPages = Math.ceil(blogs.length / ITEMS_PER_PAGE);
@@ -33,11 +36,17 @@ export default function BlogList({ blogs }) {
             {noBlogs && (
                 <div className="text-center py-20">
                     <h3 className="text-xl font-semibold text-gray-700">
-                        No Blogs Found
+                        {t("blog.noBlogsTitle", { default: "No Blogs Found" })}
                     </h3>
 
                     <p className="text-gray-500 mt-2 max-w-md mx-auto text-sm">
-                        Try adjusting your search or category filters to find articles.
+                        {t(
+                            "blog.noBlogsHint",
+                            {
+                                default:
+                                    "Try adjusting your search or category filters to find articles."
+                            }
+                        )}
                     </p>
                 </div>
             )}
@@ -64,15 +73,16 @@ export default function BlogList({ blogs }) {
                     {/* ---------- PAGINATION ---------- */}
                     {totalPages > 1 && (
                         <div className="flex items-center justify-center gap-2 mt-10">
-
                             <button
                                 disabled={page === 1}
                                 onClick={() => setPage(page - 1)}
                                 className={`px-4 py-2 rounded-lg border ${
-                                    page === 1 ? "opacity-40" : "hover:bg-gray-100"
+                                    page === 1
+                                        ? "opacity-40"
+                                        : "hover:bg-gray-100"
                                 }`}
                             >
-                                Prev
+                                {t("pagination.prev", { default: "Prev" })}
                             </button>
 
                             {[...Array(totalPages)].map((_, i) => (
@@ -98,7 +108,7 @@ export default function BlogList({ blogs }) {
                                         : "hover:bg-gray-100"
                                 }`}
                             >
-                                Next
+                                {t("pagination.next", { default: "Next" })}
                             </button>
                         </div>
                     )}
