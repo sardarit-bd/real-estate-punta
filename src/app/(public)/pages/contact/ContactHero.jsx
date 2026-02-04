@@ -2,12 +2,22 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ContactHero() {
+  const { t } = useTranslation();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  if (!ready) return null;
+
   return (
     <section className="py-16 md:py-24 bg-[#FFF6F2]">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-
         {/* LEFT TEXT */}
         <div>
           <motion.h1
@@ -16,7 +26,10 @@ export default function ContactHero() {
             transition={{ duration: 0.6 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-[#113B28]"
           >
-            Get in Touch With <span className="text-[#004087]">Our Real Estate Team</span>
+            {t("contactHero.titleBefore")}{" "}
+            <span className="text-[#004087]">
+              {t("contactHero.titleHighlight")}
+            </span>
           </motion.h1>
 
           <motion.p
@@ -25,24 +38,8 @@ export default function ContactHero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mt-5 text-[#6F6F6F] text-base leading-relaxed max-w-md"
           >
-            Whether you are looking to buy, sell, or invest in Punta Cana properties, 
-            our experienced team is ready to guide you every step of the way.  
-            Contact us for expert advice, property tours, and personalized support.
+            {t("contactHero.description")}
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-8"
-          >
-            {/* <a
-              href="#contact-form"
-              className="inline-block bg-[#E7C464] text-[#113B28] px-8 py-3 rounded-xl font-semibold shadow-md hover:bg-[#d7b356] transition"
-            >
-              Contact Us Now
-            </a> */}
-          </motion.div>
         </div>
 
         {/* RIGHT IMAGE */}
@@ -54,15 +51,14 @@ export default function ContactHero() {
         >
           <div className="rounded-3xl overflow-hidden shadow-lg border border-white">
             <Image
-              src="/images/contact.jpg"   
-              alt="Punta Cana Property"
+              src="/images/contact.jpg"
+              alt={t("contactHero.imageAlt")}
               width={700}
               height={450}
               className="object-cover w-full h-[320px] md:h-[380px]"
             />
           </div>
         </motion.div>
-
       </div>
     </section>
   );
