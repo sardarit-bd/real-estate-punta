@@ -1,32 +1,200 @@
 {
   "home": "Inicio",
-  "about": "Sobre Nosotros",
+  "navAbout": "Sobre Nosotros",
   "properties": "Propiedades",
   "blog": "Blog",
   "contact": "Contacto",
   "menu": "Menú",
   "favourites": "Favoritos",
-  
   "heroSubtitle": "Desde tan solo $10 por día con descuentos por tiempo limitado.",
   "heroTitleBefore": "Tu",
   "heroTitleHighlight": "Propiedad",
   "heroTitleAfter": "Nuestra Prioridad",
-
   "city": "Ciudad",
   "status": "Estado",
   "bedrooms": "Habitaciones",
   "bedroom": "Habitación",
-
   "allCities": "Todas las ciudades",
   "allStatus": "Todos los estados",
   "forRent": "En alquiler",
   "forSale": "En venta",
-
   "any": "Cualquiera",
   "oneBedroom": "1 habitación",
   "twoBedrooms": "2 habitaciones",
   "threeBedrooms": "3 habitaciones",
   "fourPlusBedrooms": "4+ habitaciones",
-
-  "searchProperties": "Buscar Propiedades"
+  "searchProperties": "Buscar Propiedades",
+  "citiesTitle": "Encuentra propiedades en estas ciudades",
+  "citiesSubtitle": "Explora las zonas más populares para encontrar tu hogar ideal o inversión.",
+  "cityNotFound": "Ciudad no encontrada",
+  "cityNotFoundDesc": "No pudimos encontrar la ciudad que buscas. Verifica la ortografía o intenta con otra ubicación.",
+  "tryAnotherCity": "Intenta buscar con un nombre diferente o una ciudad cercana",
+  "propertiesAvailable": "Propiedades disponibles",
+  "locationCountry": "Estados Unidos",
+  "availableProperties": "Propiedades disponibles",
+  "browseProperties": "Explora {{count}} propiedades en {{city}}",
+  "loginToRequest": "Iniciar sesión para solicitar",
+  "verifyAccount": "Verifica tu cuenta",
+  "requested": "Solicitado",
+  "requestToRent": "Solicitar alquiler",
+  "requestToBuy": "Solicitar compra",
+  "loginRequired": "Inicio de sesión requerido",
+  "tenantsOnly": "Solo inquilinos",
+  "alreadyRequested": "Ya solicitado",
+  "requestSent": "La solicitud fue enviada al propietario.",
+  "requestFailed": "La solicitud falló",
+  "oneTime": "Pago único",
+  "keyDetails": "Detalles clave",
+  "bathrooms": "Baños",
+  "area": "Área",
+  "type": "Tipo",
+  "description": "Descripción",
+  "contactAgent": "Contactar agente",
+  "notAssigned": "No asignado",
+  "featuredProperties": "Propiedades destacadas",
+  "allProperties": "Todas las propiedades",
+  "prev": "Anterior",
+  "next": "Siguiente",
+  "latestFromBlog": "Lo último de nuestro blog",
+  "blogSubtitle": "Mantente actualizado con consejos, guías y tendencias inmobiliarias de expertos.",
+  "propertiesSubtitle": "Encuentra tu hogar perfecto en Punta Cana.",
+  "filters": "Filtros",
+  "clearAll": "Borrar todo",
+  "search": "Buscar",
+  "searchPlaceholder": "Buscar por palabra clave...",
+  "allTypes": "Todos los tipos",
+  "filtersAuto": "Los filtros se aplican automáticamente",
+  "filtersHint": "Selecciona filtros para refinar tu búsqueda",
+  "activeFilters": "Filtros activos:",
+  "featured": "Destacado",
+  "beds": "Habitaciones",
+  "baths": "Baños",
+  "sqft": "pies²",
+  "addToFavourites": "Agregar a favoritos",
+  "removeFromFavourites": "Quitar de favoritos",
+  "clear": "Limpiar",
+  "clearFilters": "Limpiar filtros",
+  "filtersActive": "filtro(s) activos",
+  "about": {
+    "heroTitle": "Por qué creé",
+    "heroText1": "Casa Viva comenzó después de mis propias dificultades alquilando propiedades de inversión en Punta Cana.",
+    "heroText2": "Tras enfrentar estos desafíos repetidamente, entendí que muchos otros pasaban por lo mismo.",
+    "heroText3": "Decidí crear una solución clara y confiable para todos.",
+    "heroText4": "Hoy, Casa Viva conecta excelentes propiedades con los inquilinos ideales.",
+    "missionTitle": "Nuestra misión",
+    "missionText": "Ofrecer soluciones inmobiliarias excepcionales en Punta Cana.",
+    "visionTitle": "Nuestra visión",
+    "visionText": "Convertirnos en la plataforma inmobiliaria más confiable del país.",
+    "coreValues": "Nuestros valores",
+    "values": {
+      "trustTitle": "Confianza y transparencia",
+      "trustText": "Cada transacción es honesta y clara.",
+      "customerTitle": "El cliente primero",
+      "customerText": "Tu satisfacción guía todo lo que hacemos.",
+      "innovationTitle": "Innovación",
+      "innovationText": "Usamos tecnología moderna para facilitar tu búsqueda.",
+      "integrityTitle": "Integridad",
+      "integrityText": "Actuamos con honestidad y principios sólidos."
+    },
+    "whyChooseUs": "¿Por qué elegirnos?",
+    "choose": {
+      "expertTitle": "Conocimiento local experto",
+      "expertText": "Conocemos cada barrio de Punta Cana.",
+      "verifiedTitle": "Propiedades verificadas",
+      "verifiedText": "Cada propiedad es revisada cuidadosamente.",
+      "seamlessTitle": "Proceso sencillo",
+      "seamlessText": "Te guiamos en cada paso del proceso."
+    },
+    "teamTitle": "Conoce a nuestro equipo",
+    "teamRoles": {
+      "consultant": "Consultor inmobiliario principal",
+      "manager": "Gerente de relaciones con clientes",
+      "investment": "Especialista en inversiones"
+    },
+    "stats": {
+      "properties": "Propiedades listadas",
+      "clients": "Clientes satisfechos",
+      "experience": "Años de experiencia"
+    }
+  },
+  "blogpage": {
+    "allCategories": "Todas las categorías",
+    "realEstate": "Bienes raíces",
+    "guide": "Guía",
+    "design": "Diseño",
+    "searchPlaceholder": "Buscar artículos...",
+    "searchLabel": "Búsqueda",
+    "categoryLabel": "Categoría"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre Nosotros",
+    "properties": "Propiedades",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "menu": "Menú",
+    "favourites": "Favoritos"
+  },
+  "pagination": {
+    "prev": "Anterior",
+    "next": "Siguiente"
+  },
+  "contactHero": {
+    "titleBefore": "Ponte en contacto con",
+    "titleHighlight": "Nuestro equipo inmobiliario",
+    "description": "Ya sea que desees comprar, vender o invertir en propiedades en Punta Cana, nuestro equipo experimentado está listo para guiarte en cada paso. Contáctanos para asesoramiento experto, visitas a propiedades y apoyo personalizado.",
+    "imageAlt": "Propiedad en Punta Cana"
+  },
+  "contactSection": {
+    "title": "Contáctanos",
+    "subtitle": "¿Tienes preguntas sobre propiedades, inversiones o visitas? Nuestro equipo está listo para ayudarte en cualquier momento.",
+    "phone": {
+      "title": "Llámanos en cualquier momento",
+      "desc": "Para visitas a propiedades y asesoría"
+    },
+    "email": {
+      "title": "Soporte por correo",
+      "desc": "Respuestas rápidas en 12–24 horas"
+    },
+    "location": {
+      "title": "Visita nuestra oficina",
+      "desc": "Conoce a nuestros especialistas inmobiliarios",
+      "address": "Punta Cana, República Dominicana",
+      "hours": "Lun–Sáb, 9:00 AM – 7:00 PM"
+    },
+    "form": {
+      "title": "Envíanos un mensaje",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "phone": "Número de teléfono",
+      "message": "Tu mensaje",
+      "button": "Enviar mensaje",
+      "success": "¡Mensaje enviado! Te contactaremos pronto."
+    }
+  },
+  "footer": {
+    "about": "Descubre tu propiedad ideal en Punta Cana con nuestra asesoría experta. Hacemos que comprar e invertir sea fácil y seguro.",
+    "quickLinks": {
+      "title": "Enlaces rápidos",
+      "home": "Inicio",
+      "about": "Sobre Nosotros",
+      "properties": "Propiedades",
+      "contact": "Contacto",
+      "blog": "Blog"
+    },
+    "services": {
+      "title": "Servicios",
+      "buying": "Compra de propiedades",
+      "selling": "Venta de propiedades",
+      "investing": "Consultoría de inversión",
+      "legal": "Asistencia legal"
+    },
+    "contact": {
+      "title": "Contáctanos",
+      "address": "123 Avenida Beachfront, Punta Cana, RD",
+      "email": "Correo: info@puntacanarealestate.com",
+      "phone": "Teléfono: +1 809 123 4567"
+    },
+    "copyright": "Punta Cana Bienes Raíces. Todos los derechos reservados."
+  }
 }

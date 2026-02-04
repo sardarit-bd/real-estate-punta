@@ -1,90 +1,99 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
-    const popupMaker = (service) => () => {
+  const { t } = useTranslation();
+  const [ready, setReady] = useState(false);
 
-        alert(`You clicked on ${service}. More information will be available soon!`);
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
-    }
+  if (!ready) return null;
 
-    return (
-        <footer className="bg-[#F9F9F9] text-black py-16 shadow-inner">
-            <div className="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
+  return (
+    <footer className="bg-[#F9F9F9] text-black py-16 shadow-inner">
+      <div className="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
+        {/* ABOUT */}
+        <div>
+          <Image
+            src="/images/logo.png"
+            width={180}
+            height={80}
+            alt="Logo"
+            className="mb-4"
+          />
+          <p className="text-sm text-black/70">
+            {t("footer.about")}
+          </p>
+        </div>
 
-                {/* About Section */}
-                <div>
-                    <h2 className="text-2xl font-bold mb-4">
-                        <Image src="/images/logo.png"
-                            width={180}
-                            height={80}
-                            alt="Logo" />
-                    </h2>
-                    <p className="text-sm text-black/70">
-                        Discover your dream property in Punta Cana with our expert guidance. We make buying and investing easy and secure.
-                    </p>
-                </div>
+        {/* QUICK LINKS */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">
+            {t("footer.quickLinks.title")}
+          </h3>
+          <ul className="space-y-2 text-black/70">
+            <li><Link href="/">{t("footer.quickLinks.home")}</Link></li>
+            <li><Link href="/pages/about">{t("footer.quickLinks.about")}</Link></li>
+            <li><Link href="/pages/properties">{t("footer.quickLinks.properties")}</Link></li>
+            <li><Link href="/pages/contact">{t("footer.quickLinks.contact")}</Link></li>
+            <li><Link href="/pages/blog">{t("footer.quickLinks.blog")}</Link></li>
+          </ul>
+        </div>
 
-                {/* Quick Links */}
-                <div>
-                    <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-                    <ul className="space-y-2 text-black/70">
-                        <li> <Link href="/" className="hover:text-brandAccent transition-colors duration-200">Home</Link> </li>
-                        <li><Link href="/pages/about" className="hover:text-brandAccent transition-colors duration-200">About Us</Link></li>
-                        <li><Link href="/pages/properties" className="hover:text-brandAccent transition-colors duration-200">Properties</Link></li>
-                        <li><Link href="/pages/contact" className="hover:text-brandAccent transition-colors duration-200">Contact</Link></li>
-                        <li><Link href="/pages/blog" className="hover:text-brandAccent transition-colors duration-200">Blog</Link></li>
-                    </ul>
-                </div>
+        {/* SERVICES */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">
+            {t("footer.services.title")}
+          </h3>
+          <ul className="space-y-2 text-black/70">
+            <li>{t("footer.services.buying")}</li>
+            <li>{t("footer.services.selling")}</li>
+            <li>{t("footer.services.investing")}</li>
+            <li>{t("footer.services.legal")}</li>
+          </ul>
+        </div>
 
-                {/* Services */}
-                <div>
-                    <h3 className="text-xl font-semibold mb-4">Services</h3>
-                    <ul className="space-y-2 text-black/70">
-                        <li>
-                            <button className="hover:text-brandAccent transition-colors duration-200">Property Buying</button>
-                        </li>
-                        <li>
-                            <button className="hover:text-brandAccent transition-colors duration-200">Property Selling</button>
-                        </li>
-                        <li>
-                            <button className="hover:text-brandAccent transition-colors duration-200">Investment Consulting</button>
-                        </li>
-                        <li>
-                            <button className="hover:text-brandAccent transition-colors duration-200">Legal Assistance</button>
-                        </li>
-                    </ul>
-                </div>
+        {/* CONTACT */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">
+            {t("footer.contact.title")}
+          </h3>
+          <p className="text-black/70">
+            {t("footer.contact.address")}
+          </p>
+          <p className="text-black/70 mt-2">
+            {t("footer.contact.email")}
+          </p>
+          <p className="text-black/70 mt-2">
+            {t("footer.contact.phone")}
+          </p>
 
-                {/* Contact & Social */}
-                <div>
-                    <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-                    <p className="text-black/70">123 Beachfront Ave, Punta Cana, DR</p>
-                    <p className="text-black/70 mt-2">Email: info@puntacanarealestate.com</p>
-                    <p className="text-black/70 mt-2">Phone: +1 809 123 4567</p>
+          <div className="flex mt-4 space-x-3">
+            {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map(
+              (Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="p-2 bg-black/5 rounded-full hover:bg-brandAccent hover:text-white transition"
+                >
+                  <Icon />
+                </a>
+              )
+            )}
+          </div>
+        </div>
+      </div>
 
-                    <div className="flex mt-4 space-x-3">
-                        <a href="#" className="p-2 bg-black/5 rounded-full hover:bg-brandAccent hover:text-white transition duration-200">
-                            <FaFacebookF />
-                        </a>
-                        <a href="#" className="p-2 bg-black/5 rounded-full hover:bg-brandAccent hover:text-white transition duration-200">
-                            <FaTwitter />
-                        </a>
-                        <a href="#" className="p-2 bg-black/5 rounded-full hover:bg-brandAccent hover:text-white transition duration-200">
-                            <FaInstagram />
-                        </a>
-                        <a href="#" className="p-2 bg-black/5 rounded-full hover:bg-brandAccent hover:text-white transition duration-200">
-                            <FaLinkedinIn />
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div className="mt-12 text-center text-black/50 text-sm">
-                &copy; {new Date().getFullYear()} Punta Cana Real Estate. All rights reserved.
-            </div>
-        </footer>
-    )
+      <div className="mt-12 text-center text-black/50 text-sm">
+        © {new Date().getFullYear()} {t("footer.copyright")}
+      </div>
+    </footer>
+  );
 }
