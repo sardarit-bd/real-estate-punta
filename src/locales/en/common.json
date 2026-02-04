@@ -1,37 +1,200 @@
 {
   "home": "Home",
-  "about": "About",
+  "navAbout": "About",
   "properties": "Properties",
   "blog": "Blog",
   "contact": "Contact",
   "menu": "Menu",
   "favourites": "Favourites",
-
-
-   "heroSubtitle": "From as low as $10 per day with limited time offer discounts.",
+  "heroSubtitle": "From as low as $10 per day with limited time offer discounts.",
   "heroTitleBefore": "Your",
   "heroTitleHighlight": "Property",
   "heroTitleAfter": "Our Priority",
-
   "city": "City",
   "status": "Status",
   "bedrooms": "Bedrooms",
   "bedroom": "Bedroom",
-
   "allCities": "All cities",
   "allStatus": "All status",
   "forRent": "For rent",
   "forSale": "For sale",
-
   "any": "Any",
   "oneBedroom": "1 bedroom",
   "twoBedrooms": "2 bedrooms",
   "threeBedrooms": "3 bedrooms",
   "fourPlusBedrooms": "4+ bedrooms",
-
-  "searchProperties": "Search Properties"
+  "searchProperties": "Search Properties",
+  "citiesTitle": "Find Properties in These Cities",
+  "citiesSubtitle": "Explore the most popular areas to find your ideal home or investment.",
+  "cityNotFound": "City Not Found",
+  "cityNotFoundDesc": "We couldn't locate the city you're searching for. Please check the spelling or try another location.",
+  "tryAnotherCity": "Try searching with a different name or nearby city",
+  "propertiesAvailable": "Properties Available",
+  "locationCountry": "United States",
+  "availableProperties": "Available Properties",
+  "browseProperties": "Browse {{count}} properties in {{city}}",
+  "loginToRequest": "Login to Request",
+  "verifyAccount": "Verify your Account",
+  "requested": "Requested",
+  "requestToRent": "Request to Rent",
+  "requestToBuy": "Request to Buy",
+  "loginRequired": "Login Required",
+  "tenantsOnly": "Tenants Only",
+  "alreadyRequested": "Already Requested",
+  "requestSent": "Request is sent to Landlord.",
+  "requestFailed": "Request failed",
+  "oneTime": "One-time",
+  "keyDetails": "Key Details",
+  "bathrooms": "Bathrooms",
+  "area": "Area",
+  "type": "Type",
+  "description": "Description",
+  "contactAgent": "Contact Agent",
+  "notAssigned": "Not Assigned",
+  "featuredProperties": "Featured Properties",
+  "allProperties": "All Properties",
+  "prev": "Prev",
+  "next": "Next",
+  "latestFromBlog": "Latest From Our Blog",
+  "blogSubtitle": "Stay updated with expert real-estate tips, guides, and trends.",
+  "propertiesSubtitle": "Find your perfect home in Punta Cana.",
+  "filters": "Filters",
+  "clearAll": "Clear all",
+  "search": "Search",
+  "searchPlaceholder": "Search by keyword...",
+  "allTypes": "All types",
+  "filtersAuto": "Filters are applied automatically",
+  "filtersHint": "Select filters to refine your search",
+  "activeFilters": "Active filters:",
+  "featured": "Featured",
+  "beds": "Beds",
+  "baths": "Baths",
+  "sqft": "sqft",
+  "addToFavourites": "Add to favourites",
+  "removeFromFavourites": "Remove from favourites",
+  "clear": "Clear",
+  "clearFilters": "Clear Filters",
+  "filtersActive": "filter(s) active",
+  "about": {
+    "heroTitle": "Why I Created",
+    "heroText1": "Casa Viva began after my own struggles with renting out my investment properties in Punta Cana. I experienced firsthand how difficult it was — confusing platforms, unreliable communication, and renters who also felt lost in the process.",
+    "heroText2": "After dealing with these challenges repeatedly, I realized something important: If I was having this much trouble, hundreds of other renters and property owners were facing the same issues.",
+    "heroText3": "So instead of accepting the frustration, I decided to solve the problem. Casa Viva was created to make the rental process clearer, easier, and more reliable.",
+    "heroText4": "Today, Casa Viva exists to bridge the gap between great properties and the renters searching for them, making the entire process simpler for everyone.",
+    "missionTitle": "Our Mission",
+    "missionText": "Provide exceptional real estate solutions that simplify property buying, selling, and renting in Punta Cana.",
+    "visionTitle": "Our Vision",
+    "visionText": "To become the most trusted real estate platform in the Dominican Republic.",
+    "coreValues": "Our Core Values",
+    "values": {
+      "trustTitle": "Trust & Transparency",
+      "trustText": "Every transaction is honest, clear, and professional.",
+      "customerTitle": "Customer First",
+      "customerText": "Your goals and satisfaction guide everything we do.",
+      "innovationTitle": "Innovation",
+      "innovationText": "We use modern tools to make your property search easier.",
+      "integrityTitle": "Integrity",
+      "integrityText": "We act with honesty and strong moral principles."
+    },
+    "whyChooseUs": "Why Choose Us?",
+    "choose": {
+      "expertTitle": "Expert Local Knowledge",
+      "expertText": "We know every neighborhood in Punta Cana.",
+      "verifiedTitle": "Verified Properties",
+      "verifiedText": "Every listing is checked for accuracy and legitimacy.",
+      "seamlessTitle": "Seamless Process",
+      "seamlessText": "From search to paperwork, we guide you at every step."
+    },
+    "teamTitle": "Meet Our Team",
+    "teamRoles": {
+      "consultant": "Lead Property Consultant",
+      "manager": "Client Relations Manager",
+      "investment": "Investment Specialist"
+    },
+    "stats": {
+      "properties": "Properties Listed",
+      "clients": "Happy Clients",
+      "experience": "Years Experience"
+    }
+  },
+  "blogpage": {
+    "allCategories": "All categories",
+    "realEstate": "Real estate",
+    "guide": "Guide",
+    "design": "Design",
+    "searchPlaceholder": "Search articles...",
+    "searchLabel": "Search",
+    "categoryLabel": "Category"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "properties": "Properties",
+    "blog": "Blog",
+    "contact": "Contact",
+    "menu": "Menu",
+    "favourites": "Favourites"
+  },
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "contactHero": {
+    "titleBefore": "Get in Touch With",
+    "titleHighlight": "Our Real Estate Team",
+    "description": "Whether you are looking to buy, sell, or invest in Punta Cana properties, our experienced team is ready to guide you every step of the way. Contact us for expert advice, property tours, and personalized support.",
+    "imageAlt": "Punta Cana Property"
+  },
+  "contactSection": {
+    "title": "Get In Touch",
+    "subtitle": "Have questions about properties, investment advice, or scheduling a property tour? Our team is ready to assist you anytime.",
+    "phone": {
+      "title": "Call Us Anytime",
+      "desc": "For property visits & investment guidance"
+    },
+    "email": {
+      "title": "Email Support",
+      "desc": "Get quick responses within 12–24 hours"
+    },
+    "location": {
+      "title": "Visit Our Office",
+      "desc": "Come meet our real-estate specialists",
+      "address": "Punta Cana, Dominican Republic",
+      "hours": "Mon–Sat, 9:00 AM – 7:00 PM"
+    },
+    "form": {
+      "title": "Send Us a Message",
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "message": "Your Message",
+      "button": "Send Message",
+      "success": "Message sent! We will contact you shortly."
+    }
+  },
+  "footer": {
+    "about": "Discover your dream property in Punta Cana with our expert guidance. We make buying and investing easy and secure.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "about": "About Us",
+      "properties": "Properties",
+      "contact": "Contact",
+      "blog": "Blog"
+    },
+    "services": {
+      "title": "Services",
+      "buying": "Property Buying",
+      "selling": "Property Selling",
+      "investing": "Investment Consulting",
+      "legal": "Legal Assistance"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "address": "123 Beachfront Ave, Punta Cana, DR",
+      "email": "Email: info@puntacanarealestate.com",
+      "phone": "Phone: +1 809 123 4567"
+    },
+    "copyright": "Punta Cana Real Estate. All rights reserved."
+  }
 }
-
-
-
-
