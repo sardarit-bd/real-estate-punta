@@ -196,5 +196,39 @@
       "phone": "Phone: +1 809 123 4567"
     },
     "copyright": "Punta Cana Real Estate. All rights reserved."
+  },
+
+
+   "dashboard": {
+    "owner": {
+      "title": "Owner Dashboard",
+      "subtitle": "Welcome back! Here is your property overview",
+
+      "stats": {
+        "totalProperties": "Total Properties",
+        "activeListings": "Active Listings",
+        "totalRevenue": "Total Revenue",
+        "featuredProperties": "Featured Properties"
+      },
+
+      "actions": {
+        "addProperty": "Add New Property",
+        "viewProperties": "View All Properties",
+        "paymentHistory": "Payment History",
+        "analytics": "Analytics Report"
+      },
+
+      "sections": {
+        "recentProperties": "Recent Properties",
+        "recentPayments": "Recent Payments",
+        "viewAll": "View All"
+      },
+
+      "labels": {
+        "featured": "Featured",
+        "views": "views",
+        "receipt": "View Receipt"
+      }
+    }
   }
 }

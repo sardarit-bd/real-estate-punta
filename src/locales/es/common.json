@@ -196,5 +196,33 @@
       "phone": "Teléfono: +1 809 123 4567"
     },
     "copyright": "Punta Cana Bienes Raíces. Todos los derechos reservados."
+  },
+  "dashboard": {
+    "owner": {
+      "title": "Panel del Propietario",
+      "subtitle": "¡Bienvenido! Aquí tienes el resumen de tus propiedades",
+      "stats": {
+        "totalProperties": "Propiedades Totales",
+        "activeListings": "Anuncios Activos",
+        "totalRevenue": "Ingresos Totales",
+        "featuredProperties": "Propiedades Destacadas"
+      },
+      "actions": {
+        "addProperty": "Agregar Nueva Propiedad",
+        "viewProperties": "Ver Todas las Propiedades",
+        "paymentHistory": "Historial de Pagos",
+        "analytics": "Reporte Analítico"
+      },
+      "sections": {
+        "recentProperties": "Propiedades Recientes",
+        "recentPayments": "Pagos Recientes",
+        "viewAll": "Ver Todo"
+      },
+      "labels": {
+        "featured": "Destacado",
+        "views": "vistas",
+        "receipt": "Ver Recibo"
+      }
+    }
   }
 }

@@ -439,7 +439,7 @@ export default function PropertiesPage() {
                       <div className="mt-4 pt-4 border-t border-gray-100">
                         <div className="flex justify-between space-y-3">
                           {/* Make Lease Button */}
-                          <button
+                          {/* <button
                             onClick={() => route.push(`/dashboard/owner/leases/create?id=${property._id}`)}
                             className={`flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${property.isLeased
                               ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
@@ -449,7 +449,7 @@ export default function PropertiesPage() {
                           >
                             <FileText className="h-4 w-4 mr-2" />
                             {property.isLeased ? 'Already Leased' : 'Make Lease'}
-                          </button>
+                          </button> */}
 
                           {/* Make Featured Button */}
                           <button
@@ -496,53 +496,6 @@ export default function PropertiesPage() {
             </div>
           )}
         </div>
-
-        {/* Stats Cards at Bottom */}
-        {/* <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-r from-[#004087] to-[#004ca3] rounded-xl p-6 text-white hover:shadow-lg transition-shadow duration-300">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100">Properties by Type</p>
-                <div className="mt-3 space-y-2">
-                  {Array.from(new Set(properties.map(p => p.type))).map(type => {
-                    const count = properties.filter(p => p.type === type).length;
-                    return (
-                      <div key={type} className="flex justify-between items-center hover:bg-blue-400/20 px-2 py-1 rounded transition-colors">
-                        <span>{type.charAt(0).toUpperCase() + type.slice(1)}</span>
-                        <span className="font-semibold bg-white/20 px-2 py-1 rounded text-sm">
-                          {count}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <Home className="h-10 w-10 opacity-80" />
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#004087] to-[#004ca3] rounded-xl p-6 text-white hover:shadow-lg transition-shadow duration-300">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100">Properties by City</p>
-                <div className="mt-3 space-y-2">
-                  {Array.from(new Set(properties.map(p => p.city))).map(city => {
-                    const count = properties.filter(p => p.city === city).length;
-                    return (
-                      <div key={city} className="flex justify-between items-center hover:bg-purple-400/20 px-2 py-1 rounded transition-colors">
-                        <span>{city}</span>
-                        <span className="font-semibold bg-white/20 px-2 py-1 rounded text-sm">
-                          {count}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <MapPin className="h-10 w-10 opacity-80" />
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );
