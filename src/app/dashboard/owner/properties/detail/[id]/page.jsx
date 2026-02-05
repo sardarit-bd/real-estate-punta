@@ -41,8 +41,10 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 export default function PropertyDetailsPage() {
+    const { t } = useTranslation();
     const params = useParams();
     const router = useRouter();
     const [property, setProperty] = useState(null);
@@ -67,11 +69,11 @@ export default function PropertyDetailsPage() {
                 if (res.data.success) {
                     setProperty(res.data.data);
                 } else {
-                    setError('Property not found');
+                    setError(t('dashboard.owner.propertyDetails.propertyNotFound'));
                 }
             } catch (err) {
                 console.error('Failed to fetch property details', err);
-                setError('Failed to load property details');
+                setError(t('dashboard.owner.propertyDetails.loadError'));
             } finally {
                 setLoading(false);
             }
@@ -80,7 +82,7 @@ export default function PropertyDetailsPage() {
         if (propertyId) {
             fetchPropertyDetails();
         }
-    }, [propertyId]);
+    }, [propertyId, t]);
 
     // Amenity icons mapping
     const amenityIcons = {
@@ -116,11 +118,11 @@ export default function PropertyDetailsPage() {
                 }
             );
 
-            alert('Property deleted successfully');
+            alert(t('dashboard.owner.propertyDetails.deleteSuccess'));
             router.push('/dashboard/owner/properties');
         } catch (err) {
             console.error('Failed to delete property', err);
-            alert('Failed to delete property');
+            alert(t('dashboard.owner.propertyDetails.deleteError'));
         } finally {
             setDeleting(false);
             setShowDeleteModal(false);
@@ -136,7 +138,7 @@ export default function PropertyDetailsPage() {
     //         });
     //     } else {
     //         navigator.clipboard.writeText(window.location.href);
-    //         alert('Link copied to clipboard!');
+    //         alert(t('propertyDetails.linkCopied'));
     //     }
     // };
 
@@ -178,17 +180,17 @@ export default function PropertyDetailsPage() {
                 <div className="text-center max-w-md">
                     <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
                     <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                        {error || 'Property Not Found'}
+                        {error || t('dashboard.owner.propertyDetails.propertyNotFound')}
                     </h1>
                     <p className="text-gray-600 mb-6">
-                        The property you're looking for doesn't exist or has been removed.
+                        {t('dashboard.owner.propertyDetails.propertyRemoved')}
                     </p>
                     <Link
                         href="/dashboard/owner/properties"
                         className="inline-flex items-center px-6 py-3 bg-[#004087] text-white rounded-lg hover:bg-[#004797] transition-colors"
                     >
                         <ArrowLeft className="h-4 w-4 mr-2" />
-                        Back to Properties
+                        {t('dashboard.owner.        propertyDetails.backToProperties')}
                     </Link>
                 </div>
             </div>
@@ -211,12 +213,13 @@ export default function PropertyDetailsPage() {
                             <div className="p-2 bg-red-100 rounded-lg mr-3">
                                 <AlertTriangle className="h-6 w-6 text-red-600" />
                             </div>
-                            <h3 className="text-lg font-semibold text-gray-900">Delete Property</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                                {t('dashboard.owner.propertyDetails.deleteProperty')}
+                            </h3>
                         </div>
 
                         <p className="text-gray-600 mb-6">
-                            Are you sure you want to delete <span className="font-semibold">"{property.title}"</span>?
-                            This action cannot be undone and all property data will be permanently removed.
+                            {t('dashboard.owner.propertyDetails.deleteConfirmation', { title: property.title })}
                         </p>
 
                         <div className="flex gap-3">
@@ -225,7 +228,7 @@ export default function PropertyDetailsPage() {
                                 disabled={deleting}
                                 className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
                             >
-                                Cancel
+                                {t('common.cancel')}
                             </button>
                             <button
                                 onClick={handleDeleteProperty}
@@ -235,10 +238,10 @@ export default function PropertyDetailsPage() {
                                 {deleting ? (
                                     <>
                                         <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                                        Deleting...
+                                        {t('dashboard.owner.propertyDetails.deleting')}
                                     </>
                                 ) : (
-                                    'Delete Property'
+                                    t('dashboard.owner.propertyDetails.deleteProperty')
                                 )}
                             </button>
                         </div>
@@ -255,7 +258,7 @@ export default function PropertyDetailsPage() {
                             className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors group"
                         >
                             <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-                            Back to Properties
+                            {t('dashboard.owner.propertyDetails.backToProperties')}
                         </Link>
 
                         <div className="flex items-center gap-3">
@@ -264,7 +267,7 @@ export default function PropertyDetailsPage() {
                                 className="flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                             >
                                 <Share2 className="h-4 w-4 mr-2" />
-                                Share
+                                {t('propertyDetails.share')}
                             </button> */}
 
                             <Link
@@ -272,7 +275,7 @@ export default function PropertyDetailsPage() {
                                 className="flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797] transition-colors"
                             >
                                 <Edit className="h-4 w-4 mr-2" />
-                                Edit Property
+                                {t('dashboard.owner.propertyDetails.editProperty')}
                             </Link>
 
                             <button
@@ -280,7 +283,7 @@ export default function PropertyDetailsPage() {
                                 className="flex items-center px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
                             >
                                 <Trash2 className="h-4 w-4 mr-2" />
-                                Delete
+                                {t('dashboard.owner.propertyDetails.delete')}
                             </button>
                         </div>
                     </div>
@@ -291,7 +294,7 @@ export default function PropertyDetailsPage() {
                     {property.featured && (
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                             <Star className="h-3 w-3 mr-1 fill-yellow-500" />
-                            Featured
+                            {t('dashboard.owner.propertyDetails.featured')}
                         </span>
                     )}
 
@@ -301,12 +304,12 @@ export default function PropertyDetailsPage() {
                         }`}>
                         <div className={`h-2 w-2 rounded-full mr-2 ${property.status === 'active' ? 'bg-green-500' : 'bg-gray-500'
                             }`}></div>
-                        {property.status === 'active' ? 'Active' : 'Inactive'}
+                        {property.status === 'active' ? t('dashboard.owner.propertyDetails.active') : t('dashboard.owner.propertyDetails.inactive')}
                     </span>
 
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                         <DoorOpen className="h-3 w-3 mr-1" />
-                        {property.listingType === 'rent' ? 'For Rent' : 'For Sale'}
+                        {property.listingType === 'rent' ? t('dashboard.owner.propertyDetails.forRent') : t('dashboard.owner.propertyDetails.forSale')}
                     </span>
 
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
@@ -363,12 +366,12 @@ export default function PropertyDetailsPage() {
                             >
                                 <img
                                     src={img.url}
-                                    alt={`Property ${index + 1}`}
+                                    alt={`${t('propertyDetails.property')} ${index + 1}`}
                                     className="h-full w-full object-cover"
                                 />
                                 {img.isCover && (
                                     <span className="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs rounded">
-                                        Cover
+                                        {t('dashboard.owner.propertyDetails.cover')}
                                     </span>
                                 )}
                             </button>
@@ -395,9 +398,11 @@ export default function PropertyDetailsPage() {
                                     <span className="text-4xl font-bold text-gray-900">
                                         ${property.price}
                                     </span>
-                                    <span className="text-gray-600">
-                                        /{property.pricePeriod === 'night' ? 'night' : property.pricePeriod}
-                                    </span>
+                                    {property.listingType === 'rent' && (
+                                        <span className="text-gray-600">
+                                            /{property.pricePeriod === 'night' ? t('dashboard.owner.propertyDetails.perNight') : property.pricePeriod}
+                                        </span>
+                                    )}
                                 </div>
 
                                 <button
@@ -413,13 +418,18 @@ export default function PropertyDetailsPage() {
                         </div>
                         {/* Description */}
                         <div className="bg-white rounded-2xl shadow-sm border p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">
+                                {t('dashboard.owner.propertyDetails.description')}
+                            </h2>
                             <p className="text-gray-600 whitespace-pre-line">{property.description}</p>
                         </div>
 
                         {/* Amenities */}
                         <div className="bg-white rounded-2xl shadow-sm border p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-6">Amenities</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-6">
+                                {t('dashboard.owner.propertyDetails.amenities')}
+                            </h2>
+
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 {visibleAmenities?.map((amenity, index) => (
                                     <div
@@ -427,10 +437,15 @@ export default function PropertyDetailsPage() {
                                         className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                                     >
                                         <div className="p-2 bg-white rounded-lg mr-3">
-                                            {amenityIcons[amenity] || <Check className="h-4 w-4 text-green-500" />}
+                                            {amenityIcons[amenity] || (
+                                                <Check className="h-4 w-4 text-green-500" />
+                                            )}
                                         </div>
-                                        <span className="text-gray-700 capitalize">
-                                            {amenity.replace(/_/g, ' ')}
+
+                                        <span className="text-gray-700">
+                                            {t(`dashboard.owner.amenities.${amenity}`, {
+                                                defaultValue: amenity.replace(/_/g, ' ')
+                                            })}
                                         </span>
                                     </div>
                                 ))}
@@ -441,19 +456,28 @@ export default function PropertyDetailsPage() {
                                     onClick={() => setShowAllAmenities(!showAllAmenities)}
                                     className="mt-6 w-full py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                                 >
-                                    {showAllAmenities ? 'Show Less' : `Show All ${property.amenities.length} Amenities`}
+                                    {showAllAmenities
+                                        ? t('dashboard.owner.propertyDetails.showLess')
+                                        : t('dashboard.owner.propertyDetails.showAllAmenities', {
+                                            count: property.amenities.length
+                                        })}
                                 </button>
                             )}
                         </div>
 
+
                         {/* Location */}
                         <div className="bg-white rounded-2xl shadow-sm border p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Location</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">
+                                {t('dashboard.owner.propertyDetails.location')}
+                            </h2>
                             <div className="space-y-4">
                                 <div className="flex items-start">
                                     <MapPin className="h-5 w-5 text-gray-500 mr-3 mt-0.5" />
                                     <div>
-                                        <p className="font-medium text-gray-900">Address</p>
+                                        <p className="font-medium text-gray-900">
+                                            {t('dashboard.owner.propertyDetails.address')}
+                                        </p>
                                         <p className="text-gray-600">{property.address}, {property.city}</p>
                                     </div>
                                 </div>
@@ -462,8 +486,8 @@ export default function PropertyDetailsPage() {
                                 <div className="h-64 bg-gray-200 rounded-xl flex items-center justify-center">
                                     <div className="text-center">
                                         <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                                        <p className="text-gray-600">Map would be displayed here</p>
-                                        <p className="text-sm text-gray-500">Google Maps integration</p>
+                                        <p className="text-gray-600">{t('propertyDetails.mapPlaceholder')}</p>
+                                        <p className="text-sm text-gray-500">{t('propertyDetails.mapIntegration')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -474,7 +498,9 @@ export default function PropertyDetailsPage() {
                     <div className="space-y-6">
                         {/* Owner Actions Card */}
                         <div className="bg-white rounded-2xl shadow-sm border p-6">
-                            <h3 className="text-lg font-bold text-gray-900 mb-4">Property Actions</h3>
+                            <h3 className="text-lg font-bold text-gray-900 mb-4">
+                                {t('dashboard.owner.propertyDetails.propertyActions')}
+                            </h3>
 
                             <div className="grid grid-cols-1 gap-3">
                                 <Link
@@ -482,44 +508,46 @@ export default function PropertyDetailsPage() {
                                     className="flex items-center justify-center px-4 py-3 bg-[#004087] text-white rounded-lg hover:bg-[#004797] transition-colors"
                                 >
                                     <Edit className="h-4 w-4 mr-2" />
-                                    Edit Property Details
+                                    {t('dashboard.owner.propertyDetails.editPropertyDetails')}
                                 </Link>
                                 <button
                                     onClick={() => setShowDeleteModal(true)}
                                     className="flex items-center justify-center w-full px-4 py-3 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
                                 >
                                     <Trash2 className="h-4 w-4 mr-2" />
-                                    Delete Property
+                                    {t('dashboard.owner.propertyDetails.deleteProperty')}
                                 </button>
                             </div>
                         </div>
 
                         {/* Property Info Card */}
                         <div className="bg-white rounded-2xl shadow-sm border p-6">
-                            <h3 className="text-lg font-bold text-gray-900 mb-4">Property Information</h3>
+                            <h3 className="text-lg font-bold text-gray-900 mb-4">
+                                {t('dashboard.owner.propertyDetails.propertyInformation')}
+                            </h3>
 
                             <div className="space-y-4">
                                 <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-600">Property ID</span>
+                                    <span className="text-gray-600">{t('dashboard.owner.propertyDetails.propertyId')}</span>
                                     <span className="font-medium">{property._id}</span>
                                 </div>
 
                                 <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-600">Created On</span>
+                                    <span className="text-gray-600">{t('dashboard.owner.propertyDetails.createdOn')}</span>
                                     <span className="font-medium">
                                         {new Date(property.createdAt).toLocaleDateString()}
                                     </span>
                                 </div>
 
                                 <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-600">Last Updated</span>
+                                    <span className="text-gray-600">{t('dashboard.owner.propertyDetails.lastUpdated')}</span>
                                     <span className="font-medium">
                                         {new Date(property.updatedAt).toLocaleDateString()}
                                     </span>
                                 </div>
 
                                 <div className="flex justify-between py-2 border-b border-gray-100">
-                                    <span className="text-gray-600">Status</span>
+                                    <span className="text-gray-600">{t('dashboard.owner.propertyDetails.status')}</span>
                                     <span className={`font-medium ${property.status === 'active' ? 'text-green-600' : 'text-gray-600'
                                         }`}>
                                         {property.status.charAt(0).toUpperCase() + property.status.slice(1)}
@@ -527,10 +555,10 @@ export default function PropertyDetailsPage() {
                                 </div>
 
                                 <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Featured</span>
+                                    <span className="text-gray-600">{t('dashboard.owner.propertyDetails.featured')}</span>
                                     <span className={`font-medium ${property.featured ? 'text-yellow-600' : 'text-gray-600'
                                         }`}>
-                                        {property.featured ? 'Yes' : 'No'}
+                                        {property.featured ? t('common.yes') : t('common.no')}
                                     </span>
                                 </div>
                             </div>
@@ -539,22 +567,24 @@ export default function PropertyDetailsPage() {
                         {/* Additional Info at Bottom */}
                         <div className="mt-8 grid grid-cols-1 md:grid-cols-1 gap-6">
                             <div className="bg-white rounded-2xl shadow-sm border p-6">
-                                <h3 className="text-lg font-bold text-gray-900 mb-4">Availability & Pricing</h3>
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                                    {t('dashboard.owner.propertyDetails.availabilityPricing')}
+                                </h3>
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                        <span className="text-gray-700">Minimum Stay</span>
+                                        <span className="text-gray-700">{t('dashboard.owner.propertyDetails.minimumStay')}</span>
                                         <span className="font-semibold">
-                                            {property.availability?.minimumStay || 1} nights
+                                            {property.availability?.minimumStay || 1} {t('dashboard.owner.propertyDetails.nights')}
                                         </span>
                                     </div>
 
                                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                        <span className="text-gray-700">Security Deposit</span>
+                                        <span className="text-gray-700">{t('dashboard.owner.propertyDetails.securityDeposit')}</span>
                                         <span className="font-semibold">${property.price * 2}</span>
                                     </div>
 
                                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                        <span className="text-gray-700">Cleaning Fee</span>
+                                        <span className="text-gray-700">{t('dashboard.owner.propertyDetails.cleaningFee')}</span>
                                         <span className="font-semibold">$75</span>
                                     </div>
                                 </div>

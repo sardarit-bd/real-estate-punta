@@ -23,8 +23,10 @@ import Link from 'next/link';
 import CustomSelect from '@/components/dashboard/Admin/CustomSelect';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 export default function PropertiesPage() {
+  const { t } = useTranslation();
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -93,12 +95,12 @@ export default function PropertiesPage() {
   // Prepare options for CustomSelect
   const typeOptions = propertyTypes.map(type => ({
     value: type,
-    label: type === 'all' ? 'All Types' : type.charAt(0).toUpperCase() + type.slice(1)
+    label: type === 'all' ? t('dashboard.owner.properties.allTypes') : type.charAt(0).toUpperCase() + type.slice(1)
   }));
 
   const cityOptions = cities.map(city => ({
     value: city,
-    label: city === 'all' ? 'All Cities' : city
+    label: city === 'all' ? t('dashboard.owner.properties.allCities') : city
   }));
 
   const stats = {
@@ -109,7 +111,7 @@ export default function PropertiesPage() {
 
   // Handle delete property
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this property? This action cannot be undone.')) {
+    if (!window.confirm(t('properties.deleteConfirm'))) {
       return;
     }
 
@@ -125,10 +127,10 @@ export default function PropertiesPage() {
       setProperties(properties.filter(p => p._id !== id));
       setFilteredProperties(filteredProperties.filter(p => p._id !== id));
 
-      alert('Property deleted successfully');
+      alert(t('properties.deleteSuccess'));
     } catch (error) {
       console.error('Failed to delete property', error);
-      alert('Failed to delete property');
+      alert(t('properties.deleteError'));
     }
   };
 
@@ -148,7 +150,7 @@ export default function PropertiesPage() {
       }
     } catch (error) {
       console.error('Failed to toggle featured status', error);
-      alert('Failed to update featured status');
+      alert(t('properties.featuredError'));
       return;
     }
   }
@@ -175,15 +177,15 @@ export default function PropertiesPage() {
         <div className="px-6 py-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">My Properties</h1>
-              <p className="text-gray-600">Manage all your property listings</p>
+              <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.owner.properties.myProperties')}</h1>
+              <p className="text-gray-600">{t('dashboard.owner.properties.manageListings')}</p>
             </div>
             <Link
               href="/dashboard/owner/properties/add"
               className="flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797] transition-all duration-200 hover:scale-105 active:scale-95"
             >
               <Plus className="h-4 w-4 mr-2" />
-              Add New Property
+              {t('dashboard.owner.properties.addNewProperty')}
             </Link>
           </div>
         </div>
@@ -193,9 +195,9 @@ export default function PropertiesPage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {[
-            { title: "Total Properties", value: stats.total, icon: Home, color: "blue" },
-            { title: "Active Listings", value: stats.active, icon: Home, color: "green" },
-            { title: "Featured", value: stats.featured, icon: Star, color: "yellow" }
+            { title: t('dashboard.owner.properties.totalProperties'), value: stats.total, icon: Home, color: "blue" },
+            { title: t('dashboard.owner.properties.activeListings'), value: stats.active, icon: Home, color: "green" },
+            { title: t('dashboard.owner.properties.featured'), value: stats.featured, icon: Star, color: "yellow" }
           ].map((stat, idx) => (
             <div key={idx} className="bg-white rounded-xl shadow-sm border p-4 hover:shadow-md transition-shadow duration-200">
               <div className="flex items-center justify-between">
@@ -219,7 +221,7 @@ export default function PropertiesPage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search properties..."
+                  placeholder={t('dashboard.owner.properties.searchPlaceholder')}
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A34] focus:border-transparent transition-all duration-200"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -283,7 +285,7 @@ export default function PropertiesPage() {
                       <div className="absolute top-3 left-3 animate-pulse">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 shadow-sm">
                           <Star className="h-3 w-3 mr-1 fill-yellow-500" />
-                          Featured
+                          {t('dashboard.owner.properties.featured')}
                         </span>
                       </div>
                     )}
@@ -313,7 +315,7 @@ export default function PropertiesPage() {
                             >
                               <div className="flex items-center">
                                 <Eye className="h-4 w-4 mr-3 text-gray-400 group-hover:text-blue-500" />
-                                View Details
+                                {t('dashboard.owner.properties.viewDetails')}
                               </div>
                               <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
@@ -326,7 +328,7 @@ export default function PropertiesPage() {
                             >
                               <div className="flex items-center">
                                 <Edit className="h-4 w-4 mr-3 text-gray-400 group-hover:text-green-500" />
-                                Edit Property
+                                {t('dashboard.owner.properties.editProperty')}
                               </div>
                               <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
@@ -336,14 +338,14 @@ export default function PropertiesPage() {
                               className="flex items-center justify-between w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150 group"
                               onClick={() => {
                                 setShowDeleteConfirm(null);
-                                if (window.confirm(`Are you sure you want to delete "${property.title}"? This action cannot be undone.`)) {
+                                if (window.confirm(t('dashboard.owner.properties.deleteConfirmMessage', { title: property.title }))) {
                                   handleDelete(property._id);
                                 }
                               }}
                             >
                               <div className="flex items-center">
                                 <Trash2 className="h-4 w-4 mr-3" />
-                                Delete Property
+                                {t('dashboard.owner.properties.deleteProperty')}
                               </div>
                               <AlertTriangle className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </button>
@@ -353,7 +355,7 @@ export default function PropertiesPage() {
                           {showDeleteConfirm === property._id && (
                             <div className="px-4 py-2 bg-red-50 border-t border-red-100">
                               <p className="text-xs text-red-600">
-                                Deleting will permanently remove this property
+                                {t('dashboard.owner.properties.deleteWarning')}
                               </p>
                             </div>
                           )}
@@ -376,7 +378,7 @@ export default function PropertiesPage() {
                     >
                       <button className="cursor-pointer px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transition-all duration-200 flex items-center">
                         <Eye className="h-3 w-3 mr-2" />
-                        Quick View
+                        {t('dashboard.owner.properties.quickView')}
                       </button>
                     </Link>
                   </div>
@@ -398,13 +400,13 @@ export default function PropertiesPage() {
                           ${property.price}/{property.pricePeriod}
                         </div>
                           <div className="text-xs text-gray-500">
-                            per {property.pricePeriod}
+                            {t('dashboard.owner.properties.perPeriod', { period: property.pricePeriod })}
                           </div></>) : (<>
                             <div className="font-bold text-gray-900 text-lg">
                               ${property.price}
                             </div>
                             <div className="text-xs text-gray-500">
-                              One-time Payment
+                              {t('dashboard.owner.properties.oneTimePayment')}
                             </div>
                           </>)}
 
@@ -419,11 +421,11 @@ export default function PropertiesPage() {
                       <div className="flex items-center space-x-4">
                         <span className="flex items-center text-sm bg-gray-50 px-2 py-1 rounded">
                           <Bed className="h-4 w-4 mr-1 text-gray-500" />
-                          {property.bedrooms} beds
+                          {property.bedrooms} {t('dashboard.owner.properties.beds')}
                         </span>
                         <span className="flex items-center text-sm bg-gray-50 px-2 py-1 rounded">
                           <Bath className="h-4 w-4 mr-1 text-gray-500" />
-                          {property.bathrooms} baths
+                          {property.bathrooms} {t('dashboard.owner.properties.baths')}
                         </span>
                       </div>
                       <Link
@@ -431,26 +433,12 @@ export default function PropertiesPage() {
                         className="flex items-center justify-center px-4 py-2.5 bg-[#004797] text-white rounded-lg text-sm font-medium hover:bg-[#2a4d45] hover:shadow-sm transition-all duration-200"
                       >
                         <Edit className="h-4 w-4 mr-2" />
-                        Edit Property
+                        {t('dashboard.owner.properties.editProperty')}
                       </Link>
                     </div>
                     <>
-                      {/* here add three button, make lease, make featured , and edit */}
                       <div className="mt-4 pt-4 border-t border-gray-100">
                         <div className="flex justify-between space-y-3">
-                          {/* Make Lease Button */}
-                          {/* <button
-                            onClick={() => route.push(`/dashboard/owner/leases/create?id=${property._id}`)}
-                            className={`flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${property.isLeased
-                              ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
-                              : 'bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-sm'
-                              }`}
-                            disabled={property.isLeased}
-                          >
-                            <FileText className="h-4 w-4 mr-2" />
-                            {property.isLeased ? 'Already Leased' : 'Make Lease'}
-                          </button> */}
-
                           {/* Make Featured Button */}
                           <button
                             onClick={() => handleToggleFeatured(property._id)}
@@ -461,11 +449,8 @@ export default function PropertiesPage() {
                               }`}
                           >
                             <Star className={`h-4 w-4 mr-2 ${property.featured ? 'fill-yellow-500' : ''}`} />
-                            {property.featured ? 'Featured' : 'MakeFeatured'}
+                            {property.featured ? t('dashboard.owner.properties.featured') : t('dashboard.owner.properties.makeFeatured')}
                           </button>
-
-                          {/* Edit Button - Full width variant */}
-
                         </div>
                       </div>
                     </>
@@ -480,17 +465,17 @@ export default function PropertiesPage() {
                   <Home className="h-8 w-8 text-gray-400" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No properties found
+                  {t('dashboard.owner.properties.noPropertiesFound')}
                 </h3>
                 <p className="text-gray-600 mb-6">
-                  Try adjusting your search or filters
+                  {t('dashboard.owner.properties.adjustSearch')}
                 </p>
                 <Link
                   href="/dashboard/owner/properties/add"
                   className="inline-flex items-center px-4 py-2 bg-[#004087] text-white rounded-lg hover:bg-[#004797] hover:shadow-md transition-all duration-200"
                 >
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Your First Property
+                  {t('dashboard.owner.properties.addFirstProperty')}
                 </Link>
               </div>
             </div>

@@ -197,37 +197,227 @@
     },
     "copyright": "Punta Cana Real Estate. All rights reserved."
   },
-
-
-   "dashboard": {
+  "dashboard": {
     "owner": {
       "title": "Owner Dashboard",
       "subtitle": "Welcome back! Here is your property overview",
-
       "stats": {
         "totalProperties": "Total Properties",
         "activeListings": "Active Listings",
         "totalRevenue": "Total Revenue",
         "featuredProperties": "Featured Properties"
       },
-
       "actions": {
         "addProperty": "Add New Property",
         "viewProperties": "View All Properties",
         "paymentHistory": "Payment History",
         "analytics": "Analytics Report"
       },
-
       "sections": {
         "recentProperties": "Recent Properties",
         "recentPayments": "Recent Payments",
         "viewAll": "View All"
       },
-
       "labels": {
         "featured": "Featured",
         "views": "views",
-        "receipt": "View Receipt"
+        "receipt": "View Receipt",
+        "edit": "Edit Property",
+        "delete": "Delete Property",
+        "quickView": "Quick View",
+        "makeFeatured": "Make Featured",
+        "oneTime": "One-time Payment",
+        "per": "per",
+        "beds": "beds",
+        "baths": "baths"
+      },
+      "properties": {
+        "myProperties": "My Properties",
+        "manageListings": "Manage all your property listings",
+        "addNewProperty": "Add New Property",
+        "totalProperties": "Total Properties",
+        "activeListings": "Active Listings",
+        "featured": "Featured",
+        "searchPlaceholder": "Search properties...",
+        "allTypes": "All Types",
+        "allCities": "All Cities",
+        "viewDetails": "View Details",
+        "editProperty": "Edit Property",
+        "deleteProperty": "Delete Property",
+        "quickView": "Quick View",
+        "makeFeatured": "Make Featured",
+        "beds": "beds",
+        "baths": "baths",
+        "perPeriod": "per {{period}}",
+        "oneTimePayment": "One-time Payment",
+        "noPropertiesFound": "No properties found",
+        "adjustSearch": "Try adjusting your search or filters",
+        "addFirstProperty": "Add Your First Property",
+        "deleteConfirm": "Are you sure you want to delete this property?",
+        "deleteConfirmMessage": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+        "deleteWarning": "Deleting will permanently remove this property",
+        "deleteSuccess": "Property deleted successfully",
+        "deleteError": "Failed to delete property",
+        "featuredError": "Failed to update featured status"
+      },
+      "propertyDetails": {
+        "property": "Property",
+        "propertyNotFound": "Property Not Found",
+        "propertyRemoved": "The property you're looking for doesn't exist or has been removed.",
+        "loadError": "Failed to load property details",
+        "backToProperties": "Back to Properties",
+        "deleteProperty": "Delete Property",
+        "delete": "Delete",
+        "deleteConfirmation": "Are you sure you want to delete \"{{title}}\"? This action cannot be undone.",
+        "deleteSuccess": "Property deleted successfully",
+        "deleteError": "Failed to delete property",
+        "deleting": "Deleting...",
+        "editProperty": "Edit Property",
+        "editPropertyDetails": "Edit Property Details",
+        "featured": "Featured",
+        "active": "Active",
+        "inactive": "Inactive",
+        "forRent": "For Rent",
+        "forSale": "For Sale",
+        "perNight": "night",
+        "description": "Description",
+        "amenities": "Amenities",
+        "showLess": "Show Less",
+        "showAllAmenities": "Show All {{count}} Amenities",
+        "location": "Location",
+        "address": "Address",
+        "mapPlaceholder": "Map would be displayed here",
+        "mapIntegration": "Google Maps integration",
+        "propertyActions": "Property Actions",
+        "propertyInformation": "Property Information",
+        "propertyId": "Property ID",
+        "createdOn": "Created On",
+        "lastUpdated": "Last Updated",
+        "status": "Status",
+        "availabilityPricing": "Availability & Pricing",
+        "minimumStay": "Minimum Stay",
+        "nights": "nights",
+        "securityDeposit": "Security Deposit",
+        "cleaningFee": "Cleaning Fee",
+        "cover": "Cover"
+      },
+      "amenities": {
+        "pool": "Swimming Pool",
+        "gym": "Gym",
+        "parking": "Parking",
+        "wifi": "Wi-Fi",
+        "tv": "Television",
+        "kitchen": "Kitchen",
+        "heating": "Heating",
+        "ac": "Air Conditioning",
+        "washer": "Washer",
+        "dryer": "Dryer",
+        "security": "Security",
+        "elevator": "Elevator",
+        "concierge": "Concierge",
+        "beach_access": "Beach Access",
+        "garden": "Garden",
+        "balcony": "Balcony",
+        "spa": "Spa",
+        "bbq_area": "BBQ Area",
+        "tennis_court": "Tennis Court"
+      }
+    },
+    "leases": {
+      "title": "Lease Management",
+      "subtitle": "Manage lease agreements, track signatures, and monitor rental income",
+      "views": {
+        "grid": "Grid View",
+        "list": "List View"
+      },
+      "filters": {
+        "title": "Filter Leases",
+        "all": "All Leases",
+        "pending_request": "Pending Requests",
+        "draft": "Drafts",
+        "sent_to_tenant": "Sent to Tenant",
+        "signed_by_tenant": "Tenant Signed",
+        "signed_by_landlord": "Owner Signed",
+        "fully_executed": "Fully Executed",
+        "active": "Active",
+        "expiring_soon": "Expiring Soon",
+        "changes_requested": "Changes Requested",
+        "searchPlaceholder": "Search by tenant, property, lease ID...",
+        "clearAll": "Clear All"
+      },
+      "quickStats": {
+        "needsAttention": "Needs Attention",
+        "activeLeases": "Active Leases",
+        "expiringSoon": "Expiring Soon",
+        "monthlyRevenue": "Monthly Revenue"
+      },
+      "bulk": {
+        "selected": "{{count}} lease(s) selected",
+        "totalValue": "Total value",
+        "sendReminders": "Send Reminders",
+        "downloadPdfs": "Download PDFs",
+        "clearSelection": "Clear Selection"
+      },
+      "empty": {
+        "title": "No leases found",
+        "subtitle": "No lease records available for the selected filter"
+      },
+      "table": {
+        "lease": "Lease",
+        "property": "Property",
+        "tenant": "Tenant",
+        "termRent": "Term & Rent",
+        "status": "Status",
+        "lastUpdated": "Last Updated",
+        "actions": "Actions",
+        "type": "Type",
+        "signed": "Signed",
+        "deposit": "Deposit"
+      },
+      "statusText": {
+        "expired": "Expired",
+        "expiringSoon": "Expiring soon",
+        "waitingTenant": "Waiting for tenant",
+        "waitingOwner": "Waiting for your signature",
+        "needsReview": "Needs review",
+        "readyToSend": "Ready to send",
+        "noAction": "No action required"
+      },
+      "actions": {
+        "view": "View",
+        "approve": "Approve",
+        "send": "Send",
+        "signNow": "Sign Now",
+        "downloadPdf": "PDF",
+        "reject": "Reject",
+        "sendReminder": "Send Reminder",
+        "details": "Details",
+        "sign": "Sign"
+      },
+      "labels": {
+        "tenant": "Tenant",
+        "monthlyRent": "Monthly Rent",
+        "term": "Term",
+        "securityDeposit": "Security Deposit",
+        "signedOn": "Signed",
+        "typeFixed": "Fixed Term",
+        "typeVariable": "Variable"
+      },
+      "loading": {
+        "title": "Loading Lease Dashboard",
+        "subtitle": "Fetching your lease data..."
+      },
+      "errors": {
+        "loadFailed": "Failed to load lease data",
+        "retry": "Try Again"
+      },
+      "time": {
+        "minutesAgo": "{{count}}m ago",
+        "hoursAgo": "{{count}}h ago",
+        "daysAgo": "{{count}}d ago",
+        "overMonth": "Over a month ago",
+        "daysRemaining": "{{count}} days remaining",
+        "expiredDaysAgo": "Expired {{count}} days ago"
       }
     }
   }

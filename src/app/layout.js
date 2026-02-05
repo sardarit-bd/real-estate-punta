@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import "@/i18n";
 import { useTranslation } from "react-i18next";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,17 +35,35 @@ export default function RootLayout({ children }) {
       })
   );
 
-  const { i18n } = useTranslation();
+  // const { i18n } = useTranslation();
+
+  // useEffect(() => {
+  //   document.documentElement.lang = i18n.language || "en";
+  // }, [i18n.language]);
 
   useEffect(() => {
-    document.documentElement.lang = i18n.language || "en";
-  }, [i18n.language]);
+    document.documentElement.lang = "en";
+  }, []);
+
 
   return (
     <html lang="en">
+      <head>
+        {/* 🔥 Google Translate CONFIG */}
+        <Script src="/assets/lang-config.js" strategy="beforeInteractive" />
+        <Script src="/assets/translation.js" strategy="beforeInteractive" />
+        <Script
+          src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
+          strategy="afterInteractive"
+        />
+      </head>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Google translate hidden element */}
+        <div id="google_translate_element" className="hidden" />
+
         <QueryClientProvider client={client}>
           <AuthProvider>
             <ClientLayout>{children}</ClientLayout>
