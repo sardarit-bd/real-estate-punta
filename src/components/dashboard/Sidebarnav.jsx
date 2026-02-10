@@ -42,7 +42,7 @@ export default function SidebarNav({ items }) {
                 const isActive = activeItem?.href === item.href;
 
                 return (
-                    <Link
+                    <a
                         key={item.href}
                         href={item.href}
                         className={`relative group flex items-center gap-3 rounded-xl px-4 py-3 
@@ -62,7 +62,7 @@ export default function SidebarNav({ items }) {
 
                         {Icon && <Icon size={18} />}
                         <span>{item.title}</span>
-                    </Link>
+                    </a>
                 );
             })}
 

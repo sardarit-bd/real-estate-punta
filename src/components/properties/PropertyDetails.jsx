@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { leaseService } from "@/services/lease.service";
 import toast from "react-hot-toast";
 import Loader from "../common/Loader";
+import HospitalSchoolFinder from "./NearbyFinderMap";
 
 export default function PropertyDetails({ property, user }) {
     const router = useRouter();
@@ -271,15 +272,13 @@ export default function PropertyDetails({ property, user }) {
             </div>
 
             <div className="map">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8976.524870225803!2d-68.41150214321561!3d18.495511638412378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ea890ba67c733c1%3A0x7a0111a8ec90305b!2sCap%20Cana%2C%2023000%20Punta%20Cana%2C%20Dominican%20Republic!5e1!3m2!1sen!2sbd!4v1764738996752!5m2!1sen!2sbd"
-                    height="450"
-                    className="w-full rounded-xl"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+                <HospitalSchoolFinder
+            address={address}
+            apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+            mapHeight="600px"
+            radius={3000}
+          />
+
             </div>
 
             <div className="bg-white border rounded-xl p-5 md:p-7 shadow-sm">

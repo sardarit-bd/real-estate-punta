@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import { Phone, User, ChevronDown, Menu, X, Heart } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import UserButtons from "./UserButtons";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useAuthContext } from "@/providers/AuthProvider";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -52,7 +52,7 @@ export default function Navbar() {
           {/* LEFT: LOGO + MENUS */}
           <div className="flex items-center gap-12">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-2">
               <Image
                 src="/images/logo.png"
                 alt="Punta Cana Real Estate"
@@ -60,15 +60,17 @@ export default function Navbar() {
                 height={150}
                 className="w-[150px]"
               />
-            </Link>
+            </a>
 
             {/* Desktop Menu */}
             <nav className="hidden md:flex items-center gap-8 text-sm text-[#1F3A34]">
               <NavItem title="Home" href="/" />
               <NavItem title="About" href="/pages/about" />
               <NavItem title="Properties" href="/pages/properties" />
-              <Link href="/pages/blog" className="hover:text-black">Blog</Link>
-              <Link href="/pages/contact" className="hover:text-black">Contact</Link>
+              <a href="/pages/blog" className="hover:text-black">Blog</a>
+              <a href="/pages/contact" className="hover:text-black">Contact</a>
+
+             
             </nav>
           </div>
 
@@ -81,7 +83,7 @@ export default function Navbar() {
             </div>
 
             {/* Favourites Button */}
-            <Link
+            <a
               href="/pages/favourites"
               className="relative p-2 hover:bg-white/50 rounded-full transition"
             >
@@ -91,19 +93,19 @@ export default function Navbar() {
                   {favouriteCount}
                 </span>
               )}
-            </Link>
+            </a>
 
             <UserButtons />
 
-            {/* <Link
+            {/* <a
               href="/dashboard/owner/properties/add"
               className="px-5 py-2 border border-[#004087] rounded-full text-sm font-medium hover:bg-[#004087] hover:text-white transition"
             >
               Add Property
-            </Link> */}
+            </a> */}
 
             {/* Language Selector */}
-            <Select value={language} onValueChange={setLanguage}>
+            {/* <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger className="w-[110px] rounded-full border-[#004087] text-sm">
                 <SelectValue placeholder="Language" />
               </SelectTrigger>
@@ -112,8 +114,8 @@ export default function Navbar() {
                 <SelectItem value="en">🇺🇸 English</SelectItem>
                 <SelectItem value="es">🇪🇸 Español</SelectItem>
               </SelectContent>
-            </Select>
-
+            </Select> */}
+ <LanguageSwitcher />
 
           </div>
 
@@ -162,7 +164,7 @@ export default function Navbar() {
                 <User size={16} />
               </button>
 
-              <Link
+              <a
                 href="/pages/favourites"
                 className="relative p-2 border rounded-full border-[#1F3A34]"
               >
@@ -172,18 +174,18 @@ export default function Navbar() {
                     {favouriteCount}
                   </span>
                 )}
-              </Link>
+              </a>
             </div>
 
-            {/* <Link
+            {/* <a
               href="/dashboard/owner/properties/add"
               className="block w-full text-center px-5 py-2 border border-[#1F3A34] rounded-full text-sm font-medium hover:bg-[#1F3A34] hover:text-white transition"
             >
               Add Property
-            </Link> */}
+            </a> */}
 
             {/* Language Switcher */}
-            <Select value={language} onValueChange={setLanguage}>
+            {/* <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger className="w-[110px] rounded-full border-[#004087] text-sm">
                 <SelectValue placeholder="Language" />
               </SelectTrigger>
@@ -192,7 +194,9 @@ export default function Navbar() {
                 <SelectItem value="en">🇺🇸 English</SelectItem>
                 <SelectItem value="es">🇪🇸 Español</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
+
+            <LanguageSwitcher />
 
           </div>
         </nav>
@@ -213,7 +217,7 @@ export default function Navbar() {
 function NavItem({ title, href, dropdown }) {
   return (
     <div className="flex items-center gap-1 cursor-pointer hover:text-black">
-      <Link href={href}>{title}</Link>
+      <a href={href}>{title}</a>
       {dropdown && <ChevronDown size={14} />}
     </div>
   );
@@ -223,7 +227,7 @@ function NavItem({ title, href, dropdown }) {
 function MobileItem({ title, href, dropdown }) {
   return (
     <div className="flex items-center justify-between cursor-pointer">
-      <Link href={href} className="py-2">{title}</Link>
+      <a href={href} className="py-2">{title}</a>
       {dropdown && <ChevronDown size={18} />}
     </div>
   );
